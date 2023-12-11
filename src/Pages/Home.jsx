@@ -7,6 +7,7 @@ import { apiUrl, toast_config } from '../Utils/confiq'
 import { getMyTasks } from '../Slices/homeSlice'
 import { FaCircle } from "react-icons/fa";
 import { toast } from 'react-toastify'
+import { Link } from 'react-router-dom'
 
 
 function Home() {
@@ -59,7 +60,7 @@ function Home() {
             toast.error("Already has been finished")
             return
         }
-        else if (task.status === 0 ) {
+        else if (task.status === 0) {
             toast.error("At first you start")
             return
         }
@@ -75,70 +76,95 @@ function Home() {
         }
     }
 
+    const logoUrl = 'https://www.barnburnerbbq.ca/wp-content/uploads/2019/04/NEW-Canex-Logo-jpg.jpg'
+
 
     return (
-        <div className='home container'>
-            <div className="d-flex">
-                <h1>Welcome : {currentUser.name}</h1>
-                <Button
-                    onClick={() => {
-                        logOut()
-                    }}
-                >
-                    cixis
-                </Button>
-            </div>
-            <div className='tasks'>
-                <h3 className='mt-4 text-center'>My tasks</h3>
-                <Table>
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Title</th>
-                            <th>Description</th>
-                            <th>Deadline</th>
-                            <th>Status</th>
-                            <th>Reaction</th>
-                        </tr>
-                    </thead>
+        <div className='home'>
 
-                    <tbody>
-                        {
-                            myTasks.map(item => (
-                                <tr key={item.id}>
-                                    <td>1</td>
-                                    <td>{item.title}</td>
-                                    <td>{item.description}</td>
-                                    <td>{item.deadLine}</td>
-                                    <td>
-                                        <FaCircle
-                                            style={{ color: getStatusColor(item.status) }}
-                                        />
-                                    </td>
-                                    <td>
-                                        <button
-                                            onClick={() => {
-                                                setStatusStart(item)
-                                            }}
-                                        >
-                                            Start
-                                        </button>
-                                        <button
-                                            onClick={
-                                                () => {
-                                                    setStatusFinish(item)
-                                                }
-                                            }
-                                        >
-                                            Finish
-                                        </button>
-                                    </td>
-                                </tr>
-                            ))
-                        }
-                    </tbody>
-                </Table>
-            </div>
+            {
+                !currentUser.password ?
+                    <div className='homes'>
+                        <div className="header">
+                            <div className="logo">
+                                <Link to={'/adminhome'}>
+                                    <img src={logoUrl} alt="logo" />
+                                </Link>
+                            </div>
+                            <div className="signI">
+                                <Button onClick={() => {
+                                    navigate('/signin')
+                                }}>SignIn
+                                </Button>
+                            </div>
+                        </div>
+                    </div>
+                    :
+                    <div>
+                        <div className="d-flex">
+                            <h1>Welcome : {currentUser.name}</h1>
+                            <Button
+                                onClick={() => {
+                                    logOut()
+                                }}
+                            >
+                                cixis
+                            </Button>
+                        </div>
+                        <div className='tasks'>
+                            <h3 className='mt-4 text-center'>My tasks</h3>
+                            <Table>
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Title</th>
+                                        <th>Description</th>
+                                        <th>Deadline</th>
+                                        <th>Status</th>
+                                        <th>Reaction</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    {
+                                        myTasks.map(item => (
+                                            <tr key={item.id}>
+                                                <td>1</td>
+                                                <td>{item.title}</td>
+                                                <td>{item.description}</td>
+                                                <td>{item.deadLine}</td>
+                                                <td>
+                                                    <FaCircle
+                                                        style={{ color: getStatusColor(item.status) }}
+                                                    />
+                                                </td>
+                                                <td>
+                                                    <button
+                                                        onClick={() => {
+                                                            setStatusStart(item)
+                                                        }}
+                                                    >
+                                                        Start
+                                                    </button>
+                                                    <button
+                                                        onClick={
+                                                            () => {
+                                                                setStatusFinish(item)
+                                                            }
+                                                        }
+                                                    >
+                                                        Finish
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        ))
+                                    }
+                                </tbody>
+                            </Table>
+                        </div>
+                    </div>
+            }
+
 
         </div>
     )

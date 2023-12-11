@@ -4,3 +4,27 @@
     }
 
 }
+
+.homes {
+    background-image: url('https://www.oberlo.com/media/1605012376-image26.jpg');
+    background-position: center;
+    height: 100vh;
+
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .logo {
+
+            width: 200px;
+            height: 80px;
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+        }
+    }
+}

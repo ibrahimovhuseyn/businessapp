@@ -28,7 +28,7 @@ function App() {
         <Route path='/createtask' element={<CreateTask />} />
         <Route path='/alltasks' element={<AllTasks />} />
         <Route path='/task/:id' element={<TaskWithId />} />
-        <Route path='/user/:id' element={<UserProfile/>}/>
+        <Route path='/user/:id' element={<UserProfile />} />
       </Routes>
       <ToastContainer />
     </div>
