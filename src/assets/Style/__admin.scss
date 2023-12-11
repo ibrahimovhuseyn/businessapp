@@ -1,0 +1,180 @@
+.admin {
+    background-image: url('https://img.freepik.com/premium-photo/desktop-with-blank-laptop_700248-12527.jpg');
+    height: 100vh;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.adminHeader {
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .logo {
+        width: 150px;
+        height: 60px;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+    }
+
+    .navbar {
+        display: none;
+    }
+
+    .menu {
+        .btn {
+            background-color: transparent;
+
+            .i {
+                font-size: 2rem;
+                color: #092635;
+            }
+        }
+    }
+}
+
+.none {
+    color: #000;
+    position: absolute;
+    top: 0;
+    right: 0;
+    transition: 1s;
+    background-color: #fff;
+    padding: 20px 15px;
+    height: 100vh;
+    width: 200px;
+
+    .btn {
+        position: absolute;
+        top: 0;
+        right: 0;
+        font-size: 2rem;
+    }
+
+    ul {
+        list-style-type: none;
+
+        li {
+            a {
+                text-decoration: none;
+                display: inline-block;
+                color: #092635;
+                padding: 10px 5px;
+            }
+
+            &:hover {
+                background: blue;
+            }
+
+        }
+    }
+
+}
+
+.createUser {
+    background-image: url('https://th.bing.com/th/id/OIP.jwmq_HPsZy2v3t-q5P5EPwHaE7?rs=1&pid=ImgDetMain');
+    height: 100vh;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+
+
+    h2 {
+        color: #fff;
+    }
+
+    label {
+        color: #fff;
+    }
+}
+
+.createTask {
+    background-image: url('https://th.bing.com/th/id/OIP.Ph9gMEA7XVFhpmGDFWB_2wHaEK?rs=1&pid=ImgDetMain');
+    height: 100vh;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.allTasks {
+    background-image: url('https://storage.pixteller.com/designs/designs-images/2019-03-27/04/business-background-backgrounds-business-1-5c9b8f75536e8.png');
+    height: 100vh;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+
+    .mx-4 {
+        display: flex;
+        flex-wrap: wrap;
+        row-gap: 25px;
+        column-gap: 30px;
+
+        .link {
+            display: block;
+            color: #000;
+            text-decoration: none;
+        }
+    }
+}
+
+.taskWithId {
+    .d-flex {
+        gap: 10px;
+    }
+}
+
+@media (min-width : 768px) {
+
+    .adminHeader {
+        .logo {
+            width: 200px;
+            height: 80px;
+        }
+
+        .navbar {
+            display: block;
+
+            ul {
+                display: flex;
+                gap: 25px;
+
+                li {
+                    list-style: none;
+
+                    a {
+                        text-decoration: none;
+                        display: inline-block;
+                        color: #fff;
+                        padding: 5px 10px;
+                        transition: 0.5s;
+                        font-weight: 500;
+                        font-size: 18px;
+
+                        &:hover {
+                            color: #31304D;
+                            font-size: 1.3rem;
+                        }
+                    }
+                }
+
+                .btn {
+                    background-color: transparent;
+                    padding: 5px 10px;
+                    color: #fff;
+                    font-size: 18px;
+                }
+            }
+        }
+
+        .menu {
+            display: none;
+        }
+    }
+}

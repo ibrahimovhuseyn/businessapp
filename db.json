@@ -1,0 +1,78 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "userName": "admin",
+      "email": "admin@mail.ru",
+      "password": "admin",
+      "name": "Admin",
+      "surname": "Admin"
+    },
+    {
+      "id": 2,
+      "userName": "huseyn",
+      "email": "huseyn@mail.ru",
+      "password": "huseyn",
+      "name": "Huseyn",
+      "surname": "Ibrahimov"
+    },
+    {
+      "id": 3,
+      "userName": "elsad",
+      "email": "elsad@mail.ru",
+      "password": "elsad",
+      "name": "Elsad",
+      "surname": "Memmedov"
+    },
+    {
+      "id": 4,
+      "userName": "subhan",
+      "email": "subhan@mail.ru",
+      "password": "subhan",
+      "name": "Subhan",
+      "surname": "Orucov"
+    },
+    {
+      "name": "Vahid",
+      "surname": "Demirov",
+      "userName": "demir",
+      "password": "vahidvahid",
+      "email": "vako@mail.ru",
+      "id": 5
+    }
+  ],
+  "tasks": [
+    {
+      "deadLine": "2023-12-25",
+      "description": "her seher oyanib gullerin dibine su tokmek",
+      "id": 2,
+      "status": 2,
+      "title": "Gulleri sulamaq",
+      "userId": "4"
+    },
+    {
+      "deadLine": "2023-09-25",
+      "description": "Saticilara diqqet",
+      "id": 3,
+      "status": 0,
+      "title": "Satisa nezaret",
+      "userId": "3"
+    },
+    {
+      "deadLine": "2024-01-15",
+      "description": "Futbol oynamaq ucun adamlar ve meydanca tapmaq",
+      "id": 4,
+      "status": 2,
+      "title": "Futbol teskil etmek",
+      "userId": "2"
+    },
+    {
+      "deadLine": "2024-12-31",
+      "description": "soyuducu anbarlarin teskili ve icareye verilmesi",
+      "id": 5,
+      "status": 0,
+      "title": "Soyuducu anbar",
+      "userId": "2"
+    }
+  ]
+}

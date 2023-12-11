@@ -1,0 +1,121 @@
+.signIn {
+    height: 100vh;
+    background-image: url('https://pe56d.s3.amazonaws.com/o_1eg1agalkfid1rlc187a1seskh8m.png');
+    background-position: center;
+
+    p {
+        height: 1px;
+    }
+
+    .page {
+        text-align: center;
+        width: 50%;
+        margin-left: 25%;
+        padding: 50px 30px;
+        border-radius: 10px;
+        margin-top: 8%;
+
+        h2 {
+            margin-bottom: 2rem;
+            color: #fff;
+        }
+
+        .userName {
+            position: relative;
+
+            input {
+                margin-left: 18%;
+                width: 70%;
+                border-radius: 15px;
+                height: 42px;
+                background: #1B4242;
+                color: #fff;
+                padding-left: 60px;
+            }
+
+            .i {
+                position: absolute;
+                width: 60px;
+                height: 60px;
+                border-radius: 50%;
+                background: #fff;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                left: 16%;
+                top: -5%;
+            }
+
+            .is {
+                font-size: 2rem;
+            }
+        }
+
+        .password {
+            margin-top: 3rem;
+            position: relative;
+
+            input {
+                margin-left: 18%;
+                width: 70%;
+                border-radius: 15px;
+                height: 42px;
+                background: #1B4242;
+                color: #fff;
+                padding-left: 60px;
+            }
+
+            .check {
+                width: 25px;
+                margin-left: 60%;
+            }
+
+            .i {
+                position: absolute;
+                width: 60px;
+                height: 60px;
+                border-radius: 50%;
+                background: #fff;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                left: 16%;
+                top: -5%;
+            }
+
+            .is {
+                font-size: 2rem;
+            }
+
+            label {
+                color: #fff;
+            }
+        }
+
+        .list {
+            margin-top: 1.5rem;
+
+            ul {
+                li {
+                    list-style: none;
+
+                    a {
+                        color: #fff;
+                        text-decoration: none;
+                    }
+                }
+            }
+        }
+
+        .btn {
+            background: #fff;
+            color: #000;
+            padding: 0px 110px;
+            font-weight: bold;
+            font-size: 25px;
+            border-radius: 15px;
+            margin-top: 1rem;
+            margin-left: 6%;
+        }
+    }
+}
