@@ -6,32 +6,28 @@ import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { apiUrl, toast_config } from '../Utils/confiq';
 import { useDispatch, useSelector } from 'react-redux'
-import axios from 'axios'
-import { getTasks, setUsers } from '../Slices/signInSlice';
+import axios from 'axios';
+import { getUsers } from '../Slices/homeSlice';
 
 
 
 function SignIn() {
     const [showPassword, setShowPassword] = useState(false)
     const [password, setPassword] = useState('')
-    const dispatch = useDispatch()
-    const { users, currentUser, tasks } = useSelector(store => store.signInSlice)
     const navigate = useNavigate()
+    const { users } = useSelector(store => store.homeSlice)
+    const dispatch = useDispatch()
 
+    console.log(users);
 
     useEffect(() => {
-        getData()
-    }, [])
-
-    const getData = () => {
-        axios.get(`${apiUrl}/users`).then(res => dispatch(setUsers(res.data)))
-        axios.get(`${apiUrl}/tasks`).then(res => dispatch(getTasks(res.data)))
-        localStorage.setItem("isAuth", false)
         localStorage.setItem("currentUser", JSON.stringify({
             userName: "",
-            password: ""
-        }))
-    }
+            id: ""
+        })),
+            localStorage.setItem("isAuth", false)
+        axios.get(`${apiUrl}/users`).then(res => dispatch(getUsers(res.data)))
+    }, [])
 
     const handleLogin = (e) => {
         e.preventDefault()
@@ -43,18 +39,20 @@ function SignIn() {
         const { userName, password } = data
         const selectedUser = users.find(item => item.userName === userName && item.password === password)
 
+        console.log(selectedUser);
 
         if (!selectedUser) {
             toast.error("Please enter the true data", toast_config)
+            console.log(data);
             return
         }
         else {
             localStorage.setItem("isAuth", true)
-            localStorage.setItem("currentUser", JSON.stringify(selectedUser))
-            toast.success("Successfuly enter", toast_config)
-            {
-                data.userName === 'admin' ? navigate('/adminhome') : navigate('/')
-            }
+            localStorage.setItem("currentUser", JSON.stringify({
+                userName: selectedUser.userName,
+                id: selectedUser.id
+            }))
+            selectedUser.userName === "admin" ? navigate('/adminhome') : navigate('/')
         }
     }
 

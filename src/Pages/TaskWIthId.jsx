@@ -1,18 +1,30 @@
-import React from 'react'
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom'
 import { FaCircle } from "react-icons/fa";
+import { apiUrl, toast_config } from '../Utils/confiq';
+import axios from 'axios';
+import { getTasks, getUsers } from '../Slices/homeSlice';
+import { FaCheckDouble } from "react-icons/fa";
+import { Button, Table } from 'reactstrap';
+import { toast } from 'react-toastify';
+
 
 function TaskWithId() {
     const { id } = useParams()
-    const { tasks, users } = useSelector(store => store.signInSlice)
+    const { tasks, users } = useSelector(store => store.homeSlice)
+    const dispatch = useDispatch()
 
-    const renderedTask = tasks.find(item => item.id == id)
-    const taskOwner = users.find(item => item.id == renderedTask.userId)
 
-    
+    useEffect(() => {
+        axios.get(`${apiUrl}/users`).then(res => dispatch(getUsers(res.data)))
+        axios.get(`${apiUrl}/tasks`).then(res => dispatch(getTasks(res.data)))
+    }, [])
+
+    const renderedTask = tasks?.find(item => item.id == id)
+
     let statusColor;
-    switch (renderedTask.status) {
+    switch (renderedTask?.status) {
         case 1:
             statusColor = 'yellow';
             break;
@@ -23,18 +35,29 @@ function TaskWithId() {
             statusColor = 'red';
     }
 
+
     return (
-        <div className='taskWithId'>
-            <div>
-                <h3>Worker : {taskOwner.name} {taskOwner.surname}</h3>
-                <p>Title : {renderedTask.title}</p>
-                <p>Description : {renderedTask.description}</p>
-                <p>Dead-Line : {renderedTask.deadLine}(yy//mm/dd)</p>
-                <p className='d-flex align-items-center'>
-                    Status :
-                    <FaCircle style={{ color: statusColor }} />
-                </p>
-            </div>
+        <div className='taskWithId container'>
+            <Table>
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>Dead Line</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>{renderedTask?.title}</td>
+                        <td>{renderedTask?.description}</td>
+                        <td>{renderedTask?.deadLine}</td>
+                        <td><FaCircle style={{ color: statusColor }} /></td>
+                    </tr>
+                </tbody>
+            </Table>
         </div>
     )
 }

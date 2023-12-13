@@ -17,18 +17,34 @@ import UserProfile from './Pages/UserProfile'
 
 
 function App() {
-  const { currentUser } = useSelector(store => store.signInSlice)
+  const { currentUser } = useSelector(store => store.homeSlice)
+  const name = currentUser?.userName
   return (
     <div>
+      <div>
+        <Routes>
+          <Route path='/signin' element={<SignIn />} />
+          <Route path='/' element={<Home />} />
+          <Route path='/alltasks' element={<AllTasks />} />
+          <Route path='/task/:id' element={<TaskWithId />} /> 
+        </Routes>
+      </div>
+      {
+        currentUser &&
+          name === "admin" ?
+          <Routes>
+            <Route path='/adminhome' element={<AdminHome />} />
+            <Route path='/createuser' element={<CreateUser />} />
+            <Route path='/createtask' element={<CreateTask />} />
+
+          </Routes>
+          :
+          <Routes>
+            <Route path='/user/:id' element={<UserProfile />} />
+          </Routes>
+      }
       <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='/signin' element={<SignIn />} />
-        <Route path='/adminhome' element={<AdminHome />} />
-        <Route path='/createuser' element={<CreateUser />} />
-        <Route path='/createtask' element={<CreateTask />} />
-        <Route path='/alltasks' element={<AllTasks />} />
-        <Route path='/task/:id' element={<TaskWithId />} />
-        <Route path='/user/:id' element={<UserProfile />} />
+
       </Routes>
       <ToastContainer />
     </div>

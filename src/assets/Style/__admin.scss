@@ -7,6 +7,11 @@
 }
 
 .adminHeader {
+    .active {
+        color: #2B2A4C !important;
+        border-radius: 8px;
+    }
+
     padding: 20px;
     display: flex;
     align-items: center;
@@ -80,7 +85,7 @@
 
 .createUser {
     background-image: url('https://th.bing.com/th/id/OIP.jwmq_HPsZy2v3t-q5P5EPwHaE7?rs=1&pid=ImgDetMain');
-    height: 100vh;
+    height: 120vh;
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -111,12 +116,12 @@
     background-size: cover;
 
     .mx-4 {
+        row-gap: 30px;
         display: flex;
         flex-wrap: wrap;
-        row-gap: 25px;
         column-gap: 30px;
 
-        .link {
+        a {
             display: block;
             color: #000;
             text-decoration: none;
@@ -155,11 +160,11 @@
                         padding: 5px 10px;
                         transition: 0.5s;
                         font-weight: 500;
-                        font-size: 18px;
+                        font-size: 1.7rem;
 
                         &:hover {
                             color: #31304D;
-                            font-size: 1.3rem;
+                            font-size: 2rem;
                         }
                     }
                 }
@@ -168,7 +173,7 @@
                     background-color: transparent;
                     padding: 5px 10px;
                     color: #fff;
-                    font-size: 18px;
+                    font-size: 1.7rem;
                 }
             }
         }

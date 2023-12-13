@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { TfiMenuAlt } from "react-icons/tfi";
 import { IoLogOut } from "react-icons/io5";
 import { IoClose } from "react-icons/io5";
 
 function AdminHeader() {
-    const logoUrl = 'https://www.barnburnerbbq.ca/wp-content/uploads/2019/04/NEW-Canex-Logo-jpg.jpg'
+    const logoUrl = 'https://i.etsystatic.com/8684670/r/il/15db07/3914380275/il_fullxfull.3914380275_gv6j.jpg'
     const navigate = useNavigate()
     const [isMenuVisible, setMenuVisibility] = useState(false);
     const toggleMenu = () => {
@@ -16,12 +16,12 @@ function AdminHeader() {
         localStorage.setItem('isAuth', false)
         localStorage.setItem('currentUser', JSON.stringify({
             userName: "",
-            password: ""
+            phone: ""
         }))
         navigate('/signin')
     }
 
-  
+
 
 
 
@@ -37,13 +37,13 @@ function AdminHeader() {
                 <div className="navbar">
                     <ul>
                         <li>
-                            <Link to={'/createuser'}>Create User</Link>
+                            <NavLink to={'/createuser'}>Create User</NavLink>
                         </li>
                         <li>
-                            <Link to={'/createtask'}>Create Task</Link>
+                            <NavLink to={'/createtask'}>Create Task</NavLink>
                         </li>
                         <li>
-                            <Link to={'/alltasks'}>All Task</Link>
+                            <NavLink to={'/alltasks'}>All Task</NavLink>
                         </li>
                         <button
                             className='btn'

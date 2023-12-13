@@ -1,17 +1,19 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import AdminHeader from '../Components/AdminHeader'
 import { Button, Form, Input, Label } from 'reactstrap'
 import Select from 'react-select'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import { apiUrl, toast_config } from '../Utils/confiq'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import { getUsers } from '../Slices/homeSlice'
 
 function CreateTask() {
-  const { users } = useSelector(store => store.signInSlice)
+  const { users } = useSelector(store => store.homeSlice)
   const [validationErrors, setValidationErrors] = useState({})
   const navigate = useNavigate()
+  const disptach = useDispatch()
 
   function validation(data) {
     const errors = {
@@ -53,13 +55,18 @@ function CreateTask() {
       title: data.title,
       description: data.description,
       deadLine: data.deadLine,
-      status: 0
+      status: 0,
+      isFinished: false
     }).then(res => {
       toast.success("Successfully", toast_config)
       e.target.reset()
       navigate('/adminhome')
     })
   }
+
+  useEffect(() => {
+    axios.get(`${apiUrl}/users`).then(res => disptach(getUsers(res.data)))
+  }, [])
 
   const sortedData = [...users].sort((a, b) => a.name.localeCompare(b.name));
 

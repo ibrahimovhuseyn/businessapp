@@ -12,7 +12,7 @@ function CreateUser() {
   const [password, setPassword] = useState('')
   const [validationErrors, setValdationErrors] = useState({})
 
-  const { workers } = useSelector(store => store.adminSlice)
+  const { users } = useSelector(store => store.homeSlice)
   const navigate = useNavigate()
 
   const handleInputChange = (e) => {
@@ -29,7 +29,8 @@ function CreateUser() {
       surname: "",
       email: "",
       userName: "",
-      password: ""
+      password: "",
+      phone: ""
     }
 
 
@@ -47,6 +48,9 @@ function CreateUser() {
     }
     if (!data.password) {
       errors.password = "Password is required"
+    }
+    if (!data.phone) {
+      errors.phone = "Phone number is required"
     }
     return errors
   }
@@ -71,7 +75,7 @@ function CreateUser() {
       toast.error("Password length is minimum 6 characters")
       return
     }
-    else if (workers.find(item => item.userName.toUpperCase() === data.userName.toUpperCase())) {
+    else if (users.find(item => item.userName.toUpperCase() === data.userName.toUpperCase())) {
       toast.error("This username has been registered", toast_config)
       return
     }
@@ -80,7 +84,8 @@ function CreateUser() {
       surname: data.surname,
       userName: data.userName,
       password: data.password,
-      email: data.email
+      email: data.email,
+      phone: data.phone
     }).then(res => {
       e.target.reset()
       toast.success("User successfully created", toast_config)
@@ -148,6 +153,24 @@ function CreateUser() {
           {
             validationErrors.userName &&
             <p className='text-danger fw-bold'>{validationErrors.userName}</p>
+          }
+        </div>
+        <div className="mb-3 mx-5">
+          <Label
+            className='fw-bold'
+            htmlFor='phone'
+          >
+            Enter user's phone number
+          </Label>
+          <Input
+            name='phone'
+            id='phone'
+            className={`${validationErrors.phone ? "border border-danger w-50" : ""} w-50`}
+
+          />
+          {
+            validationErrors.phone &&
+            <p className='text-danger fw-bold'>{validationErrors.phone}</p>
           }
         </div>
         <div className="mb-3 mx-5">
