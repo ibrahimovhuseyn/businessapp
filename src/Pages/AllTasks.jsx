@@ -17,7 +17,7 @@ function AllTasks() {
 
   return (
     <div className='allTasks'>
-      {/* <AdminHeader /> */}
+      <AdminHeader />
       <div className='mx-4'>
         {
           tasks.map((item, index) => (

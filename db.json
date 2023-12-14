@@ -13,19 +13,42 @@
       "name": "Huseyn",
       "surname": "Ibrahimov",
       "userName": "huseyn",
-      "password": "huseyn1995",
+      "id": 2,
       "email": "huseyn@mail.ru",
       "phone": "553066068",
-      "id": 2
+      "positionId": 2,
+      "positionName": "Master",
+      "password": "huseyn"
     },
     {
       "name": "Pervin",
       "surname": "Pashazada",
       "userName": "pervin",
-      "password": "pervin1997",
+      "id": 3,
       "email": "pervin@mail.ru",
       "phone": "552790634",
-      "id": 3
+      "positionId": 2,
+      "positionName": "Master"
+    },
+    {
+      "name": "Elsad",
+      "surname": "Memmedzade",
+      "userName": "elsad",
+      "id": 4,
+      "email": "elsad@mail.ru",
+      "phone": "3116505",
+      "positionId": 1,
+      "positionName": "Apprentice"
+    },
+    {
+      "name": "Aydan",
+      "surname": "Memmedzade",
+      "userName": "aydan",
+      "id": 5,
+      "email": "aydan@mail.ru",
+      "phone": "553116068",
+      "positionId": 4,
+      "positionName": "Team Leader"
     }
   ],
   "tasks": [
@@ -33,10 +56,10 @@
       "deadLine": "2023-12-31",
       "description": "Create all contract with the customers, negotiating with customers",
       "id": 1,
-      "status": 0,
+      "status": 2,
       "title": "Work with customers",
       "userId": "2",
-      "isFinished": false
+      "isFinished": true
     },
     {
       "deadLine": "2023-12-31",
@@ -46,6 +69,28 @@
       "title": "Programming",
       "userId": "3",
       "isFinished": false
+    }
+  ],
+  "positions": [
+    {
+      "id": 1,
+      "name": "Apprentice"
+    },
+    {
+      "id": 2,
+      "name": "Master"
+    },
+    {
+      "id": 3,
+      "name": "Expert"
+    },
+    {
+      "id": 4,
+      "name": "Team Leader"
+    },
+    {
+      "id": 5,
+      "name": "Asistant"
     }
   ]
 }

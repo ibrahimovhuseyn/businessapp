@@ -3,14 +3,27 @@ import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { TfiMenuAlt } from "react-icons/tfi";
 import { IoLogOut } from "react-icons/io5";
 import { IoClose } from "react-icons/io5";
+import { useSelector } from 'react-redux';
+import {
+    Dropdown,
+    DropdownToggle,
+    DropdownMenu,
+    DropdownItem,
+} from 'reactstrap';
 
 function AdminHeader() {
     const logoUrl = 'https://i.etsystatic.com/8684670/r/il/15db07/3914380275/il_fullxfull.3914380275_gv6j.jpg'
     const navigate = useNavigate()
     const [isMenuVisible, setMenuVisibility] = useState(false);
+    const { currentUser } = useSelector(store => store.homeSlice)
+
     const toggleMenu = () => {
         setMenuVisibility(!isMenuVisible);
     };
+
+    const [dropdownOpen, setDropdownOpen] = useState(false);
+
+    const toggle = () => setDropdownOpen((prevState) => !prevState);
 
     const logOut = () => {
         localStorage.setItem('isAuth', false)
@@ -20,12 +33,6 @@ function AdminHeader() {
         }))
         navigate('/signin')
     }
-
-
-
-
-
-
     return (
         <div>
             <div className='adminHeader'>
@@ -35,16 +42,45 @@ function AdminHeader() {
                     </Link>
                 </div>
                 <div className="navbar">
+
                     <ul>
-                        <li>
-                            <NavLink to={'/createuser'}>Create User</NavLink>
-                        </li>
-                        <li>
-                            <NavLink to={'/createtask'}>Create Task</NavLink>
-                        </li>
+                        {
+                            currentUser.userName === 'admin' ?
+                                <li>
+                                    <div className="d-flex">
+                                        <Dropdown isOpen={dropdownOpen} toggle={toggle} >
+                                            <DropdownToggle caret>User Managment</DropdownToggle>
+                                            <DropdownMenu>
+                                                <DropdownItem>
+                                                    <Link to={'/createuser'}>Create User</Link>
+                                                </DropdownItem>
+                                                <DropdownItem>
+                                                    <Link to={'/valuation'}>Valuation User</Link>
+                                                </DropdownItem>
+                                            </DropdownMenu>
+                                        </Dropdown>
+                                    </div>
+                                </li>
+                                :
+                                <li>
+                                    <NavLink to={'/'}>Home</NavLink>
+                                </li>
+                        }
+                        {
+                            currentUser.userName === 'admin' ?
+                                <li>
+                                    <NavLink to={'/createtask'}>Create Task</NavLink>
+                                </li>
+                                :
+                                <li>
+                                    <NavLink to={`/user/${currentUser.id}`}>Profile</NavLink>
+                                </li>
+                        }
+
                         <li>
                             <NavLink to={'/alltasks'}>All Task</NavLink>
                         </li>
+
                         <button
                             className='btn'
                             onClick={() => {
@@ -87,7 +123,14 @@ function AdminHeader() {
                                 <Link to={'/createuser'}>Create User</Link>
                             </li>
                             <li>
+                                <Link to={'/valuation'}>Valuation User</Link>
+                            </li>
+                            <li>
                                 <Link to={'/createtask'}>Create Task</Link>
+                            </li>
+                            <li>
+                            <Link to={'/deletetask'}>Delete Task</Link>
+
                             </li>
                             <li>
                                 <Link to={'/alltasks'}>All Tasks</Link>

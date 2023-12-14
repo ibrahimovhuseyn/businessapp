@@ -21,7 +21,6 @@ function UserProfile() {
         axios.get(`${apiUrl}/tasks`).then(res => dispatch(getTasks(res.data)))
     }, [])
 
-    console.log(tasks);
     const name = currentUser?.userName
     const currentUserId = currentUser?.id
 
@@ -83,7 +82,11 @@ function UserProfile() {
 
     return (
         <div className='userProfile'>
-            <div className="container">
+            {
+                currentUser.id == 1 ? 
+                "admin"
+                :
+                <div className="container">
                 <div className="header">
                     <h1>Welcome : {user?.name}</h1>
                     <div className="navbar">
@@ -102,6 +105,7 @@ function UserProfile() {
                                 <Link to={'/signin'}>
                                     Logout
                                 </Link>
+                           
                             </li>
                         </ul>
                     </div>
@@ -158,6 +162,7 @@ function UserProfile() {
                     </div>
                 </div>
             </div>
+            }
         </div>
     )
 }

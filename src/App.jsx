@@ -13,6 +13,7 @@ import AllTasks from './Pages/AllTasks'
 import TaskWithId from './Pages/TaskWithId'
 import Home from './Pages/Home'
 import UserProfile from './Pages/UserProfile'
+import Valuation from './Pages/Valuation'
 
 
 
@@ -26,22 +27,26 @@ function App() {
           <Route path='/signin' element={<SignIn />} />
           <Route path='/' element={<Home />} />
           <Route path='/alltasks' element={<AllTasks />} />
-          <Route path='/task/:id' element={<TaskWithId />} /> 
+          <Route path='/task/:id' element={<TaskWithId />} />
         </Routes>
       </div>
       {
         currentUser &&
           name === "admin" ?
-          <Routes>
-            <Route path='/adminhome' element={<AdminHome />} />
-            <Route path='/createuser' element={<CreateUser />} />
-            <Route path='/createtask' element={<CreateTask />} />
-
-          </Routes>
+          <div>
+            <Routes>
+              <Route path='/adminhome' element={<AdminHome />} />
+              <Route path='/createuser' element={<CreateUser />} />
+              <Route path='/valuation' element={<Valuation />} />
+              <Route path='/createtask' element={<CreateTask />} />
+            </Routes>
+          </div>
           :
-          <Routes>
-            <Route path='/user/:id' element={<UserProfile />} />
-          </Routes>
+          <div>
+            <Routes>
+              <Route path='/user/:id' element={<UserProfile />} />
+            </Routes>
+          </div>
       }
       <Routes>
 

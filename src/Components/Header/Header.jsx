@@ -10,6 +10,15 @@ function Header() {
 
     const name = currentUser?.userName
 
+    const realNav = (user) => {
+        console.log(user);
+        if (user.id == 1) {
+            navigate('/adminhome')
+        }
+        else {
+            navigate(`/user/${user.id}`)
+        }
+    }
     return (
         <div className='header'>
             <Link to={'/'}>
@@ -21,7 +30,7 @@ function Header() {
                     currentUser &&
                         name.length > 0 ?
                         <div className='d-flex'>
-                            <button onClick={()=>navigate(`/user/${currentUser?.id}`)}>Profile</button>
+                            <button onClick={() => realNav(currentUser)}>Profile</button>
                             <button onClick={() => navigate('/signin')}>Logout</button>
                         </div>
                         :
