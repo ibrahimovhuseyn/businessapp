@@ -18,15 +18,13 @@ function SignIn() {
     const { users } = useSelector(store => store.homeSlice)
     const dispatch = useDispatch()
 
-    console.log(users);
 
     useEffect(() => {
         localStorage.setItem("currentUser", JSON.stringify({
             userName: "",
             id: ""
         })),
-            localStorage.setItem("isAuth", false)
-        axios.get(`${apiUrl}/users`).then(res => dispatch(getUsers(res.data)))
+            axios.get(`${apiUrl}/users`).then(res => dispatch(getUsers(res.data)))
     }, [])
 
     const handleLogin = (e) => {
@@ -39,7 +37,6 @@ function SignIn() {
         const { userName, password } = data
         const selectedUser = users.find(item => item.userName === userName && item.password === password)
 
-        console.log(selectedUser);
 
         if (!selectedUser) {
             toast.error("Please enter the true data", toast_config)
@@ -48,10 +45,7 @@ function SignIn() {
         }
         else {
             localStorage.setItem("isAuth", true)
-            localStorage.setItem("currentUser", JSON.stringify({
-                userName: selectedUser.userName,
-                id: selectedUser.id
-            }))
+            localStorage.setItem("currentUser", JSON.stringify(selectedUser))
             selectedUser.userName === "admin" ? navigate('/adminhome') : navigate('/')
         }
     }
@@ -109,10 +103,10 @@ function SignIn() {
                     <div className='list'>
                         <ul>
                             <li>
-                                <Link>Parolumu unutmuşam</Link>
+                                <Link to={'/resetpassword'}>Forget password</Link>
                             </li>
                             <li>
-                                <Link to={'/registration'}>Yeni qeydiyyat</Link>
+                                <Link to={'/registration'}>New registration</Link>
                             </li>
                         </ul>
                     </div>

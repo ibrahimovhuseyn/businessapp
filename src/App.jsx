@@ -14,6 +14,7 @@ import TaskWithId from './Pages/TaskWithId'
 import Home from './Pages/Home'
 import UserProfile from './Pages/UserProfile'
 import Valuation from './Pages/Valuation'
+import ResetPassword from './Pages/ResetPassword'
 
 
 
@@ -27,6 +28,7 @@ function App() {
           <Route path='/signin' element={<SignIn />} />
           <Route path='/' element={<Home />} />
           <Route path='/alltasks' element={<AllTasks />} />
+          <Route path='/resetpassword' element={<ResetPassword />} />
           <Route path='/task/:id' element={<TaskWithId />} />
         </Routes>
       </div>

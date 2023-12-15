@@ -5,7 +5,7 @@ import { Link, useNavigate } from 'react-router-dom'
 
 function Header() {
     const navigate = useNavigate()
-    const { isAuth, currentUser } = useSelector(store => store.homeSlice)
+    const {  currentUser } = useSelector(store => store.homeSlice)
     const imgUrl = 'https://i.etsystatic.com/8684670/r/il/15db07/3914380275/il_fullxfull.3914380275_gv6j.jpg'
 
     const name = currentUser?.userName

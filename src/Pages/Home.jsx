@@ -9,22 +9,22 @@ import { useNavigate } from 'react-router-dom'
 
 
 function Home() {
-    const { users, currentUser, tasks } = useSelector(store => store.homeSlice)
+    const { currentUser} = useSelector(store => store.homeSlice)
     const dispact = useDispatch()
     const navigate = useNavigate()
 
+console.log(currentUser);
     useEffect(() => {
         setData()
     }, [])
 
-        const setData = () => {
-            axios.get(`${apiUrl}/users`).then(res => dispact(getUsers(res.data)))
-            axios.get(`${apiUrl}/tasks`).then(res => dispact(getTasks(res.data)))
-        }
 
 
 
-
+    const setData = () => {
+        axios.get(`${apiUrl}/users`).then(res => dispact(getUsers(res.data)))
+        axios.get(`${apiUrl}/tasks`).then(res => dispact(getTasks(res.data)))
+    }
 
 
     return (

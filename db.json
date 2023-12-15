@@ -28,7 +28,8 @@
       "email": "pervin@mail.ru",
       "phone": "552790634",
       "positionId": 2,
-      "positionName": "Master"
+      "positionName": "Master",
+      "password" :"pervin"
     },
     {
       "name": "Elsad",
@@ -38,7 +39,8 @@
       "email": "elsad@mail.ru",
       "phone": "3116505",
       "positionId": 1,
-      "positionName": "Apprentice"
+      "positionName": "Apprentice",
+      "password":"elsad"
     },
     {
       "name": "Aydan",
@@ -48,7 +50,8 @@
       "email": "aydan@mail.ru",
       "phone": "553116068",
       "positionId": 4,
-      "positionName": "Team Leader"
+      "positionName": "Team Leader",
+      "password":"aydan"
     }
   ],
   "tasks": [
