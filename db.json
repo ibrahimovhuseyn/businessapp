@@ -15,7 +15,8 @@
       "userName": "huseyn",
       "id": 2,
       "email": "huseyn@mail.ru",
-      "phone": "553066068"
+      "phone": "553066068",
+      "password" : "huseyn"
     },
     {
       "name": "Pervin",
@@ -25,7 +26,8 @@
       "email": "pervin@mail.ru",
       "phone": "552790634",
       "positionId": 4,
-      "positionName": "Team Leader"
+      "positionName": "Team Leader",
+      "password" : "pervin"
     },
     {
       "name": "Elsad",
@@ -35,7 +37,8 @@
       "email": "elsad@mail.ru",
       "phone": "3116505",
       "positionId": 3,
-      "positionName": "Expert"
+      "positionName": "Expert",
+      "password" : "elsad "
     },
     {
       "name": "Aydan",
