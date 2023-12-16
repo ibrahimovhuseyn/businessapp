@@ -15,10 +15,7 @@
       "userName": "huseyn",
       "id": 2,
       "email": "huseyn@mail.ru",
-      "phone": "553066068",
-      "positionId": 2,
-      "positionName": "Master",
-      "password": "huseyn"
+      "phone": "553066068"
     },
     {
       "name": "Pervin",
@@ -27,9 +24,8 @@
       "id": 3,
       "email": "pervin@mail.ru",
       "phone": "552790634",
-      "positionId": 2,
-      "positionName": "Master",
-      "password" :"pervin"
+      "positionId": 4,
+      "positionName": "Team Leader"
     },
     {
       "name": "Elsad",
@@ -38,9 +34,8 @@
       "id": 4,
       "email": "elsad@mail.ru",
       "phone": "3116505",
-      "positionId": 1,
-      "positionName": "Apprentice",
-      "password":"elsad"
+      "positionId": 3,
+      "positionName": "Expert"
     },
     {
       "name": "Aydan",
@@ -51,7 +46,7 @@
       "phone": "553116068",
       "positionId": 4,
       "positionName": "Team Leader",
-      "password":"aydan"
+      "password": "aydan"
     }
   ],
   "tasks": [

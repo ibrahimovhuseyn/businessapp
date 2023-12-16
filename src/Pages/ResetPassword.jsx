@@ -5,6 +5,7 @@ import { apiUrl, toast_config } from '../Utils/confiq'
 import { useDispatch, useSelector } from 'react-redux'
 import { getUsers } from '../Slices/homeSlice'
 import { toast } from 'react-toastify'
+import { Link } from 'react-router-dom'
 
 function ResetPassword() {
     const dispatch = useDispatch()
@@ -28,11 +29,10 @@ function ResetPassword() {
         const passwordData = users.find(item => item.userName == data.userName && item.phone == data.phone)
         if (passwordData) {
             setPassword(passwordData.password)
-        e.target.reset()
+            e.target.reset()
         }
         else {
             toast.error("user cant find", toast_config)
-            setPassword(false)
         }
     }
 
@@ -41,6 +41,16 @@ function ResetPassword() {
     return (
         <div>
             <h1 className='text-center'>Password recovery</h1>
+            <Link
+                style={{
+                    "color": '#000',
+                    "fontSize": '2rem'
+                }}
+                className='mx-5'
+                to={'/'}
+            >
+                Home
+            </Link>
             <Form
                 onSubmit={(e) => handlePassword(e)}
                 className='my-5 mx-5'
@@ -49,6 +59,7 @@ function ResetPassword() {
                     className='w-50 my-2'
                     placeholder='Enter your username'
                     name='userName'
+                    onChange={e => dispatch(setPassword(false))}
                 />
                 <Input
                     className='w-50 my-4'
@@ -64,7 +75,7 @@ function ResetPassword() {
             </Form>
             {
                 password &&
-                <p className='mx-5' style={{fontSize : "2rem"}}>Your password is : {password}</p>
+                <p className='mx-5' style={{ fontSize: "2rem" }}>Your password is : {password}</p>
             }
         </div>
     )

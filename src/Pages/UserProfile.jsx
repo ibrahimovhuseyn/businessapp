@@ -14,6 +14,7 @@ function UserProfile() {
     const { id } = useParams()
     const { currentUser, users, tasks } = useSelector(store => store.homeSlice)
     const dispatch = useDispatch()
+    const user = users.find(item => item.id == currentUser.id)
 
     useEffect(() => {
         axios.get(`${apiUrl}/users`).then(res => dispatch(getUsers(res.data)))
@@ -87,7 +88,7 @@ function UserProfile() {
                     :
                     <div className="container">
                         <div className="header">
-                            <h1>Welcome : {owner.name}</h1>
+                            <h1>Welcome : {user?.name} ({user?.positionName})</h1>
                             <div className="navbar">
                                 <ul>
                                     <li>

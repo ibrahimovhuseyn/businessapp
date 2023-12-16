@@ -8,6 +8,7 @@ import { getPosition } from '../Slices/adminSlice'
 import { toast } from 'react-toastify'
 import { getUsers } from '../Slices/homeSlice'
 import AdminHeader from '../Components/AdminHeader'
+import { Link } from 'react-router-dom'
 
 
 
@@ -51,8 +52,19 @@ function Valuation() {
 
   return (
     <div className='valuation'>
-      <AdminHeader/>
+      <AdminHeader />
       <h1 className='text-center'>All positions and workers</h1>
+      <Link
+        className='mx-5'
+        style={{
+          "fontSize": "2.6rem",
+          "color": "#000",
+        }}
+        to={'/'}
+      >
+        Home
+      </Link>
+
       <div className='about container'>
         {
           erasAble.map(item => (
@@ -72,35 +84,35 @@ function Valuation() {
                   </Button>
                 )}
                 {
-                  selectedItemId == item.id ? 
-                  <div className='d-flex'>
-                    <Select
-                      isClearable
-                      options={positions}
-                      getOptionLabel={option => option.name}
-                      getOptionValue={option => option.id}
-                      onChange={e => setSelectedPosition(e)}
-                    />
+                  selectedItemId == item.id ?
+                    <div className='d-flex'>
+                      <Select
+                        isClearable
+                        options={positions}
+                        getOptionLabel={option => option.name}
+                        getOptionValue={option => option.id}
+                        onChange={e => setSelectedPosition(e)}
+                      />
+                      <Button
+                        onClick={() => {
+                          setShowPosition(false)
+                          confirmPosition(item)
+                          setSelectedItemId(item.name)
+                        }}
+                      >
+                        Confirm
+                      </Button>
+                    </div>
+                    :
                     <Button
                       onClick={() => {
-                        setShowPosition(false)
-                        confirmPosition(item)
-                        setSelectedItemId(item.name)
+                        setSelectedItemId(item.id);
+                        setSelectedPosition({}); // Reset selected position when clicking the Change button
                       }}
+                      size="sm"
                     >
-                      Confirm
+                      Change
                     </Button>
-                  </div>
-                  :
-                  <Button
-                  onClick={() => {
-                    setSelectedItemId(item.id);
-                    setSelectedPosition({}); // Reset selected position when clicking the Change button
-                  }}
-                  size="sm"
-                >
-                  Change
-                </Button>
                 }
               </div>
             </div>
