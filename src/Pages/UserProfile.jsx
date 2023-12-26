@@ -25,7 +25,7 @@ function UserProfile() {
     const name = currentUser?.userName
     const currentUserId = currentUser?.id
 
-    
+
 
     const owner = users?.find(item => item.userName === name)
     const renderedArr = tasks?.filter(item => Number(item.userId) === Number(currentUserId))
@@ -38,7 +38,12 @@ function UserProfile() {
                 status: 1,
                 title: task.title,
                 userId: task.userId
-            }).then(res => toast.success("Successfully", toast_config))
+            }).then(res => {
+                toast.success("You have started this work", toast_config)
+                axios.get(`${apiUrl}/tasks`).then(res => dispatch(getTasks(res.data)))
+            }
+
+            )
         }
         else if (task.status == 1) {
             toast.error("You have started", toast_config)
@@ -58,7 +63,11 @@ function UserProfile() {
                 title: task.title,
                 userId: task.userId,
                 isFinished: true
-            }).then(res => toast.success("Successfully", toast_config))
+            }).then(res => {
+                toast.success("Congratulations", toast_config)
+                axios.get(`${apiUrl}/tasks`).then(res => dispatch(getTasks(res.data)))
+
+            })
         }
         else if (Number(task.status === 2)) {
             toast.error("This task has been solved", toast_config)
@@ -139,7 +148,12 @@ function UserProfile() {
                                                             <td>
                                                                 <Button
                                                                     color='primary'
-                                                                    onClick={() => start(item)}
+                                                                    onClick={() => {
+                                                                        start(item)
+
+                                                                    }
+
+                                                                    }
                                                                 >
                                                                     Start
                                                                 </Button>
