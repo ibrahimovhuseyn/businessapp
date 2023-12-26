@@ -17,9 +17,8 @@ function Valuation() {
   const { users, currentUser } = useSelector(store => store.homeSlice)
   const { positions } = useSelector(store => store.adminSlice)
   const [showPosition, setShowPosition] = useState(false)
-  const [selectedPosition, setSelectedPosition] = useState({})
+  const [selectedPosition, setSelectedPosition] = useState(null)
   const [selectedItemId, setSelectedItemId] = useState("hh");
-  console.log(selectedPosition);
 
   const disptach = useDispatch()
 
@@ -37,7 +36,6 @@ function Valuation() {
 
   const confirmPosition = (e) => {
 
-
     axios.put(`${apiUrl}/users/${e.id}`, {
       name: e.name,
       surname: e.surname,
@@ -46,8 +44,13 @@ function Valuation() {
       email: e.email,
       phone: e.phone,
       positionId: selectedPosition.id,
-      positionName: selectedPosition.name
-    }).then(res => toast.success("Successfully", toast_config))
+      positionName: selectedPosition.name,
+      password: e.password
+    }).then(res => {
+      toast.success("Successfully", toast_config)
+      axios.get(`${apiUrl}/users`).then(res => disptach(getUsers(res.data)))
+    }
+    )
   }
 
   return (

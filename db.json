@@ -16,7 +16,9 @@
       "id": 2,
       "email": "huseyn@mail.ru",
       "phone": "553066068",
-      "password" : "huseyn"
+      "positionId": 4,
+      "positionName": "Wildlife photography",
+      "password": "huseyn"
     },
     {
       "name": "Pervin",
@@ -25,9 +27,9 @@
       "id": 3,
       "email": "pervin@mail.ru",
       "phone": "552790634",
-      "positionId": 4,
-      "positionName": "Team Leader",
-      "password" : "pervin"
+      "positionId": 3,
+      "positionName": "Nature photography",
+      "password": "pervin"
     },
     {
       "name": "Elsad",
@@ -36,20 +38,53 @@
       "id": 4,
       "email": "elsad@mail.ru",
       "phone": "3116505",
-      "positionId": 3,
-      "positionName": "Expert",
-      "password" : "elsad "
+      "positionId": 6,
+      "positionName": "Film photographers",
+      "password": "elsad"
     },
     {
-      "name": "Aydan",
-      "surname": "Memmedzade",
-      "userName": "aydan",
+      "name": "Nihad",
+      "surname": "Agazade",
+      "userName": "nihad",
       "id": 5,
-      "email": "aydan@mail.ru",
+      "email": "nihad@mail.ru",
       "phone": "553116068",
-      "positionId": 4,
-      "positionName": "Team Leader",
-      "password": "aydan"
+      "positionId": 5,
+      "positionName": "Travel photographers",
+      "password": "nihad"
+    },
+    {
+      "name": "Subhan",
+      "surname": "Orucov",
+      "userName": "subhan",
+      "id": 6,
+      "email": "subhan@mail.ru",
+      "phone": "553116068",
+      "positionId": 3,
+      "positionName": "Nature photography",
+      "password": "subhan"
+    },
+    {
+      "name": "Vahid",
+      "surname": "Demirov",
+      "userName": "vahid",
+      "id": 7,
+      "email": "vahid@mail.ru",
+      "phone": "552145202",
+      "positionId": 1,
+      "positionName": "Street photographers",
+      "password": "vahid"
+    },
+    {
+      "name": "Ehmek",
+      "surname": "Agayev",
+      "userName": "ehmed123",
+      "id": 8,
+      "email": "ehmed@mail.ru",
+      "phone": "553066068",
+      "positionId": 5,
+      "positionName": "Travel photography",
+      "password": "ehmed123456"
     }
   ],
   "tasks": [
@@ -70,28 +105,56 @@
       "title": "Programming",
       "userId": "3",
       "isFinished": false
+    },
+    {
+      "deadLine": "2023-03-11",
+      "description": "Attract those who want to travel, provide information about tours",
+      "id": 3,
+      "status": 0,
+      "title": "To organize travels",
+      "userId": "5",
+      "isFinished": true
+    },
+    {
+      "userId": "8",
+      "title": "saalm",
+      "description": "sagol",
+      "deadLine": "2025-12-21",
+      "status": 0,
+      "isFinished": false,
+      "id": 4
     }
   ],
   "positions": [
     {
       "id": 1,
-      "name": "Apprentice"
+      "name": "Street photography",
+      "price": 50
     },
     {
       "id": 2,
-      "name": "Master"
+      "name": "Wedding photography",
+      "price": 100
     },
     {
       "id": 3,
-      "name": "Expert"
+      "name": "Nature photography",
+      "price": 70
     },
     {
       "id": 4,
-      "name": "Team Leader"
+      "name": "Wildlife photography",
+      "price": 200
     },
     {
       "id": 5,
-      "name": "Asistant"
+      "name": "Travel photography",
+      "price": 150
+    },
+    {
+      "id": 6,
+      "name": "Film photography",
+      "price": 60
     }
   ]
 }

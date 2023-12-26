@@ -7,7 +7,7 @@ import { toast } from 'react-toastify'
 import { apiUrl, toast_config } from '../Utils/confiq';
 import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios';
-import { getUsers } from '../Slices/homeSlice';
+import { getUsers, setCurrentUser } from '../Slices/homeSlice';
 
 
 
@@ -46,6 +46,7 @@ function SignIn() {
         else {
             localStorage.setItem("isAuth", true)
             localStorage.setItem("currentUser", JSON.stringify(selectedUser))
+            dispatch(setCurrentUser(selectedUser))
             selectedUser.userName === "admin" ? navigate('/adminhome') : navigate('/')
         }
     }
@@ -107,6 +108,9 @@ function SignIn() {
                             </li>
                             <li>
                                 <Link to={'/registration'}>New registration</Link>
+                            </li>
+                            <li>
+                                <Link to={'/'}>Home</Link>
                             </li>
                         </ul>
                     </div>

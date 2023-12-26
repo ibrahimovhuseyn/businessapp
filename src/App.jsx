@@ -15,12 +15,15 @@ import Home from './Pages/Home'
 import UserProfile from './Pages/UserProfile'
 import Valuation from './Pages/Valuation'
 import ResetPassword from './Pages/ResetPassword'
+import Services from './Pages/Services'
+import ServiceItem from './Pages/ServiceItem'
 
 
 
 function App() {
   const { currentUser } = useSelector(store => store.homeSlice)
   const name = currentUser?.userName
+  console.log(currentUser);
   return (
     <div>
       <div>
@@ -30,6 +33,8 @@ function App() {
           <Route path='/alltasks' element={<AllTasks />} />
           <Route path='/resetpassword' element={<ResetPassword />} />
           <Route path='/task/:id' element={<TaskWithId />} />
+          <Route path='/service/:id' element={<ServiceItem />} />
+          <Route path='/services' element={<Services />} />
         </Routes>
       </div>
       {

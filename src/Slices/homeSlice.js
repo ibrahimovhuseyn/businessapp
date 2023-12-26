@@ -15,9 +15,12 @@ export const homeSlice = createSlice({
         },
         getTasks: (state, action) => {
             state.tasks = action.payload
+        },
+        setCurrentUser : (state,action) =>{
+            state.currentUser =action.payload
         }
     }
 })
 
-export const { getUsers, getTasks } = homeSlice.actions
+export const { getUsers, getTasks, setCurrentUser } = homeSlice.actions
 export default homeSlice.reducer

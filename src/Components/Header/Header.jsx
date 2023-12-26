@@ -5,9 +5,8 @@ import { Link, useNavigate } from 'react-router-dom'
 
 function Header() {
     const navigate = useNavigate()
-    const {  currentUser } = useSelector(store => store.homeSlice)
-    const imgUrl = 'https://i.etsystatic.com/8684670/r/il/15db07/3914380275/il_fullxfull.3914380275_gv6j.jpg'
-
+    const { currentUser } = useSelector(store => store.homeSlice)
+    const imgUrl = "https://i.etsystatic.com/9264928/r/il/e11757/5235339445/il_570xN.5235339445_lf8x.jpg"
     const name = currentUser?.userName
 
     const realNav = (user) => {
@@ -25,7 +24,17 @@ function Header() {
                 <div className="logo">
                     <img src={imgUrl} alt="logo" />
                 </div></Link>
-            <div className="signin">
+            <div className="signin d-flex">
+                <div className='navBar'>
+                    <ul>
+                        <li>
+                            <button onClick={()=>navigate('/services')}>Services</button>
+                        </li>
+                        <li>
+                            <button>Order </button>
+                        </li>
+                    </ul>
+                </div>
                 {
                     currentUser &&
                         name.length > 0 ?
@@ -36,6 +45,7 @@ function Header() {
                         :
                         <button onClick={() => navigate('/signin')}>Login</button>
                 }
+
             </div>
         </div>
     )

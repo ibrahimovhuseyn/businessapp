@@ -25,6 +25,7 @@ function UserProfile() {
     const name = currentUser?.userName
     const currentUserId = currentUser?.id
 
+    
 
     const owner = users?.find(item => item.userName === name)
     const renderedArr = tasks?.filter(item => Number(item.userId) === Number(currentUserId))

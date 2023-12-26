@@ -12,10 +12,12 @@ import {
 } from 'reactstrap';
 
 function AdminHeader() {
-    const logoUrl = 'https://i.etsystatic.com/8684670/r/il/15db07/3914380275/il_fullxfull.3914380275_gv6j.jpg'
     const navigate = useNavigate()
     const [isMenuVisible, setMenuVisibility] = useState(false);
     const { currentUser } = useSelector(store => store.homeSlice)
+
+    const logoUrl = "https://i.etsystatic.com/9264928/r/il/e11757/5235339445/il_570xN.5235339445_lf8x.jpg"
+
 
     const toggleMenu = () => {
         setMenuVisibility(!isMenuVisible);
