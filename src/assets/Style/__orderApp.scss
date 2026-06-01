@@ -1,0 +1,167 @@
+$dark-bg: #070a13;
+$box-bg: rgba(17, 24, 39, 0.55);
+$neon-cyan: #00f3ff;
+$text-slate: #94a3b8;
+$border-soft: rgba(255, 255, 255, 0.05);
+
+.order-page-wrapper {
+  min-height: 100vh;
+  background-color: $dark-bg;
+  background-image: radial-gradient(circle at top right, #0f172a, $dark-bg);
+  background-attachment: fixed;
+  background-size: cover;
+  color: #ffffff;
+  font-family: 'Inter', sans-serif;
+  padding-bottom: 60px;
+
+  .order-header-section {
+    text-align: center;
+    margin-bottom: 40px;
+
+    .order-title {
+      font-size: 36px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      margin-bottom: 12px;
+
+      span {
+        color: $neon-cyan;
+        text-shadow: 0 0 15px rgba($neon-cyan, 0.3);
+      }
+    }
+
+    .order-subtitle {
+      color: $text-slate;
+      font-size: 16px;
+      max-width: 650px;
+      margin: 0 auto;
+    }
+  }
+}
+
+// --- CYBER FORM KONTEYNERİ ---
+.order-form-container {
+  max-width: 800px;
+  margin: 0 auto;
+  background: $box-bg;
+  backdrop-filter: blur(12px);
+  border: 1px solid $border-soft;
+  border-radius: 24px;
+  padding: 40px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+}
+
+.cyber-order-form {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+
+  .form-row-cyber {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+      gap: 25px;
+    }
+  }
+
+  .form-group-cyber {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex-grow: 1;
+    width: 100%;
+
+    label {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: $text-slate;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+
+      .input-icon-label {
+        color: rgba($neon-cyan, 0.7);
+      }
+    }
+
+    // Input, Select və Textarea elementlərinin kiber dizaynı
+    input, select, textarea {
+      background: rgba(13, 19, 33, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 14px 18px;
+      color: #ffffff;
+      font-family: inherit;
+      font-size: 15px;
+      transition: all 0.2s ease;
+      outline: none;
+
+      &::placeholder {
+        color: #475569;
+      }
+
+      &:focus {
+        border-color: $neon-cyan;
+        box-shadow: 0 0 12px rgba($neon-cyan, 0.2);
+        background: rgba(13, 19, 33, 0.9);
+      }
+    }
+
+    select {
+      cursor: pointer;
+      option {
+        background: #0d1321;
+        color: #ffffff;
+      }
+    }
+
+    textarea {
+      resize: none;
+    }
+  }
+
+  // Neon Submit Düyməsi
+  .submit-cyber-btn {
+    margin-top: 10px;
+    background: rgba($neon-cyan, 0.08);
+    border: 1px solid rgba($neon-cyan, 0.3);
+    color: $neon-cyan;
+    padding: 16px;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.2s ease;
+
+    .btn-send-icon {
+      font-size: 16px;
+      transition: transform 0.2s ease;
+    }
+
+    &:hover:not(:disabled) {
+      background: $neon-cyan;
+      color: #000000;
+      box-shadow: 0 0 25px rgba($neon-cyan, 0.4);
+
+      .btn-send-icon {
+        transform: translateX(4px) translateY(-2px);
+      }
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+}

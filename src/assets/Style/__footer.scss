@@ -1,0 +1,172 @@
+$bg-footer: #0c101a;
+$bg-footer-card: #141b2b;
+$border-light: rgba(255, 255, 255, 0.04);
+$text-light-title: #f1f5f9;
+$text-light-para: #94a3b8;
+
+$brand-cyan: #0ea5e9;
+$brand-green: #10b981;
+$brand-purple: #a855f7;
+
+.modern-user-footer {
+  background-color: $bg-footer;
+  border-top: 1px solid $border-light;
+  font-family: 'Inter', sans-serif;
+  color: $text-light-para;
+  position: relative;
+  overflow: hidden;
+
+  .footer-about-segment {
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+
+      .brand-icon {
+        font-size: 24px;
+        color: $brand-cyan;
+        filter: drop-shadow(0 0 8px rgba($brand-cyan, 0.4));
+      }
+
+      h4 {
+        font-size: 20px;
+        font-weight: 700;
+        color: $text-light-title;
+        margin: 0;
+        letter-spacing: -0.5px;
+      }
+    }
+
+    .about-text {
+      font-size: 14px;
+      line-height: 1.65;
+      color: $text-light-para;
+      text-align: justify;
+    }
+  }
+
+  .segment-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: $text-light-title;
+    margin-bottom: 24px;
+    letter-spacing: 0.5px;
+    position: relative;
+    padding-bottom: 8px;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 30px; height: 2px;
+      background: $brand-purple;
+      border-radius: 2px;
+    }
+  }
+
+  .tech-stack-list {
+    list-style: none;
+    padding: 0; margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    li {
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: $text-light-para;
+      transition: transform 0.2s, color 0.2s;
+
+      .list-arrow {
+        font-size: 12px;
+        color: rgba($text-light-para, 0.4);
+      }
+
+      &:hover {
+        transform: translateX(4px);
+        color: $brand-cyan;
+        .list-arrow { color: $brand-cyan; }
+      }
+    }
+  }
+
+  .footer-contact-segment {
+    .contact-desc {
+      font-size: 13px;
+      margin-bottom: 18px;
+    }
+
+    .user-contact-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .user-contact-card {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: $bg-footer-card;
+      border: 1px solid rgba(255, 255, 255, 0.03);
+      padding: 12px 16px;
+      border-radius: 12px;
+      text-decoration: none;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+
+      .icon-box {
+        width: 38px; height: 38px;
+        border-radius: 8px;
+        display: flex; justify-content: center; align-items: center;
+        font-size: 18px;
+        background: rgba(255, 255, 255, 0.03);
+        color: $text-light-para;
+        transition: all 0.2s;
+      }
+
+      .card-info {
+        display: flex; flex-direction: column;
+        span { font-size: 11px; color: rgba($text-light-para, 0.6); }
+        strong { font-size: 13px; color: $text-light-title; font-weight: 600; margin-top: 2px; }
+      }
+
+      &.whatsapp-gate:hover {
+        border-color: rgba($brand-green, 0.2);
+        background: rgba($brand-green, 0.02);
+        transform: translateY(-2px);
+        .icon-box { background: rgba($brand-green, 0.1); color: $brand-green; }
+      }
+
+      &.gmail-gate:hover {
+        border-color: rgba($brand-cyan, 0.2);
+        background: rgba($brand-cyan, 0.02);
+        transform: translateY(-2px);
+        .icon-box { background: rgba($brand-cyan, 0.1); color: $brand-cyan; }
+      }
+    }
+  }
+
+  .footer-bottom-bar {
+    margin-top: 40px;
+    border-top: 1px solid $border-light;
+
+    .copyright-text {
+      font-size: 13px;
+      color: rgba($text-light-para, 0.5);
+    }
+
+    .framework-badge {
+      display: inline-flex;
+      align-items: center;
+      font-size: 11px;
+      font-weight: 600;
+      background: rgba(255, 255, 255, 0.03);
+      color: rgba($text-light-title, 0.7);
+      padding: 4px 12px;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.02);
+    }
+  }
+}

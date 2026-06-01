@@ -1,0 +1,374 @@
+// Kiber Dəyişənlər Ekosistemi
+$dark-void: #050811;
+$card-glass: rgba(10, 17, 36, 0.6);
+$border-glow: rgba(0, 243, 255, 0.08);
+$neon-cyan: #00f3ff;
+$neon-purple: #8b5cf6;
+$neon-green: #10b981;
+$text-pure: #ffffff;
+$text-grey: #64748b;
+
+.coresync-homepage {
+  background-color: $dark-void;
+  background-image: 
+    radial-gradient(circle at 10% 20%, rgba(139, 92, 246, 0.05) 0%, transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(0, 243, 255, 0.05) 0%, transparent 40%);
+  color: $text-pure;
+  overflow-x: hidden;
+  font-family: 'Inter', sans-serif;
+
+  // Qlobal Başlıq Dizaynı
+  .section-title {
+    font-size: 38px;
+    font-weight: 900;
+    letter-spacing: -1px;
+    span {
+      color: $neon-cyan;
+      text-shadow: 0 0 20px rgba($neon-cyan, 0.4);
+    }
+  }
+  .section-desc {
+    color: $text-grey;
+    font-size: 15px;
+    max-width: 600px;
+    margin: 10px auto 0 auto;
+  }
+
+  // ================= SECTION 1: HERO & SOLUTIONS =================
+  .section-hero-services {
+    padding: 120px 0 80px 0;
+
+    .cyber-badge {
+      background: rgba($neon-cyan, 0.08);
+      border: 1px solid rgba($neon-cyan, 0.2);
+      color: $neon-cyan;
+      font-size: 12px;
+      font-weight: 800;
+      padding: 6px 16px;
+      border-radius: 50px;
+      letter-spacing: 2px;
+    }
+
+    .main-glow-title {
+      font-size: 56px;
+      font-weight: 900;
+      letter-spacing: -2px;
+      margin-top: 20px;
+      span {
+        color: transparent;
+        -webkit-text-stroke: 1px $neon-cyan;
+        filter: drop-shadow(0 0 15px rgba($neon-cyan, 0.5));
+      }
+    }
+
+    .hero-subtitle-text {
+      color: #94a3b8;
+      font-size: 18px;
+      max-width: 700px;
+      margin: 16px auto 0 auto;
+    }
+
+    // 4-6 ədəd Kiber Kartın Stilləri
+    .solution-cyber-card {
+      background: $card-glass;
+      border: 1px solid $border-glow;
+      border-radius: 20px;
+      padding: 40px 30px;
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      height: 100%;
+
+      .card-glow-overlay {
+        position: absolute;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background: radial-gradient(circle at top right, rgba($neon-cyan, 0.15), transparent 60%);
+        opacity: 0;
+        transition: opacity 0.4s ease;
+      }
+
+      .card-number {
+        font-size: 44px;
+        font-weight: 900;
+        color: rgba(255, 255, 255, 0.03);
+        position: absolute;
+        top: 10px; right: 20px;
+      }
+
+      .card-tag {
+        color: $neon-purple;
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 1.5px;
+        display: block;
+        margin-bottom: 12px;
+      }
+
+      .card-title {
+        font-size: 20px;
+        font-weight: 700;
+        margin-bottom: 12px;
+      }
+
+      .card-desc {
+        color: #94a3b8;
+        font-size: 14px;
+        line-height: 1.6;
+        margin-bottom: 24px;
+      }
+
+      .card-metric-badge {
+        display: inline-block;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        padding: 6px 14px;
+        border-radius: 8px;
+        font-size: 12px;
+        color: #cbd5e1;
+        strong { color: $neon-cyan; }
+      }
+
+      &:hover {
+        transform: translateY(-5px);
+        border-color: rgba($neon-cyan, 0.4);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba($neon-cyan, 0.05);
+        
+        .card-glow-overlay { opacity: 1; }
+      }
+
+      &.variant-mobile { .card-tag { color: $neon-cyan; } }
+      &.variant-backend { .card-tag { color: $neon-green; } }
+    }
+  }
+
+  // ================= SECTION 2: TEAM SQUAD (50% RADIUS IMGS) =================
+  .section-elite-squad {
+    padding: 80px 0;
+    background: rgba(0,0,0,0.2);
+
+    .squad-member-card {
+      background: rgba(15, 23, 42, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.03);
+      border-radius: 24px;
+      padding: 30px 20px;
+      text-align: center;
+      transition: all 0.3s ease;
+
+      // 50% Yumru Şəkil Hissəsi
+      .avatar-wrapper-circle {
+        width: 110px;
+        height: 110px;
+        margin: 0 auto 20px auto;
+        position: relative;
+
+        .round-avatar {
+          width: 100%;
+          height: 100%;
+          border-radius: 50% !important; // Mütləq 50% yumru
+          object-fit: cover;
+          border: 3px solid rgba(255, 255, 255, 0.05);
+          background: #0f172a;
+          position: relative;
+          z-index: 2;
+        }
+
+        .pulse-border-line {
+          position: absolute;
+          top: -2px; left: -2px; right: -2px; bottom: -2px;
+          border-radius: 50%;
+          border: 2px dashed rgba($neon-purple, 0.4);
+          z-index: 1;
+          animation: spin360 20s linear infinite;
+        }
+      }
+
+      .member-name {
+        font-size: 18px;
+        font-weight: 700;
+        margin-bottom: 4px;
+      }
+
+      .member-role {
+        color: $neon-cyan;
+        font-size: 13px;
+        font-weight: 600;
+        display: block;
+      }
+
+      .member-handle {
+        color: $text-grey;
+        font-size: 12px;
+        margin: 6px 0 0 0;
+      }
+
+      &:hover {
+        border-color: rgba($neon-purple, 0.3);
+        background: rgba(15, 23, 42, 0.8);
+        transform: translateY(-4px);
+
+        .pulse-border-line {
+          border-color: $neon-cyan;
+          animation-duration: 8s;
+        }
+      }
+    }
+  }
+
+  // ================= SECTION 3: CORE CAPABILITIES (ICON CARDS) =================
+  .section-tech-capabilities {
+    padding: 80px 0;
+
+    .capability-icon-card {
+      background: $card-glass;
+      border: 1px solid rgba(255,255,255,0.03);
+      border-radius: 16px;
+      padding: 30px;
+      height: 100%;
+      transition: all 0.3s ease;
+
+      .icon-hexagon-box {
+        width: 54px;
+        height: 54px;
+        background: rgba($neon-cyan, 0.08);
+        border: 1px solid rgba($neon-cyan, 0.2);
+        color: $neon-cyan;
+        border-radius: 12px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 24px;
+        margin-bottom: 20px;
+        transition: all 0.3s ease;
+      }
+
+      .cap-title {
+        font-size: 18px;
+        font-weight: 700;
+        margin-bottom: 10px;
+      }
+
+      .cap-desc {
+        color: #94a3b8;
+        font-size: 13.5px;
+        line-height: 1.5;
+        margin: 0;
+      }
+
+      &:hover {
+        background: rgba(0, 243, 255, 0.02);
+        border-color: rgba($neon-cyan, 0.2);
+
+        .icon-hexagon-box {
+          background: $neon-cyan;
+          color: #000;
+          box-shadow: 0 0 20px rgba($neon-cyan, 0.4);
+        }
+      }
+    }
+  }
+
+  // ================= SECTION 4: CONSOLE PORTAL INTERFACES =================
+  .section-console-portal {
+    padding: 60px 0;
+
+    .console-glass-portal {
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.6) 0%, rgba(30, 41, 59, 0.4) 100%);
+      border: 1px solid rgba($neon-cyan, 0.15);
+      border-radius: 24px;
+      padding: 50px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+
+      .live-signal {
+        font-size: 11px;
+        font-weight: 800;
+        color: $neon-green;
+        letter-spacing: 1.5px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 14px;
+
+        .dot {
+          width: 6px; height: 6px; background: $neon-green; border-radius: 50%;
+          animation: blink 1.2s infinite;
+        }
+      }
+
+      .portal-main-title {
+        font-size: 32px; font-weight: 800; margin-bottom: 14px;
+      }
+
+      .portal-text {
+        color: #94a3b8; max-width: 650px; line-height: 1.6; margin: 0;
+      }
+
+      .btn-launch-neon {
+        background: $neon-cyan !important;
+        border: none !important;
+        color: #000000 !important;
+        font-weight: 700 !important;
+        padding: 14px 30px !important;
+        border-radius: 10px !important;
+        display: inline-flex; align-items: center; gap: 8px;
+        box-shadow: 0 0 20px rgba($neon-cyan, 0.3);
+        transition: all 0.3s ease !important;
+
+        &:hover {
+          box-shadow: 0 0 35px rgba($neon-cyan, 0.6);
+          transform: scale(1.02);
+        }
+      }
+    }
+  }
+
+  // ================= SECTION 5: LIVE TELEMETRY STATS =================
+  .section-live-telemetry {
+    padding: 80px 0 120px 0;
+
+    .telemetry-title {
+      font-size: 28px; font-weight: 800;
+      span { color: $neon-purple; }
+    }
+
+    .telemetry-subtitle { color: $text-grey; font-size: 14px; margin-top: 8px; }
+
+    .telemetry-stat-box {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      border-radius: 16px;
+      padding: 30px;
+      text-align: center;
+
+      .stat-ico {
+        font-size: 28px; margin-bottom: 14px;
+        &.cyan { color: $neon-cyan; }
+        &.purple { color: $neon-purple; }
+        &.green { color: $neon-green; }
+      }
+
+      .stat-num { font-size: 36px; font-weight: 900; margin-bottom: 4px; }
+      .stat-label { color: $text-grey; font-size: 13px; margin: 0; }
+    }
+  }
+}
+
+// Qlobal Animasiya Keyframe-ləri
+@keyframes spin360 {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+@keyframes blink {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+
+// Mobil Adaptasiya (Responsive)
+@media (max-width: 991px) {
+  .coresync-homepage {
+    .section-hero-services .main-glow-title { font-size: 40px; }
+    .console-glass-portal { padding: 30px; text-align: center; .btn-launch-neon { margin-top: 24px; } }
+  }
+}

@@ -1,0 +1,243 @@
+// ==========================================
+// Dəyişənlər (SaaS & Kiber Mövzu)
+// ==========================================
+$bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1e2f 50%, #0b0f19 100%);
+$card-bg: #1e293b;
+$neon-cyan: #00f3ff;
+$primary-blue: #3b82f6;
+$text-white: #ffffff;
+$text-gray: #94a3b8;
+$transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+// ==========================================
+// Səhifə Struktur
+// ==========================================
+.signIn {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: $bg-gradient;
+  font-family: 'Inter', sans-serif;
+  overflow: hidden;
+
+  form {
+    width: 100%;
+    max-width: 420px;
+    display: flex;
+    justify-content: center;
+  }
+
+  // ==========================================
+  // Premium Giriş Kartı
+  // ==========================================
+  .page {
+    width: 100%;
+    padding: 45px 40px;
+    border-radius: 24px;
+    background: $card-bg;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow:
+      0 10px 40px rgba(0, 0, 0, 0.5),
+      0 0 30px rgba(59, 130, 246, 0.15);
+
+    transition: $transition;
+
+    h2 {
+      text-align: center;
+      color: $text-white;
+      margin-bottom: 35px;
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      text-shadow: 0 0 15px rgba(255, 255, 255, 0.15);
+    }
+
+    // ==========================================
+    // İnput Sahələri (Ümumi tənzimləmə)
+    // ==========================================
+    .userName,
+    .password {
+      position: relative;
+      margin-bottom: 22px;
+
+      input {
+        width: 100%;
+        height: 52px;
+        padding-left: 50px;
+        border-radius: 12px;
+        font-size: 15px;
+        font-weight: 500;
+        box-sizing: border-box;
+        background: rgba(15, 23, 42, 0.6);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: $text-white;
+        transition: $transition;
+
+        &::placeholder {
+          color: rgba(255, 255, 255, 0.3);
+        }
+
+        &:focus {
+          outline: none;
+          background: rgba(15, 23, 42, 0.8);
+          border-color: $neon-cyan;
+          box-shadow: 0 0 15px rgba(0, 243, 255, 0.25), inset 0 0 8px rgba(0, 243, 255, 0.05);
+
+          &~.i .is {
+            color: $neon-cyan;
+            filter: drop-shadow(0 0 6px $neon-cyan);
+          }
+        }
+      }
+
+      // QIFIL İKONUNUN TAM INPUTUN MƏRKƏZİNDƏ DURMASI ÜÇÜN DÜZƏLİŞ:
+      .i {
+        position: absolute;
+        left: 16px;
+        top: 26px; // Inputun hündürlüyü 52px olduğu üçün tam yarı hissəsi (52 / 2 = 26)
+        transform: translateY(-50%);
+        display: flex;
+        align-items: center;
+        pointer-events: none;
+
+        .is {
+          color: $text-gray;
+          font-size: 20px;
+          transition: $transition;
+        }
+      }
+    }
+
+    // ==========================================
+    // Checkbox və Label (Show Password)
+    // ==========================================
+    .d-flex.align-items-center {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 12px;
+      user-select: none;
+
+      input[type="checkbox"].check {
+        cursor: pointer;
+        width: 14px;
+        height: 14px;
+        appearance: none;
+        -webkit-appearance: none;
+        background: rgba(15, 23, 42, 0.6);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 4px;
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease-in-out;
+
+        &:checked {
+          background: $primary-blue;
+          border-color: $neon-cyan;
+          box-shadow: 0 0 8px rgba(0, 243, 255, 0.3);
+
+          &::before {
+            content: '✓';
+            color: white;
+            font-size: 10px;
+            font-weight: 900;
+            position: absolute;
+            top: 48%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+          }
+        }
+
+        &:focus {
+          outline: none;
+          border-color: $neon-cyan;
+        }
+      }
+
+      label {
+        color: $text-gray !important;
+        font-size: 13px !important;
+        font-weight: 500 !important;
+        cursor: pointer;
+        margin: 0 !important;
+        transition: color 0.2s ease;
+
+        &:hover {
+          color: $text-white !important;
+        }
+      }
+    }
+
+    // ==========================================
+    // Login Düyməsi (DÜZGÜN SCOPE-A ÇIXARILDI - ARTIQ İDEAL ÖLÇÜDƏDİR)
+    // ==========================================
+    button[type="submit"] {
+      width: 100%;
+      height: 50px; // Uzunsov görünməməsi üçün hündürlük standart 50px-ə çəkildi
+      margin-top: 25px; // Checkbox ilə düymə arasında nəfəs alacaq boşluq
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      color: $text-white;
+      cursor: pointer;
+      background: linear-gradient(135deg, $primary-blue, #1d4ed8);
+      box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+      transition: $transition;
+
+      &:hover {
+        transform: translateY(-2px);
+        background: linear-gradient(135deg, lighten($primary-blue, 5%), #2563eb);
+        box-shadow:
+          0 8px 25px rgba(37, 99, 235, 0.4),
+          0 0 15px rgba(0, 243, 255, 0.2);
+      }
+
+      &:active {
+        transform: translateY(0);
+        box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
+      }
+    }
+
+    // ==========================================
+    // Linklər Siyahısı
+    // ==========================================
+    .list {
+      margin-top: 25px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      padding-top: 20px;
+
+      ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+
+        li {
+          text-align: center;
+
+          a {
+            color: $text-gray;
+            font-size: 14px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: $transition;
+            display: inline-block;
+
+            &:hover {
+              color: $neon-cyan;
+              transform: translateY(-1px);
+              text-shadow: 0 0 8px rgba(0, 243, 255, 0.5);
+            }
+          }
+        }
+      }
+    }
+  }
+}

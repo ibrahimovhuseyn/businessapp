@@ -1,0 +1,198 @@
+$dark-bg: #070a13;
+$card-bg: rgba(17, 24, 39, 0.8);
+$border-glow: rgba(255, 255, 255, 0.05);
+$neon-cyan: #00f3ff;
+$neon-pink: #ff0055;
+$text-light: #ffffff;
+$text-muted: #94a3b8;
+
+.createUser-layout {
+  min-height: 100vh;
+  background: radial-gradient(circle at top left, #111827, $dark-bg);
+  color: $text-light;
+  font-family: 'Inter', sans-serif;
+  padding-bottom: 60px;
+
+  .form-container-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+  }
+
+  .form-card {
+    background: $card-bg;
+    backdrop-filter: blur(14px);
+    border: 1px solid $border-glow;
+    border-radius: 24px;
+    padding: 40px;
+    width: 100%;
+    max-width: 650px; // Formun çox böyüyüb dağılmaması üçün ideal ölçü
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+
+    .form-title {
+      font-size: 28px;
+      font-weight: 800;
+      text-align: center;
+      margin-bottom: 6px;
+      letter-spacing: -0.5px;
+
+      span {
+        color: $neon-cyan;
+        text-shadow: 0 0 15px rgba($neon-cyan, 0.3);
+      }
+    }
+
+    .form-subtitle {
+      font-size: 13.5px;
+      color: $text-muted;
+      text-align: center;
+      margin-bottom: 35px;
+    }
+  }
+
+  // Grid Sistemi (Ad və Soyad yan-yana, digərləri alt-alta)
+  .modern-form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+
+    .form-group-item {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+
+      // Tam eni tutmalı olan elementlər (Email, Position, Password)
+      &.full-width {
+        grid-column: span 2;
+      }
+    }
+  }
+
+  .form-label {
+    font-size: 13px;
+    font-weight: 700;
+    color: #cbd5e1;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 0;
+  }
+
+  .form-input {
+    background: #0d1321 !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    color: #ffffff !important;
+    border-radius: 10px !important;
+    padding: 11px 16px !important;
+    font-size: 14.5px !important;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+
+    &::placeholder {
+      color: #475569;
+    }
+
+    &:focus {
+      border-color: $neon-cyan !important;
+      box-shadow: 0 0 12px rgba($neon-cyan, 0.25) !important;
+      background: #0f172a !important;
+    }
+  }
+
+  // Validasiya zamanı qırmızı neon effekt
+  .border-danger-glow {
+    border-color: $neon-pink !important;
+    box-shadow: 0 0 10px rgba($neon-pink, 0.2) !important;
+  }
+
+  .error-text {
+    font-size: 12px;
+    font-weight: 600;
+    color: $neon-pink;
+    margin: 4px 0 0 0;
+  }
+
+  // Password Show/Hide Tənzimləmələri
+  .password-group {
+    .password-input-wrapper {
+      position: relative;
+    }
+
+    .checkbox-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 8px;
+      padding-left: 2px;
+
+      input[type="checkbox"] {
+        cursor: pointer;
+        background-color: #0d1321;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 4px;
+        width: 15px;
+        height: 15px;
+        margin: 0;
+
+        &:checked {
+          background-color: $neon-cyan;
+          border-color: $neon-cyan;
+        }
+      }
+
+      .checkbox-label {
+        font-size: 12.5px;
+        color: $text-muted;
+        cursor: pointer;
+        user-select: none;
+        margin: 0;
+        font-weight: 500;
+      }
+    }
+  }
+
+  // Register Submit Düyməsi
+  .form-actions {
+    margin-top: 15px;
+
+    .submit-neon-btn {
+      width: 100%;
+      background: linear-gradient(135deg, #0055ff, $neon-cyan) !important;
+      border: none !important;
+      color: #000000 !important;
+      font-size: 15px !important;
+      font-weight: 800 !important;
+      padding: 14px !important;
+      border-radius: 12px !important;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      box-shadow: 0 0 20px rgba($neon-cyan, 0.3);
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 0 30px rgba($neon-cyan, 0.6);
+        opacity: 0.95;
+      }
+
+      &:active {
+        transform: translateY(0);
+      }
+    }
+  }
+}
+
+// Kiçik ekranlarda form tam eni tutsun
+@media (max-width: 576px) {
+  .modern-form-grid {
+    grid-template-columns: 1fr !important;
+
+    .form-group-item {
+      grid-column: span 2 !important;
+    }
+  }
+
+  .form-card {
+    padding: 25px 20px !important;
+  }
+}

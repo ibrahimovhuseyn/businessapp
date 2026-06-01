@@ -1,0 +1,331 @@
+$dark-bg: #070a13;
+$card-bg: rgba(17, 24, 39, 0.85);
+$border-glow: rgba(255, 255, 255, 0.06);
+
+// Yüksək Kontrastlı Neon Rənglər
+$neon-cyan: #00f3ff;
+$neon-pink: #ff0055;
+$neon-yellow: #ffb700; // İn Progress üçün güclü sarı
+$neon-green: #00ff88;  // Parlaq yaşıl
+$text-light: #ffffff;
+$text-muted: #94a3b8;
+
+// Qeyri-aktiv düymə rəngləri (Lock State)
+$disabled-bg: rgba(30, 41, 59, 0.5);
+$disabled-border: rgba(255, 255, 255, 0.05);
+$disabled-text: #475569;
+
+.user-profile-layout {
+  min-height: 100vh;
+  background: radial-gradient(circle at top right, #111827, $dark-bg);
+  color: $text-light;
+  padding-bottom: 60px;
+  font-family: 'Inter', sans-serif;
+
+  .profile-wrapper {
+    margin-top: 40px;
+  }
+
+  // ==========================================
+  // PROFILE HERO PANEL
+  // ==========================================
+  .profile-hero-section {
+    background: $card-bg;
+    backdrop-filter: blur(14px);
+    border: 1px solid $border-glow;
+    border-radius: 20px;
+    padding: 35px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 30px;
+    margin-bottom: 40px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+
+    .welcome-box {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+
+      .user-avatar {
+        width: 65px;
+        height: 65px;
+        background: linear-gradient(135deg, #0055ff, $neon-cyan);
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 26px;
+        font-weight: 900;
+        color: #000;
+        box-shadow: 0 0 20px rgba($neon-cyan, 0.4);
+      }
+
+      h2 {
+        font-size: 24px;
+        font-weight: 700;
+        margin: 0 0 6px 0;
+        span { color: $neon-cyan; text-shadow: 0 0 10px rgba($neon-cyan, 0.2); }
+      }
+      .role-tag {
+        background: rgba(0, 243, 255, 0.1);
+        border: 1px solid rgba(0, 243, 255, 0.2);
+        color: $neon-cyan;
+        padding: 4px 12px;
+        border-radius: 6px;
+        font-size: 12px;
+        display: inline-block;
+        margin: 0;
+        font-weight: 600;
+      }
+    }
+
+    // ==========================================
+    // MİNİ STATİSTİKA — YENİ EYNİ ÖLÇÜLÜ SİSTEM
+    // ==========================================
+    .mini-stats-grid {
+      display: flex;
+      gap: 16px;
+      align-items: stretch; // Bütün pill-lərin eyni hündürlükdə (hizalı) aşağıya enməsini təmin edir
+
+      .stat-pill {
+        position: relative;
+        background: #0d1321;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        padding: 14px 24px;
+        border-radius: 14px;
+        
+        // Flexbox strukturu daxili elementləri alt-alta yığır və mərkəzləyir
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center; 
+        
+        min-width: 115px;
+        height: 85px; // Hündürlüyü sabitlədik ki, extension içəri element atsa da ölçü dəyişməsin
+        box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+        overflow: hidden; // Kənara çıxan yad elementləri (məs. google ikonunu) gizlədir
+
+        .count { 
+          font-size: 26px; 
+          font-weight: 800; 
+          line-height: 1;
+          z-index: 2;
+        }
+        
+        .label { 
+          font-size: 11px; 
+          font-weight: 700;
+          letter-spacing: 0.5px;
+          text-transform: uppercase; 
+          margin-top: 6px;
+          z-index: 2;
+          white-space: nowrap; // Yazının iki sətrə düşməsini əngəlləyir
+        }
+
+        // Google Translate kimi extension-ların yaratdığı lazımsız boşluqları və ikonları sıfırlamaq üçün:
+        font {
+          background: transparent !important;
+          color: inherit !important;
+        }
+        img, iframe, div:not(.count):not(.label) {
+          display: none !important; // Sənin komponentinə aid olmayan hər şeyi gizlədir
+        }
+
+        &.todo { 
+          border-bottom: 3px solid $neon-pink;
+          .count { color: $neon-pink; text-shadow: 0 0 8px rgba($neon-pink, 0.3); }
+          .label { color: rgba($neon-pink, 0.8); }
+        }
+        
+        &.progress { 
+          background: rgba(245, 158, 11, 0.06); // Zərif sarımtıl kiber fon
+          border: 1px solid rgba($neon-yellow, 0.25);
+          border-bottom: 3px solid $neon-yellow;
+          
+          .count { 
+            color: $neon-yellow; 
+            text-shadow: 0 0 12px rgba($neon-yellow, 0.6); 
+          }
+          .label { 
+            color: #ffffff; 
+            font-weight: 800;
+          }
+        }
+        
+        &.done { 
+          border-bottom: 3px solid $neon-green;
+          .count { color: $neon-green; text-shadow: 0 0 8px rgba($neon-green, 0.3); }
+          .label { color: rgba($neon-green, 0.8); }
+        }
+      }
+    }
+  }
+
+  // ==========================================
+  // TASKS GRID MANAGEMENT
+  // ==========================================
+  .section-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 25px;
+    border-left: 4px solid $neon-cyan;
+    padding-left: 14px;
+    letter-spacing: 0.5px;
+  }
+
+  .tasks-grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 25px;
+  }
+
+  // Modern Task Kartı
+  .task-modern-card {
+    background: rgba(20, 29, 47, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    border-radius: 16px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 230px;
+    position: relative;
+    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+
+    &:hover {
+      transform: translateY(-5px);
+      background: rgba(26, 37, 60, 0.85);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+
+      .task-id { font-size: 11px; color: $text-muted; font-family: monospace; font-weight: bold; }
+    }
+
+    // Status Badges
+    .status-badge {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 20px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      text-transform: uppercase;
+
+      &.todo { background: rgba($neon-pink, 0.12); color: $neon-pink; border: 1px solid rgba($neon-pink, 0.2); }
+      &.progress { background: rgba($neon-yellow, 0.15); color: $neon-yellow; border: 1px solid rgba($neon-yellow, 0.3); }
+      &.done { background: rgba($neon-green, 0.12); color: $neon-green; border: 1px solid rgba($neon-green, 0.2); }
+
+      .spin-icon { animation: spin-loader 2.5s linear infinite; }
+    }
+
+    .task-title { font-size: 17px; font-weight: 600; color: #ffffff; margin-bottom: 10px; line-height: 1.4; }
+    .task-desc { font-size: 13.5px; color: $text-muted; line-height: 1.6; margin-bottom: 25px; }
+
+    .card-footer-controls {
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      padding-top: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .deadline-box {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 12px;
+        color: $text-muted;
+        font-weight: 500;
+        .cal-icon { color: $neon-cyan; }
+      }
+    }
+
+    &.status-not-started { border-left: 3px solid $neon-pink; }
+    &.status-in-progress { border-left: 3px solid $neon-yellow; background: rgba(27, 34, 54, 0.7); }
+    &.status-completed { 
+      border-left: 3px solid $neon-green; 
+      .task-title { text-decoration: line-through; color: #64748b; }
+      .task-desc { opacity: 0.5; }
+    }
+  }
+
+  // Düymə tənzimləmələri
+  .btn-group-actions {
+    display: flex;
+    gap: 10px;
+
+    .task-btn {
+      padding: 8px 14px;
+      font-size: 12px;
+      font-weight: 700;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+
+      &.start {
+        background: rgba(0, 149, 255, 0.15);
+        border: 1px solid rgba(0, 149, 255, 0.4);
+        color: #38bdf8;
+        
+        &:hover:not(:disabled) { 
+          background: #0055ff; 
+          color: white; 
+          box-shadow: 0 0 15px rgba(0, 85, 255, 0.5);
+          border-color: #0055ff;
+        }
+      }
+
+      &.finish {
+        background: rgba(0, 255, 136, 0.12);
+        border: 1px solid rgba(0, 255, 136, 0.4);
+        color: $neon-green;
+        
+        &:hover:not(:disabled) { 
+          background: #00cc66; 
+          color: white; 
+          box-shadow: 0 0 15px rgba(0, 255, 136, 0.5);
+          border-color: #00cc66;
+        }
+      }
+
+      &:disabled {
+        cursor: not-allowed;
+        background: $disabled-bg !important;
+        border: 1px solid $disabled-border !important;
+        color: $disabled-text !important;
+        opacity: 1;
+        box-shadow: none !important;
+        
+        svg { opacity: 0.3; }
+      }
+    }
+  }
+
+  .empty-tasks-fallback {
+    text-align: center;
+    padding: 70px 20px;
+    background: $card-bg;
+    border: 1px dashed rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+
+    .fallback-illustration { font-size: 45px; margin-bottom: 15px; }
+    h4 { font-size: 18px; color: #f1f5f9; margin-bottom: 6px; }
+    p { color: $text-muted; font-size: 14px; margin: 0; }
+  }
+}
+
+@keyframes spin-loader {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}

@@ -1,0 +1,404 @@
+// ==========================================================================
+// CORE_SYNC BRAND VARIABELLƏRİ
+// ==========================================================================
+$dark-void: #060913;
+$card-glass: rgba(10, 15, 30, 0.7);
+$neon-cyan: #00f3ff;
+$neon-purple: #8b5cf6;
+$neon-red: #ff0055;
+$text-pure: #ffffff;
+$text-muted: #94a3b8;
+$transition-fast: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+// ==========================================================================
+// HEADER ANATOMİYASI VƏ NAVİQASİYA PANERLİ
+// ==========================================================================
+.header {
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 80px;
+  background: rgba($dark-void, 0.8);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba($neon-cyan, 0.15);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 40px;
+  z-index: 1000;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5), 0 1px 15px rgba($neon-cyan, 0.05);
+
+  // CoreSync Loqosu (Hover Parıltı Animasiyası İlə)
+  .coresync-logo {
+    font-size: 28px;
+    font-weight: 900;
+    letter-spacing: -0.5px;
+    color: $text-pure;
+    cursor: pointer;
+    user-select: none;
+    transition: all $transition-fast;
+    margin: 0;
+
+    span {
+      color: $neon-cyan;
+      text-shadow: 0 0 10px rgba($neon-cyan, 0.3);
+      transition: all $transition-fast;
+    }
+
+    &:hover {
+      color: $neon-cyan;
+      text-shadow: 0 0 15px rgba($neon-cyan, 0.5);
+
+      span {
+        color: $text-pure;
+        text-shadow: none;
+      }
+    }
+  }
+
+  // Masaüstü Naviqasiya Linkləri
+  .taskhub-nav {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+
+      li {
+        position: relative;
+      }
+    }
+  }
+}
+
+// ==========================================================================
+// MASAÜSTÜ NAVİQASİYA DÜYMƏLƏRİ VƏ AKTİV TAB ELEMENTLƏRİ
+// ==========================================================================
+.nav-item-btn {
+  background: transparent;
+  border: 1px solid transparent;
+  color: $text-muted;
+  font-size: 14.5px;
+  font-weight: 600;
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all $transition-fast;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    color: $text-pure;
+    background: rgba(255, 255, 255, 0.03);
+    border-color: rgba(255, 255, 255, 0.08);
+  }
+
+  &.active {
+    color: $neon-cyan;
+    background: rgba($neon-cyan, 0.05);
+    border-color: rgba($neon-cyan, 0.25);
+    box-shadow: 0 0 15px rgba($neon-cyan, 0.1);
+    text-shadow: 0 0 8px rgba($neon-cyan, 0.3);
+  }
+}
+
+// ==========================================================================
+// REACTSTRAP DROPDOWN CUSTOM KİBER TEMASI
+// ==========================================================================
+.dropdown-toggle-custom {
+  @extend .nav-item-btn; // Masaüstü düymə stillərini bura tətbiq edir
+  
+  &::after {
+    margin-left: 8px;
+    vertical-align: 0.15em;
+    transition: transform $transition-fast;
+  }
+  
+  &[aria-expanded="true"]::after {
+    transform: rotate(180deg); // Oxun 180 dərəcə yumşaq fırlanması
+  }
+}
+
+.custom-dropdown-menu {
+  background: rgba(10, 16, 32, 0.95) !important;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba($neon-cyan, 0.2) !important;
+  border-radius: 10px !important;
+  padding: 6px !important;
+  margin-top: 12px !important;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6), 0 0 20px rgba($neon-cyan, 0.05) !important;
+  animation: dropdownFadeIn 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+
+  .dropdown-item {
+    color: #cbd5e1 !important;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 10px 16px !important;
+    border-radius: 6px;
+    transition: all $transition-fast;
+    cursor: pointer;
+    background: transparent !important;
+
+    &:hover {
+      color: $neon-cyan !important;
+      background: rgba($neon-cyan, 0.08) !important;
+      padding-left: 20px !important; // Hover olanda içəri sürüşmə effekti
+    }
+  }
+}
+
+// ==========================================================================
+// SİSTEMDƏN ÇIXIŞ (LOGOUT BUTTON)
+// ==========================================================================
+.nav-auth {
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
+  padding-left: 24px;
+
+  .logout-btn {
+    background: rgba($neon-red, 0.05);
+    border: 1px solid rgba($neon-red, 0.2);
+    color: #fca5a5;
+    font-size: 14.5px;
+    font-weight: 700;
+    padding: 10px 20px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: all $transition-fast;
+
+    .nav-icon {
+      font-size: 18px;
+      transition: transform $transition-fast;
+    }
+
+    &:hover {
+      background: $neon-red;
+      border-color: $neon-red;
+      color: $text-pure;
+      box-shadow: 0 0 20px rgba($neon-red, 0.4);
+
+      .nav-icon {
+        transform: translateX(3px); // Oxun sağa itələnmə effekti
+      }
+    }
+  }
+}
+
+// ==========================================================================
+// MOBİL NAVİQASİYA İKONLARI (STANDART HAMBURGER SAHƏSİ)
+// ==========================================================================
+.header {
+  .menu {
+    display: none; // Masaüstündə gizlədilir
+    gap: 12px;
+
+    .btn {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: $text-pure;
+      width: 44px;
+      height: 44px;
+      border-radius: 8px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: all $transition-fast;
+      padding: 0;
+
+      .i {
+        font-size: 20px;
+      }
+
+      &:hover {
+        border-color: $neon-cyan;
+        color: $neon-cyan;
+        box-shadow: 0 0 15px rgba($neon-cyan, 0.2);
+      }
+
+      &.text-danger {
+        border-color: rgba($neon-red, 0.2);
+        color: #fca5a5;
+
+        &:hover {
+          background: $neon-red;
+          border-color: $neon-red;
+          color: $text-pure;
+          box-shadow: 0 0 15px rgba($neon-red, 0.3);
+        }
+      }
+    }
+  }
+}
+
+// ==========================================================================
+// YENİ: PREMIUM SAĞDAN SÜRÜŞƏN KİBER SIDE DRAWER DESIGN
+// ==========================================================================
+.mobile-sidebar-drawer {
+  position: fixed;
+  top: 0;
+  right: -100%; // Gizli mövqe (ekranın tam sağında)
+  width: 300px;
+  height: 100vh;
+  background: rgba(6, 9, 19, 0.96);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-left: 2px solid rgba($neon-cyan, 0.2);
+  z-index: 2000;
+  transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1); // Axıcı kiber açılış dynamic sürəti
+  box-shadow: -10px 0 30px rgba(0, 0, 0, 0.7);
+
+  // Məntiqi true (açıq) olanda sağdan ekrana daxil olur
+  &.drawer-open {
+    right: 0;
+  }
+
+  .drawer-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 30px 24px;
+  }
+
+  .drawer-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding-bottom: 15px;
+
+    .drawer-title {
+      font-family: 'Fira Code', monospace;
+      font-size: 12px;
+      font-weight: 700;
+      color: $neon-cyan;
+      letter-spacing: 1px;
+    }
+
+    .close-btn {
+      background: transparent;
+      border: none;
+      color: $text-pure;
+      font-size: 22px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s;
+
+      &:hover {
+        color: $neon-red;
+        transform: rotate(90deg);
+      }
+    }
+  }
+
+  .drawer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    li {
+      button {
+        width: 100%;
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        color: #94a3b8;
+        font-size: 15px;
+        font-weight: 600;
+        padding: 14px 20px;
+        border-radius: 8px;
+        text-align: left;
+        cursor: pointer;
+        transition: all 0.3s;
+
+        &:hover, &.active {
+          color: $neon-cyan;
+          background: rgba($neon-cyan, 0.05);
+          border-color: rgba($neon-cyan, 0.3);
+          padding-left: 26px; // Hover effekti zamanı sağa uzanma
+          box-shadow: 0 0 15px rgba($neon-cyan, 0.1);
+        }
+      }
+    }
+  }
+
+  .drawer-footer {
+    margin-top: auto; // Düyməni panelin ən dibinə bərkidir
+    
+    .drawer-logout {
+      width: 100%;
+      background: rgba($neon-red, 0.06);
+      border: 1px solid rgba($neon-red, 0.2);
+      color: #ff94b4;
+      font-family: 'Fira Code', monospace;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.3s;
+
+      &:hover {
+        background: $neon-red;
+        color: $text-pure;
+        box-shadow: 0 0 20px rgba($neon-red, 0.4);
+      }
+    }
+  }
+}
+
+// ==========================================================================
+// MULTI-LEVEL RESPONSIVE FIX (EKRAN BÖYÜDÜKDƏ DRAWER TAM SİLİNİR)
+// ==========================================================================
+@media (max-width: 1024px) {
+  .header {
+    padding: 0 24px;
+    height: 70px;
+
+    .coresync-logo {
+      font-size: 24px;
+    }
+
+    .taskhub-nav {
+      display: none; // Mobil və planşetdə masaüstü menyu ləğv olunur
+    }
+
+    .menu {
+      display: flex; // Mobil hamburger düymələri işə düşür
+    }
+  }
+}
+
+@media (min-width: 1025px) {
+  .mobile-sidebar-drawer {
+    display: none !important; // Ekran böyüdükdə drawer mütləq şəkildə gizlənir və asılı qalmır
+  }
+}
+
+// ==========================================================================
+// ANIMATION KEYFRAMES
+// ==========================================================================
+@keyframes dropdownFadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}

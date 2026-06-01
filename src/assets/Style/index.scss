@@ -1,0 +1,27 @@
+@import './_signIn';
+@import './_admin';
+@import './_home';
+@import './_header';
+@import './_services';
+@import './_resetPassword';
+@import './_userProfile';
+@import './_adminHeader';
+@import './_createUser';
+@import './_valuation';
+@import './_createTask';
+@import './_allTasks';
+@import './_createPosition';
+@import './_ourTeam';
+@import './_orderApp';
+@import './_footer';
+
+
+html,
+body {
+  background-color: #070a13 !important;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  max-width: 100%;
+  overflow-x: hidden
+}

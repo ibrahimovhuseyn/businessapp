@@ -1,0 +1,266 @@
+// ==========================================================================
+// PREMIUM SYSTEM COLOR PALETTE
+// ==========================================================================
+$bg-main: #0b0f19;
+$bg-card: #131926;
+$border-color: rgba(255, 255, 255, 0.05);
+$text-title: #f8fafc;
+$text-para: #94a3b8;
+
+$clr-cyan: #0ea5e9;
+$clr-purple: #a855f7;
+$clr-green: #10b981;
+$clr-orange: #f59e0b;
+
+// ==========================================================================
+// CORE STRUCTURAL VIEWPORT
+// ==========================================================================
+.coresync-premium-dashboard-layout {
+  min-height: 100vh;
+  background-color: $bg-main;
+  color: $text-title;
+  padding-bottom: 50px;
+
+  .dashboard-viewport {
+    padding-top: 100px; // Header altından təmiz məsafə
+  }
+}
+
+// ==========================================================================
+// MODERN KPI KARTLARI (TOP ROW STATS)
+// ==========================================================================
+.premium-kpi-card {
+  background: $bg-card;
+  border: 1px solid $border-color;
+  border-radius: 16px;
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.25s;
+
+  &:hover {
+    transform: translateY(-2px);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .kpi-icon-wrapper {
+    width: 54px;
+    height: 54px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 22px;
+
+    &.cyan { background: rgba($clr-cyan, 0.1); color: $clr-cyan; }
+    &.purple { background: rgba($clr-purple, 0.1); color: $clr-purple; }
+    &.green { background: rgba($clr-green, 0.1); color: $clr-green; }
+    &.orange { background: rgba($clr-orange, 0.1); color: $clr-orange; }
+  }
+
+  .kpi-info {
+    .kpi-title { font-size: 13px; color: $text-para; font-weight: 500; }
+    .kpi-value { font-size: 26px; font-weight: 700; margin: 4px 0 0 0; letter-spacing: -0.5px; }
+    .text-green { color: $clr-green; }
+  }
+}
+
+// ==========================================================================
+// STYLISH MAIN CARDS
+// ==========================================================================
+.premium-main-card {
+  background: $bg-card;
+  border: 1px solid $border-color;
+  border-radius: 20px;
+  padding: 28px;
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
+  height: 100%;
+
+  .card-header-modern {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+
+    .title-area {
+      display: flex;
+      align-items: center;
+      font-size: 18px;
+      color: $clr-cyan;
+    }
+
+    h4 { font-size: 18px; font-weight: 700; margin: 0; color: $text-title; }
+    
+    .status-badge {
+      font-size: 11px; background: rgba(255,255,255,0.05); padding: 4px 10px;
+      border-radius: 20px; color: $text-para; font-weight: 500;
+    }
+
+    .live-pulse-badge {
+      font-size: 11px; background: rgba($clr-green, 0.1); color: $clr-green;
+      padding: 4px 12px; border-radius: 20px; font-weight: 600;
+      animation: flashDot 1.5s infinite alternate;
+    }
+  }
+
+  .card-subtitle-modern {
+    font-size: 13px; color: $text-para; margin-bottom: 24px; line-height: 1.5;
+  }
+}
+
+// ==========================================================================
+// LUXURY GRID OF USER CARDS (AĞILLI SİYAHI)
+// ==========================================================================
+.modern-user-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+
+  .modern-user-node {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    border-radius: 14px;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    position: relative;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.04);
+      border-color: rgba(255, 255, 255, 0.08);
+      transform: translateY(-2px);
+    }
+
+    .node-status-indicator {
+      position: absolute; top: 12px; right: 12px; width: 8px; height: 8px; border-radius: 50%;
+      &.active { background: $clr-green; box-shadow: 0 0 8px $clr-green; }
+      &.standby { background: $clr-cyan; }
+      &.syncing { background: $clr-orange; }
+    }
+
+    .node-avatar {
+      width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, $clr-cyan, $clr-purple);
+      display: flex; justify-content: center; align-items: center; font-size: 13px; font-weight: 700; color: #fff;
+    }
+
+    .node-details {
+      h5 { font-size: 14px; font-weight: 600; margin: 0 0 2px 0; color: $text-title; }
+      p { font-size: 12px; color: $text-para; margin: 0; }
+    }
+  }
+
+  .empty-grid-state {
+    grid-column: 1 / -1; text-align: center; color: $text-para; font-size: 13px; padding: 40px 0;
+  }
+}
+
+// ==========================================================================
+// REFINED TELEMETRY TERMINAL LOQS
+// ==========================================================================
+.modern-terminal-box {
+  background: #070a12;
+  border-radius: 12px;
+  padding: 16px;
+  height: 180px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.02);
+
+  .modern-log-line {
+    font-size: 12px; color: #cbd5e1; line-height: 1.5; font-family: 'Fira Code', monospace;
+    .log-prefix { color: $clr-purple; font-weight: bold; margin-right: 4px; }
+  }
+}
+
+.modern-terminal-actions {
+  display: flex; gap: 10px; margin-top: 14px;
+
+  .modern-btn-ctrl {
+    flex: 1; border: 1px solid rgba(255,255,255,0.08); background: transparent;
+    border-radius: 8px; padding: 8px; color: $text-title; font-size: 12px;
+    display: flex; align-items: center; justify-content: center; gap: 6px; font-weight: 500;
+    transition: all 0.2s;
+
+    &:hover { background: rgba(255,255,255,0.05); }
+    &.btn-pause:hover { color: $clr-orange; border-color: rgba($clr-orange, 0.3); }
+    &.btn-play:hover { color: $clr-green; border-color: rgba($clr-green, 0.3); }
+    &.btn-clear:hover { color: #f43f5e; border-color: rgba(#f43f5e, 0.3); }
+  }
+}
+
+// ==========================================================================
+// QUICK OPERATIONS STACK BUTTONS
+// ==========================================================================
+.modern-action-stack {
+  display: flex; flex-direction: column; gap: 10px;
+
+  .modern-stack-trigger {
+    background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 10px; padding: 12px 16px; color: $text-title; font-size: 13px; font-weight: 600;
+    display: flex; align-items: center; gap: 10px; text-align: left; transition: all 0.2s;
+
+    &:hover {
+      background: rgba($clr-cyan, 0.05); border-color: rgba($clr-cyan, 0.2); color: $clr-cyan;
+    }
+  }
+}
+
+// ==========================================================================
+// PERFECT INTEGRATION FOR SUB MODULE FORMS (SUB PANELS)
+// ==========================================================================
+.modern-sub-card {
+  background: $bg-card;
+  border: 1px solid $border-color;
+  border-radius: 20px;
+  padding: 35px;
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
+  animation: fadeInDashboard 0.3s ease-out;
+
+  // Alt formları təmizləyən və gözəlləşdirən hissə
+  h2, h3 { font-size: 20px; font-weight: 700; color: $text-title; margin-bottom: 20px; }
+  
+  input, select, textarea {
+    background: $bg-main !important;
+    border: 1px solid $border-color !important;
+    color: #fff !important;
+    border-radius: 10px !important;
+    padding: 10px 14px !important;
+    font-size: 14px;
+    
+    &:focus {
+      border-color: rgba($clr-cyan, 0.5) !important;
+      box-shadow: 0 0 0 3px rgba($clr-cyan, 0.1) !important;
+    }
+  }
+
+  label {
+    color: $text-para !important;
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+
+  button[type="submit"], .btn-primary {
+    background: $clr-cyan !important;
+    border: none !important;
+    color: #fff !important;
+    border-radius: 10px !important;
+    font-weight: 600 !important;
+    padding: 10px 20px !important;
+    transition: opacity 0.2s;
+
+    &:hover { opacity: 0.9; }
+  }
+}
+
+// ==========================================================================
+// ANIMATIONS
+// ==========================================================================
+@keyframes flashDot { from { opacity: 0.5; } to { opacity: 1; } }
+@keyframes fadeInDashboard { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }

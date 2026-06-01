@@ -1,0 +1,256 @@
+$dark-bg: #070a13;
+$card-bg: rgba(17, 24, 39, 0.65);
+$border-color: rgba(255, 255, 255, 0.05);
+$neon-cyan: #00f3ff;
+$neon-purple: #8b5cf6;
+$text-light: #ffffff;
+$text-muted: #94a3b8;
+
+.valuation-layout {
+  min-height: 100vh;
+  background: radial-gradient(circle at top right, #0f172a, $dark-bg);
+  color: $text-light;
+  font-family: 'Inter', sans-serif;
+  padding-bottom: 60px;
+
+  .valuation-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 20px;
+  }
+
+
+  
+
+  // Üst başlıq hissəsi
+  .valuation-top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    padding-bottom: 24px;
+    margin-bottom: 40px;
+
+    .page-title {
+      font-size: 32px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      margin: 0 0 6px 0;
+
+      span {
+        color: $neon-cyan;
+        text-shadow: 0 0 15px rgba($neon-cyan, 0.3);
+      }
+    }
+
+    .page-subtitle {
+      color: $text-muted;
+      font-size: 14px;
+      margin: 0;
+    }
+
+    .back-home-link {
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 700;
+      padding: 10px 20px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      transition: all 0.2s;
+
+      &:hover {
+        background: rgba($neon-cyan, 0.1);
+        border-color: $neon-cyan;
+        color: $neon-cyan;
+        box-shadow: 0 0 15px rgba($neon-cyan, 0.15);
+      }
+    }
+  }
+
+  // İşçilərin siyahı strukturu
+  .workers-grid-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  // Hər bir işçi kartı
+  .worker-card {
+    background: $card-bg;
+    backdrop-filter: blur(12px);
+    border: 1px solid $border-color;
+    border-radius: 16px;
+    padding: 24px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+
+    &:hover {
+      border-color: rgba(255, 255, 255, 0.12);
+      transform: translateY(-2px);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+    }
+
+    // Əgər həmin kart redaktə olunursa, kiber effekt verilsin
+    &.active-editing {
+      border-color: $neon-cyan;
+      box-shadow: 0 0 25px rgba($neon-cyan, 0.15), inset 0 0 10px rgba($neon-cyan, 0.05);
+      background: rgba(15, 23, 42, 0.9);
+    }
+  }
+
+  // İşçi profil məlumatı (Sol Tərəf)
+  .worker-info-section {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+
+    .avatar-icon-box {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: rgba($neon-purple, 0.15);
+      border: 1px solid rgba($neon-purple, 0.3);
+      color: #a78bfa;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 22px;
+    }
+
+    .worker-name {
+      font-size: 17px;
+      font-weight: 700;
+      margin: 0 0 4px 0;
+      letter-spacing: -0.3px;
+    }
+
+    .username-tag {
+      font-size: 13px;
+      color: $text-muted;
+      margin: 0;
+    }
+  }
+
+  // Hazırkı Vəzifə və Düymə Sahəsi (Sağ Tərəf)
+  .position-status-section {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+
+    .current-position-badge {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14.5px;
+      color: #e2e8f0;
+      background: rgba(255, 255, 255, 0.03);
+      padding: 8px 16px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+
+      .badge-icon {
+        color: $neon-cyan;
+      }
+
+      strong {
+        color: #ffffff;
+        margin-left: 4px;
+        font-weight: 600;
+      }
+    }
+  }
+
+  // Düymələrin ümumi stilləri
+  .btn-change-neon {
+    background: transparent !important;
+    border: 1px solid rgba($neon-cyan, 0.4) !important;
+    color: $neon-cyan !important;
+    font-weight: 700 !important;
+    font-size: 13.5px !important;
+    padding: 8px 18px !important;
+    border-radius: 8px !important;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.25s !important;
+
+    &:hover {
+      background: $neon-cyan !important;
+      color: #000000 !important;
+      box-shadow: 0 0 20px rgba($neon-cyan, 0.4);
+    }
+  }
+
+  // Redaktə rejimi idarəetmə elementləri
+  .edit-mode-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    .btn-confirm-neon {
+      background: #00f3ff !important;
+      border: none !important;
+      color: #000000 !important;
+      font-weight: 700 !important;
+      font-size: 13.5px !important;
+      padding: 8px 18px !important;
+      border-radius: 8px !important;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      box-shadow: 0 0 15px rgba($neon-cyan, 0.3);
+      transition: all 0.25s !important;
+
+      &:hover {
+        box-shadow: 0 0 25px rgba($neon-cyan, 0.6);
+        opacity: 0.95;
+      }
+    }
+
+    .btn-cancel-link {
+      background: transparent !important;
+      border: none !important;
+      color: $text-muted !important;
+      font-size: 13.5px !important;
+      font-weight: 600 !important;
+      cursor: pointer;
+      padding: 0 8px !important;
+
+      &:hover {
+        color: #ffffff !important;
+      }
+    }
+  }
+}
+
+// Ekran kiçildikdə kartların alt-alta səliqəli keçməsi
+@media (max-width: 868px) {
+  .worker-card {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 20px;
+    padding: 20px !important;
+  }
+
+  .position-status-section {
+    width: 100%;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 15px !important;
+
+    .current-position-badge, .action-control-area, .edit-mode-controls {
+      width: 100%;
+    }
+    
+    .edit-mode-controls {
+      flex-wrap: wrap;
+      
+      & > div { width: 100%; } // select tam eni tutsun
+    }
+  }
+}

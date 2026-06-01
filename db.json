@@ -1,0 +1,216 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "userName": "admin",
+      "email": "admin@mail.ru",
+      "password": "admin",
+      "name": "Admin",
+      "surname": "Admin",
+      "phone": "admin"
+    },
+    {
+      "name": "Huseyn",
+      "surname": "Ibrahimov",
+      "userName": "huseyn",
+      "id": "a32d",
+      "email": "ibrahimovh066@gmail.com",
+      "phone": "0703056068",
+      "positionId": "2",
+      "positionName": "Backend Developer",
+      "password": "huseyn"
+    },
+    {
+      "id": "7b1f",
+      "name": "Aydan",
+      "surname": "Memmedzade",
+      "userName": "aydan",
+      "password": "aydann",
+      "email": "aydan@mail.ru",
+      "phone": "70327437",
+      "positionId": "3",
+      "positionName": "Mobile Developer"
+    },
+    {
+      "id": "af9a",
+      "name": "Elsad",
+      "surname": "Memmedzada",
+      "userName": "elsad",
+      "password": "elsadd",
+      "email": "elsad@mail.ru",
+      "phone": "+994553116505",
+      "positionId": "5",
+      "positionName": "Project Manager"
+    },
+    {
+      "id": "7954",
+      "name": "Subhan",
+      "surname": "Orucov",
+      "userName": "subhan",
+      "password": "subhan",
+      "email": "subhan@mail.ru",
+      "phone": "24247238572",
+      "positionId": "1",
+      "positionName": "Frontend Developer"
+    },
+    {
+      "id": "247e",
+      "name": "Nihad",
+      "surname": "Qarayev",
+      "userName": "nihad",
+      "password": "huhyyqw",
+      "email": "nihad@mail.ru",
+      "phone": "43839549",
+      "positionId": "4",
+      "positionName": "System Administrator"
+    },
+    {
+      "id": "3e46",
+      "name": "Leman",
+      "surname": "Agayeva",
+      "userName": "leman",
+      "password": "lemana",
+      "email": "leman@mail.ru",
+      "phone": "4732897325792",
+      "positionId": "6",
+      "positionName": "Business Analyst"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "3417",
+      "userId": "3e46",
+      "title": "test",
+      "description": "test",
+      "deadLine": "2026-06-10",
+      "status": "completed",
+      "isFinished": true
+    }
+  ],
+  "positions": [
+    {
+      "id": "1",
+      "name": "Frontend Developer"
+    },
+    {
+      "id": "2",
+      "name": "Backend Developer"
+    },
+    {
+      "id": "3",
+      "name": "Mobile Developer"
+    },
+    {
+      "id": "4",
+      "name": "System Administrator"
+    },
+    {
+      "id": "5",
+      "name": "Project Manager"
+    },
+    {
+      "id": "6",
+      "name": "Business Analyst"
+    }
+  ],
+  "orders": [
+    {
+      "id": "c348",
+      "title": "dsadsa",
+      "description": "dsaihsa",
+      "category": "5",
+      "budget": "4343",
+      "clientName": "elman",
+      "clientEmail": "dsjsaidj2!@mail.ru",
+      "createdAt": "2026-06-01T12:52:38.521Z",
+      "status": "Pending"
+    },
+    {
+      "id": "6dac",
+      "title": "uhhi",
+      "description": "dsada",
+      "category": "1",
+      "budget": "3878",
+      "clientName": "jijknk",
+      "clientEmail": "dxsad@majek.r",
+      "createdAt": "2026-06-01T12:53:56.407Z",
+      "status": "Pending"
+    }
+  ],
+  "services": [
+    {
+      "id": "web-apps",
+      "title": "Functional Web Applications",
+      "tag": "FULL-STACK DEVELOPMENT",
+      "focus": "E-Commerce, Custom SaaS Platforms, Corporate Portals",
+      "metricLabel": "Deployment Speed",
+      "metricValue": "Accelerated",
+      "class": "frontend",
+      "targetPositions": [
+        1,
+        2
+      ]
+    },
+    {
+      "id": "mobile-apps",
+      "title": "Mobile App Development",
+      "tag": "CROSS-PLATFORM SOLUTIONS",
+      "focus": "High-Performance iOS & Android Applications",
+      "metricLabel": "Crash-Free Rate",
+      "metricValue": "99.9%",
+      "class": "mobile",
+      "targetPositions": [
+        3
+      ]
+    },
+    {
+      "id": "excel-automation",
+      "title": "Advanced Excel & Data Automation",
+      "tag": "OPERATIONAL EFFICIENCY",
+      "focus": "Custom Macro Scripts, Automated Financial Models, Dashboards",
+      "metricLabel": "Time Saved",
+      "metricValue": "85% Avg.",
+      "class": "analyst",
+      "targetPositions": [
+        6
+      ]
+    },
+    {
+      "id": "accounting-systems",
+      "title": "FinTech & Accounting Management",
+      "tag": "FINANCIAL INFRASTRUCTURE",
+      "focus": "Tax Engines, ERP Integrations, Automated Bookkeeping Modules",
+      "metricLabel": "Data Accuracy",
+      "metricValue": "100% Audit-Safe",
+      "class": "backend",
+      "targetPositions": [
+        2,
+        6
+      ]
+    },
+    {
+      "id": "cloud-infrastructure",
+      "title": "Enterprise Cloud & DevOps Solutions",
+      "tag": "INFRASTRUCTURE",
+      "focus": "AWS/Azure Cloud Migration, Zero-Downtime CI/CD Pipelines",
+      "metricLabel": "System Uptime",
+      "metricValue": "99.99%",
+      "class": "sysadmin",
+      "targetPositions": [
+        4
+      ]
+    },
+    {
+      "id": "product-strategy",
+      "title": "Agile Product Management",
+      "tag": "STRATEGIC CONSULTING",
+      "focus": "Market-Fit Discovery, Sprint Planning, Risk Mitigation Architect",
+      "metricLabel": "On-Time Delivery",
+      "metricValue": "96.4%",
+      "class": "pm",
+      "targetPositions": [
+        5
+      ]
+    }
+  ]
+}
