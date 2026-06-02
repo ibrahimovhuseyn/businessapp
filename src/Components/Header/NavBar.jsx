@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { FiLayers, FiBriefcase, FiUsers, FiUser, FiLogOut, FiLogIn, FiMenu, FiX } from 'react-icons/fi';
+import { FiLayers, FiBriefcase, FiUsers, FiUser, FiLogOut, FiLogIn, FiMenu, FiX, FiInfo } from 'react-icons/fi';
 import { setCurrentUser } from '../../Slices/homeSlice';
 import { toast } from 'react-toastify';
 import { toast_config } from '../../Utils/confiq';
@@ -60,17 +60,23 @@ const Navbar = () => {
           <div className="nav-links">
             <NavLink to="/services" className={({ isActive }) => isActive ? "nav-item active" : "nav-item"}>
               <FiLayers className="nav-icon" />
-              <span>Services</span>
+              <span>Xidmətlər</span>
+            </NavLink>
+
+
+            <NavLink to="/about" className={({ isActive }) => isActive ? "nav-item active" : "nav-item"}>
+              <FiInfo className="nav-icon" />
+              <span>Haqqımızda</span>
             </NavLink>
 
             <NavLink to="/order" className={({ isActive }) => isActive ? "nav-item active" : "nav-item"}>
               <FiBriefcase className="nav-icon" />
-              <span>Order</span>
+              <span>Sifariş et</span>
             </NavLink>
 
             <NavLink to="/our-team" className={({ isActive }) => isActive ? "nav-item active" : "nav-item"}>
               <FiUsers className="nav-icon" />
-              <span>Our Team</span>
+              <span>Komandamız</span>
             </NavLink>
           </div>
 
@@ -82,18 +88,18 @@ const Navbar = () => {
                   className={({ isActive }) => isActive ? "nav-item active profile-link" : "nav-item profile-link"}
                 >
                   <FiUser className="nav-icon" />
-                  <span>Profile</span>
+                  <span>Profil</span>
                 </NavLink>
 
                 <button onClick={handleLogout} className="nav-btn logout-btn">
                   <FiLogOut className="nav-icon" />
-                  <span>Logout</span>
+                  <span>Çıxış</span>
                 </button>
               </>
             ) : (
               <NavLink to="/signin" className={({ isActive }) => isActive ? "nav-item active login-btn" : "nav-item login-btn"}>
                 <FiLogIn className="nav-icon" />
-                <span>Login</span>
+                <span>Daxil ol</span>
               </NavLink>
             )}
           </div>
@@ -101,9 +107,9 @@ const Navbar = () => {
       </nav>
 
       {/* MOBILE TRIGGER BUTTON (Hamburger / Bağlama Düyməsi) */}
-      <button 
-        className={`mobile-menu-trigger ${isMobileOpen ? 'trigger-active' : ''}`} 
-        onClick={toggleMobileMenu} 
+      <button
+        className={`mobile-menu-trigger ${isMobileOpen ? 'trigger-active' : ''}`}
+        onClick={toggleMobileMenu}
         aria-label="Toggle Menu"
       >
         {isMobileOpen ? <FiX /> : <FiMenu />}
@@ -120,17 +126,22 @@ const Navbar = () => {
           <div className="mobile-links-wrapper">
             <NavLink to="/services" onClick={closeMobileMenu} className={({ isActive }) => isActive ? "mobile-nav-item active" : "mobile-nav-item"}>
               <FiLayers className="nav-icon" />
-              <span>Services</span>
+              <span>Xidmətlər</span>
+            </NavLink>
+
+            <NavLink to="/about" onClick={closeMobileMenu} className={({ isActive }) => isActive ? "mobile-nav-item active" : "mobile-nav-item"}>
+              <FiInfo className="nav-icon" />
+              <span>Haqqımızda</span>
             </NavLink>
 
             <NavLink to="/order" onClick={closeMobileMenu} className={({ isActive }) => isActive ? "mobile-nav-item active" : "mobile-nav-item"}>
               <FiBriefcase className="nav-icon" />
-              <span>Order</span>
+              <span>Sifariş et</span>
             </NavLink>
 
             <NavLink to="/our-team" onClick={closeMobileMenu} className={({ isActive }) => isActive ? "mobile-nav-item active" : "mobile-nav-item"}>
               <FiUsers className="nav-icon" />
-              <span>Our Team</span>
+              <span>Komandamız</span>
             </NavLink>
 
             <div className="mobile-auth-divider"></div>
@@ -143,18 +154,18 @@ const Navbar = () => {
                   className={({ isActive }) => isActive ? "mobile-nav-item active profile-link" : "mobile-nav-item profile-link"}
                 >
                   <FiUser className="nav-icon" />
-                  <span>Profile</span>
+                  <span>Profil</span>
                 </NavLink>
 
                 <button onClick={handleLogout} className="mobile-nav-item mobile-logout-btn">
                   <FiLogOut className="nav-icon" />
-                  <span>Logout</span>
+                  <span>Çıxış</span>
                 </button>
               </>
             ) : (
               <NavLink to="/signin" onClick={closeMobileMenu} className={({ isActive }) => isActive ? "mobile-nav-item active mobile-login-btn" : "mobile-nav-item mobile-login-btn"}>
                 <FiLogIn className="nav-icon" />
-                <span>Login</span>
+                <span>Daxil ol</span>
               </NavLink>
             )}
           </div>

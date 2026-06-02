@@ -1,0 +1,62 @@
+.about-cyber {
+  background-color: $bg-main;
+  color: $text-title;
+  padding: 100px 0;
+  min-height: 100vh;
+
+  .header-zone {
+    text-align: center;
+    margin-bottom: 80px;
+    .cyber-title {
+      font-size: 5rem;
+      font-weight: 900;
+      letter-spacing: -2px;
+      .text-neon { color: $neon-cyan; text-shadow: 0 0 20px rgba($neon-cyan, 0.5); }
+    }
+    .subtitle { color: $text-para; font-size: 1.4rem; letter-spacing: 2px; }
+  }
+
+  .info-grid {
+    gap: 30px 0;
+    .cyber-node {
+      background: $bg-card;
+      border: 1px solid $border-color;
+      padding: 40px;
+      border-radius: 20px;
+      height: 100%;
+      transition: all 0.4s ease;
+      cursor: default;
+
+      &:hover {
+        border-color: $neon-purple;
+        box-shadow: 0 0 30px rgba($neon-purple, 0.2);
+        transform: translateY(-10px);
+      }
+
+      .icon {
+        font-size: 2.5rem;
+        color: $neon-cyan;
+        margin-bottom: 20px;
+      }
+      h4 { font-weight: 700; margin-bottom: 15px; }
+      p { color: $text-para; line-height: 1.8; font-size: 0.95rem; }
+    }
+  }
+
+  .footer-zone {
+    margin-top: 80px;
+    .cta-btn {
+      background: transparent;
+      border: 1px solid $neon-cyan;
+      color: $neon-cyan;
+      padding: 15px 40px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      transition: 0.3s;
+      &:hover {
+        background: $neon-cyan;
+        color: $bg-main;
+      }
+    }
+  }
+}

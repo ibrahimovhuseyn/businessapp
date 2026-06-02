@@ -47,114 +47,114 @@ function AdminHeader({ activeTab, setActiveTab }) {
     }, []);
 
     return (
-        <div>
-            <header className='header'>
-                <h1 className="coresync-logo" onClick={() => handleTabChange('dashboard')}>
-                    Core<span>Sync</span>
-                </h1>
+       <div>
+    <header className='header'>
+        <h1 className="coresync-logo" onClick={() => handleTabChange('dashboard')}>
+            Core<span>Sync</span>
+        </h1>
 
-                <nav className="taskhub-nav">
-                    <ul className="nav-links">
-                        <li>
-                            <div className="d-flex">
-                                <Dropdown isOpen={dropdownOpen} toggle={toggle}>
-                                    <DropdownToggle caret className={`nav-item dropdown-toggle-custom ${['createuser', 'valuation'].includes(activeTab) ? 'active' : ''}`}>
-                                        User Management
-                                    </DropdownToggle>
-                                    <DropdownMenu className="custom-dropdown-menu">
-                                        <DropdownItem onClick={() => handleTabChange('createuser')}>
-                                            Create User
-                                        </DropdownItem>
-                                        <DropdownItem onClick={() => handleTabChange('valuation')}>
-                                            Valuation User
-                                        </DropdownItem>
-                                    </DropdownMenu>
-                                </Dropdown>
-                            </div>
-                        </li>
-
-                        <li>
-                            <button 
-                                className={`nav-item-btn ${activeTab === 'createtask' ? 'active' : ''}`} 
-                                onClick={() => handleTabChange('createtask')}
-                            >
-                                Create Task
-                            </button>
-                        </li>
-
-                        <li>
-                            <button 
-                                className={`nav-item-btn ${activeTab === 'createposition' ? 'active' : ''}`} 
-                                onClick={() => handleTabChange('createposition')}
-                            >
-                                Create Position
-                            </button>
-                        </li>
-
-                        <li>
-                            <button 
-                                className={`nav-item-btn ${activeTab === 'alltasks' ? 'active' : ''}`} 
-                                onClick={() => handleTabChange('alltasks')}
-                            >
-                                All Tasks
-                            </button>
-                        </li>
-                    </ul>
-
-                    <div className="nav-auth">
-                        <button className='nav-btn logout-btn' onClick={logOut}>
-                            <IoLogOut className="nav-icon" /> Logout
-                        </button>
+        <nav className="taskhub-nav">
+            <ul className="nav-links">
+                <li>
+                    <div className="d-flex">
+                        <Dropdown isOpen={dropdownOpen} toggle={toggle}>
+                            <DropdownToggle caret className={`nav-item dropdown-toggle-custom ${['createuser', 'valuation'].includes(activeTab) ? 'active' : ''}`}>
+                                İstifadəçi İdarəetməsi
+                            </DropdownToggle>
+                            <DropdownMenu className="custom-dropdown-menu">
+                                <DropdownItem onClick={() => handleTabChange('createuser')}>
+                                    İstifadəçi Yarat
+                                </DropdownItem>
+                                <DropdownItem onClick={() => handleTabChange('valuation')}>
+                                    İstifadəçi Dəyərləndirmə
+                                </DropdownItem>
+                            </DropdownMenu>
+                        </Dropdown>
                     </div>
-                </nav>
+                </li>
 
-                {/* Mobil Düymələr */}
-                <div className="menu">
-                    <button className='btn' onClick={toggleMenu}>
-                        <TfiMenuAlt className='i' />
+                <li>
+                    <button 
+                        className={`nav-item-btn ${activeTab === 'createtask' ? 'active' : ''}`} 
+                        onClick={() => handleTabChange('createtask')}
+                    >
+                        Tapşırıq Yarat
                     </button>
-                    <button className='btn text-danger' onClick={logOut}>
-                        <IoLogOut className='i' />
+                </li>
+
+                <li>
+                    <button 
+                        className={`nav-item-btn ${activeTab === 'createposition' ? 'active' : ''}`} 
+                        onClick={() => handleTabChange('createposition')}
+                    >
+                        Vəzifə Yarat
                     </button>
-                </div>
-            </header>
+                </li>
 
-            {/* YENİLƏNMİŞ: Sağdan sürüşərək açılan kiber panel */}
-            <div className={`mobile-sidebar-drawer ${isMenuVisible ? 'drawer-open' : ''}`}>
-                <div className='drawer-content'>
-                    <div className="drawer-header">
-                        <span className="drawer-title">CORE_NAVIGATION</span>
-                        <button className='btn close-btn' onClick={toggleMenu}>
-                            <IoClose />
-                        </button>
-                    </div>
-                    
-                    <ul className="drawer-links">
-                        <li>
-                            <button className={activeTab === 'createuser' ? 'active' : ''} onClick={() => handleTabChange('createuser')}>Create User</button>
-                        </li>
-                        <li>
-                            <button className={activeTab === 'valuation' ? 'active' : ''} onClick={() => handleTabChange('valuation')}>Valuation User</button>
-                        </li>
-                        <li>
-                            <button className={activeTab === 'createtask' ? 'active' : ''} onClick={() => handleTabChange('createtask')}>Create Task</button>
-                        </li>
-                        <li>
-                            <button className={activeTab === 'createposition' ? 'active' : ''} onClick={() => handleTabChange('createposition')}>Create Position</button>
-                        </li>
-                        <li>
-                            <button className={activeTab === 'alltasks' ? 'active' : ''} onClick={() => handleTabChange('alltasks')}>All Tasks</button>
-                        </li>
-                    </ul>
+                <li>
+                    <button 
+                        className={`nav-item-btn ${activeTab === 'alltasks' ? 'active' : ''}`} 
+                        onClick={() => handleTabChange('alltasks')}
+                    >
+                        Bütün Tapşırıqlar
+                    </button>
+                </li>
+            </ul>
 
-                    <div className="drawer-footer">
-                        <button className="drawer-logout" onClick={logOut}>
-                            <IoLogOut /> SYSTEM DISCONNECT
-                        </button>
-                    </div>
-                </div>
+            <div className="nav-auth">
+                <button className='nav-btn logout-btn' onClick={logOut}>
+                    <IoLogOut className="nav-icon" /> Çıxış
+                </button>
+            </div>
+        </nav>
+
+        {/* Mobil Düymələr */}
+        <div className="menu">
+            <button className='btn' onClick={toggleMenu}>
+                <TfiMenuAlt className='i' />
+            </button>
+            <button className='btn text-danger' onClick={logOut}>
+                <IoLogOut className='i' />
+            </button>
+        </div>
+    </header>
+
+    {/* Sağdan sürüşərək açılan kiber panel */}
+    <div className={`mobile-sidebar-drawer ${isMenuVisible ? 'drawer-open' : ''}`}>
+        <div className='drawer-content'>
+            <div className="drawer-header">
+                <span className="drawer-title">CORE_NAVİQASİYA</span>
+                <button className='btn close-btn' onClick={toggleMenu}>
+                    <IoClose />
+                </button>
+            </div>
+            
+            <ul className="drawer-links">
+                <li>
+                    <button className={activeTab === 'createuser' ? 'active' : ''} onClick={() => handleTabChange('createuser')}>İstifadəçi Yarat</button>
+                </li>
+                <li>
+                    <button className={activeTab === 'valuation' ? 'active' : ''} onClick={() => handleTabChange('valuation')}>İstifadəçi Dəyərləndirmə</button>
+                </li>
+                <li>
+                    <button className={activeTab === 'createtask' ? 'active' : ''} onClick={() => handleTabChange('createtask')}>Tapşırıq Yarat</button>
+                </li>
+                <li>
+                    <button className={activeTab === 'createposition' ? 'active' : ''} onClick={() => handleTabChange('createposition')}>Vəzifə Yarat</button>
+                </li>
+                <li>
+                    <button className={activeTab === 'alltasks' ? 'active' : ''} onClick={() => handleTabChange('alltasks')}>Bütün Tapşırıqlar</button>
+                </li>
+            </ul>
+
+            <div className="drawer-footer">
+                <button className="drawer-logout" onClick={logOut}>
+                    <IoLogOut /> SİSTEMİ BAĞLA
+                </button>
             </div>
         </div>
+    </div>
+</div>
     );
 }
 

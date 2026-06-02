@@ -1,25 +1,23 @@
-import axios from 'axios';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { apiUrl, toast_config } from '../Utils/confiq';
+import {  toast_config } from '../Utils/confiq';
 import { FaPlay, FaCheck, FaCalendarAlt, FaSpinner, FaCheckCircle, FaExclamationCircle } from "react-icons/fa";
 import { toast } from 'react-toastify';
 import Header from '../Components/Header/Header';
-import { fetchTasks, fetchUsers } from '../Slices/homeSlice';
+import { fetchAllData } from '../Slices/homeSlice';
 
 function UserProfile() {
     const { id } = useParams();
-    const { currentUser, users, tasks } = useSelector(store => store.homeSlice);
+    const { data } = useSelector(store => store.homeSlice);
+    const { currentUser, users, tasks } =data
     const dispatch = useDispatch();
 
     useEffect(() => {
-        if (users.length === 0) {
-            dispatch(fetchUsers())
+        if (users.length || tasks.length === 0) {
+            dispatch(fetchAllData())
         }
-        if (tasks.length === 0) {
-            dispatch(fetchTasks())
-        }
+      
     }, [dispatch]);
 
     const user = users?.find(item => item.id === currentUser?.id);
@@ -39,28 +37,11 @@ function UserProfile() {
     const doneCount = userTasks.filter(item => item.isFinished === true || item.status === "completed").length;
 
     const start = (task) => {
-        if (task.status === "not started") {
-            axios.put(`${apiUrl}/tasks/${task.id}`, {
-                ...task,
-                status: "in progress"
-            }).then(() => {
-                toast.success("Task status updated to: IN PROGRESS", toast_config);
-                axios.get(`${apiUrl}/tasks`).then(res => dispatch(getTasks(res.data)));
-            });
-        }
+      
     };
 
     const finish = (task) => {
-        if (task.status === "in progress") {
-            axios.put(`${apiUrl}/tasks/${task.id}`, {
-                ...task,
-                status: "completed",
-                isFinished: true
-            }).then(() => {
-                toast.success("Congratulations! Task completed successfully.", toast_config);
-                dispatch(fetchTasks())
-            });
-        }
+        
     };
 
     const renderStatusBadge = (status) => {

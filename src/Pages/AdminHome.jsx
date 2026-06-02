@@ -10,43 +10,35 @@ import Valuation from './Valuation';
 import CreateTask from './CreateTask';
 import CreatePosition from './CreatePosition';
 import AllTasks from './AllTasks';
-import { fetchTasks, fetchUsers } from '../Slices/homeSlice';
+import { fetchAllData } from '../Slices/homeSlice';
 
 function AdminHome() {
   const [activeTab, setActiveTab] = useState('dashboard');
-  const { users, tasks } = useSelector(store => store.homeSlice);
-  const dispatch = useDispatch()
-
-
-
-
-
-
+  const { data } = useSelector(store => store.homeSlice);
+  const { users, tasks } = data;
+  const dispatch = useDispatch();
 
   const [isLive, setIsLive] = useState(true);
   const [terminalLogs, setTerminalLogs] = useState([
-    "CoreSync Control Center successfully initialized.",
-    "AuthShield cryptographic vault: SECURE",
+    "CoreSync İdarəetmə Mərkəzi uğurla işə salındı.",
+    "AuthShield kriptoqrafik anbarı: QORUNUR",
   ]);
 
   // Canlı Terminal Loqları Efekti
   useEffect(() => {
     if (activeTab !== 'dashboard' || !isLive) return;
 
-    if (users.length === 0) {
-      dispatch(fetchUsers())
+    if (users.length === 0 || tasks.length === 0) {
+      dispatch(fetchAllData());
     }
 
-    else if (tasks.length === 0) {
-      dispatch(fetchTasks())
-    }
     const logPool = [
-      "Database cluster synchronization complete.",
-      "Telemetry pulse sent to global active nodes.",
-      "Microservice memory reallocation optimized.",
-      "Cryptographic signature token refreshed.",
-      "FlowMatrix successfully dispatched internal stack task.",
-      "SyncNode Engine pipeline clear. Zero latency detected."
+      "Verilənlər bazası klaster sinxronizasiyası tamamlandı.",
+      "Telemetriya impulsu aktiv qovşaqlara (nodes) göndərildi.",
+      "Mikroxidmət yaddaş bölgüsü optimallaşdırıldı.",
+      "Kriptoqrafik imza tokeni yeniləndi.",
+      "FlowMatrix daxili tapşırığı uğurla yerinə yetirdi.",
+      "SyncNode Engine kanalı təmizdir. Gecikmə aşkarlanmadı."
     ];
 
     const interval = setInterval(() => {
@@ -56,9 +48,9 @@ function AdminHome() {
     }, 3000);
 
     return () => clearInterval(interval);
-  }, [activeTab, isLive]);
+  }, [activeTab, isLive, users, tasks, dispatch]);
 
-  const clearLogs = () => setTerminalLogs(["Terminal log history cleared by administrator."]);
+  const clearLogs = () => setTerminalLogs(["Terminal loqları inzibatçı tərəfindən təmizləndi."]);
   const toggleLiveLogs = () => setIsLive(!isLive);
 
   // Komponentlərin steril şəkildə ekrana gətirilməsi
@@ -74,56 +66,47 @@ function AdminHome() {
     }
   };
 
-  const renderedTasks = tasks.filter(item => item.isFinished === false)
-  const renderedUsers = users.filter(item => item.id != 1)
-
+  const renderedTasks = tasks.filter(item => item.isFinished === false);
+  const renderedUsers = users.filter(item => item.id != 1);
 
   // Yeni Müasir Dashboard Görünüşü
   const renderPremiumDashboard = () => {
     return (
       <Container fluid className="px-4">
-        {/* METRİK KARTLARI (KPI CARDS) */}
+        {/* METRİK KARTLARI */}
         <Row className="g-4 mb-4">
           <Col sm={6} xl={3}>
             <div className="premium-kpi-card">
-              <div className="kpi-icon-wrapper cyan">
-                <FiUsers />
-              </div>
+              <div className="kpi-icon-wrapper cyan"><FiUsers /></div>
               <div className="kpi-info">
-                <span className="kpi-title">Total Users</span>
+                <span className="kpi-title">İstifadəçilər</span>
                 <h3 className="kpi-value">{users?.length || 0}</h3>
               </div>
             </div>
           </Col>
           <Col sm={6} xl={3}>
             <div className="premium-kpi-card">
-              <div className="kpi-icon-wrapper purple">
-                <FiFolder />
-              </div>
+              <div className="kpi-icon-wrapper purple"><FiFolder /></div>
               <div className="kpi-info">
-                <span className="kpi-title">Active Tasks</span>
+                <span className="kpi-title">Aktiv Tapşırıqlar</span>
                 <h3 className="kpi-value">{renderedTasks?.length || 0}</h3>
               </div>
             </div>
           </Col>
           <Col sm={6} xl={3}>
             <div className="premium-kpi-card">
-              <div className="kpi-icon-wrapper green">
-                <FiActivity />
-              </div>
+              <div className="kpi-icon-wrapper green"><FiActivity /></div>
               <div className="kpi-info">
-                <span className="kpi-title">System Status</span>
-                <h3 className="kpi-value text-green">Healthy</h3>
+                <span className="kpi-title">Sistem Vəziyyəti</span>
+                <h3 className="kpi-value text-green">Stabil</h3>
               </div>
             </div>
           </Col>
           <Col sm={6} xl={3}>
             <div className="premium-kpi-card">
-              <div className="kpi-icon-wrapper orange">
-                <FiCpu />
-              </div>
+              <div className="kpi-icon-wrapper orange"><FiCpu /></div>
               <div className="kpi-info">
-                <span className="kpi-title">Sync Rate</span>
+                <span className="kpi-title">Sinxronizasiya</span>
                 <h3 className="kpi-value">99.9%</h3>
               </div>
             </div>
@@ -137,17 +120,16 @@ function AdminHome() {
               <div className="card-header-modern">
                 <div className="title-area">
                   <FiGrid className="me-2" />
-                  <h4>Infrastructure Grid Matrix</h4>
+                  <h4>İnfrastruktur Şəbəkəsi</h4>
                 </div>
-                <span className="status-badge">Live System Tracking</span>
+                <span className="status-badge">Canlı İzləmə</span>
               </div>
               <p className="card-subtitle-modern">
-                Overview of active nodes globally synchronized within the Redux runtime architecture.
+                Redux runtime arxitekturası daxilində sinxronizə olunan aktiv qovşaqların icmalı.
               </p>
 
               <div className="modern-user-grid">
                 {renderedUsers?.map((user, idx) => {
-                  // Dinamik və estetik status nöqtələri
                   const status = idx % 5 === 0 ? 'standby' : idx % 7 === 0 ? 'syncing' : 'active';
                   return (
                     <div key={user.id} className="modern-user-node">
@@ -162,11 +144,8 @@ function AdminHome() {
                     </div>
                   );
                 })}
-
                 {users?.length === 0 && (
-                  <div className="empty-grid-state">
-                    No active user nodes found in the current cluster database.
-                  </div>
+                  <div className="empty-grid-state">Aktiv istifadəçi qovşağı tapılmadı.</div>
                 )}
               </div>
             </div>
@@ -178,9 +157,9 @@ function AdminHome() {
               <div className="card-header-modern justify-content-between">
                 <div className="title-area">
                   <FiActivity className="me-2 text-purple" />
-                  <h4>System Telemetry</h4>
+                  <h4>Sistem Telemetriyası</h4>
                 </div>
-                {isLive && <span className="live-pulse-badge">LIVE STREAM</span>}
+                {isLive && <span className="live-pulse-badge">CANLI YAYIM</span>}
               </div>
 
               <div className="modern-terminal-box">
@@ -197,26 +176,26 @@ function AdminHome() {
                   className={`modern-btn-ctrl ${isLive ? 'btn-pause' : 'btn-play'}`}
                 >
                   {isLive ? <FiPause /> : <FiPlay />}
-                  <span>{isLive ? "Pause Stream" : "Resume Stream"}</span>
+                  <span>{isLive ? "Yayımı Dayandır" : "Yayımı Başlat"}</span>
                 </button>
                 <button onClick={clearLogs} className="modern-btn-ctrl btn-clear">
                   <FiTrash2 />
-                  <span>Wipe Logs</span>
+                  <span>Loqları Təmizlə</span>
                 </button>
               </div>
             </div>
 
-            {/* TEZBAZAR KONTROL DÜYMƏLƏRİ */}
+            {/* TEZKAR ƏMƏLİYYATLAR */}
             <div className="premium-main-card mt-4">
               <div className="card-header-modern">
-                <h4>Quick Operations</h4>
+                <h4>Tezkar Əməliyyatlar</h4>
               </div>
               <div className="modern-action-stack">
                 <button className="modern-stack-trigger" onClick={() => setActiveTab('createuser')}>
-                  <FiPlus /> <span>Deploy New User Module</span>
+                  <FiPlus /> <span>Yeni İstifadəçi Modulu</span>
                 </button>
                 <button className="modern-stack-trigger" onClick={() => setActiveTab('createtask')}>
-                  <FiPlus /> <span>Dispatch Pipeline Task</span>
+                  <FiPlus /> <span>Tapşırıq Göndər</span>
                 </button>
               </div>
             </div>

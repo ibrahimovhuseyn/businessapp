@@ -3,13 +3,13 @@ import { Button, Form, Input, Label } from 'reactstrap'
 import Select from 'react-select'
 import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
-import { apiUrl, toast_config } from '../Utils/confiq'
-import axios from 'axios'
+import {  toast_config } from '../Utils/confiq'
 import { useNavigate } from 'react-router-dom'
-import { fetchUsers } from '../Slices/homeSlice'
+import { addTask, fetchAllData } from '../Slices/homeSlice'
 
 function CreateTask() {
-  const { users } = useSelector(store => store.homeSlice)
+  const { data } = useSelector(store => store.homeSlice)
+  const { users } = data
   const [validationErrors, setValidationErrors] = useState({})
   const [selectedUser, setSelectedUser] = useState(null) // react-select dəyərini tutmaq üçün state
   const navigate = useNavigate()
@@ -49,44 +49,52 @@ function CreateTask() {
     return errors
   }
 
-  const handleCreateTask = (e) => {
-    e.preventDefault()
+  const handleCreateTask = async (e) => {
+    e.preventDefault();
 
-    const formData = new FormData(e.target)
-    const data = {}
-    for (const [key, value] of formData.entries()) {
-      data[key] = value
+    // 1. Form məlumatlarını al
+    const formData = new FormData(e.target);
+    const formValues = Object.fromEntries(formData.entries());
+
+    // 2. React-select dəyərini əlavə et
+    formValues.userId = selectedUser ? selectedUser.id : "";
+
+    // 3. Validasiya et
+    const errors = validation(formValues);
+    setValidationErrors(errors);
+
+    // Əgər xəta varsa, dayandır
+    if (Object.values(errors).some(err => err !== "")) {
+        toast.error("Zəhmət olmasa bütün sahələri düzgün doldurun", toast_config);
+        return;
     }
 
-    // Standart FormData-da düşməyən react-select dəyərini state-dən əlavə edirik
-    data.userId = selectedUser ? selectedUser.id : "";
+    // 4. Yeni task obyektini yarat
+    const newTask = {
+        id: Date.now().toString(),
+        userId: formValues.userId,
+        title: formValues.title,
+        description: formValues.description,
+        deadLine: formValues.deadLine,
+        status: "pending",
+        isFinished: false
+    };
 
-    const errors = validation(data)
-    setValidationErrors(errors)
-
-    if (Object.values(errors).filter(string => string).length) {
-      toast.error("Please fill the boxes correctly", toast_config)
-      return
-    }
-
-    axios.post(`${apiUrl}/tasks`, {
-      userId: data.userId,
-      title: data.title,
-      description: data.description,
-      deadLine: data.deadLine,
-      status: "not started",
-      isFinished: false
-    }).then(res => {
-      toast.success("Successfully created", toast_config)
-      e.target.reset()
-      setSelectedUser(null)
-      navigate('/')
-    })
-  }
+    // 5. Redux-a göndər
+    try {
+        await dispatch(addTask({ newTask, fullData: data })).unwrap();
+        toast.success("Tapşırıq uğurla yaradıldı!", toast_config);
+        navigate('/'); // və ya istədiyin səhifəyə yönləndir
+        e.target.reset(); // Formu təmizlə
+    } catch (er) {
+        toast.error("Tapşırıq yaradılarkən xəta baş verdi.", toast_config);
+        console.error("Xəta:", er);
+    } 
+};
 
   useEffect(() => {
     if (users.length === 0) {
-      dispatch(fetchUsers())
+      dispatch(fetchAllData())
     }
   }, [dispatch])
 
@@ -121,74 +129,73 @@ function CreateTask() {
   };
 
   return (
-    <div className='createTask-layout'>
+  <div className='createTask-layout'>
+  <div className='task-container-wrapper'>
+    <div className='task-card'>
+      <h2 className='task-title'>Yeni <span>Tapşırıq Təyini</span></h2>
+      <p className='task-subtitle'>İş axınına yeni tapşırıq əlavə etmək üçün formanı doldurun</p>
 
-      <div className='task-container-wrapper'>
-        <div className='task-card'>
-          <h2 className='task-title'>Assign <span>New Task</span></h2>
-          <p className='task-subtitle'>Fill out the structural form to push a job assignment to the pipeline</p>
+      <Form onSubmit={handleCreateTask} className='modern-task-form'>
 
-          <Form onSubmit={handleCreateTask} className='modern-task-form'>
-
-            <div className="task-form-group">
-              <Label className='task-label'>Assignee (Employee)</Label>
-              <Select
-                value={selectedUser}
-                onChange={(option) => setSelectedUser(option)}
-                options={sortedData}
-                isClearable
-                styles={customSelectStyles}
-                getOptionLabel={option => option.name + " " + option.surname}
-                getOptionValue={option => option.id}
-                placeholder="Search and select worker..."
-              />
-              {validationErrors.userId && <p className='error-glow-text'>{validationErrors.userId}</p>}
-            </div>
-
-            <div className="task-form-group">
-              <Label className='task-label' htmlFor='title'>Task Heading / Title</Label>
-              <Input
-                name='title'
-                id='title'
-                placeholder="e.g., Optimize Database Queries"
-                className={`task-input ${validationErrors.title ? "border-danger-glow" : ""}`}
-              />
-              {validationErrors.title && <p className='error-glow-text'>{validationErrors.title}</p>}
-            </div>
-
-            <div className="task-form-group">
-              <Label className='task-label' htmlFor='description'>Detailed Description</Label>
-              <Input
-                name='description'
-                id='description'
-                type="textarea"
-                rows="4"
-                placeholder="Describe the workflow, requirements, and scope of work..."
-                className={`task-input textarea-input ${validationErrors.description ? "border-danger-glow" : ""}`}
-              />
-              {validationErrors.description && <p className='error-glow-text'>{validationErrors.description}</p>}
-            </div>
-
-            <div className="task-form-group">
-              <Label className='task-label' htmlFor='deadLine'>Deadline Limit</Label>
-              <Input
-                name='deadLine'
-                id='deadLine'
-                type='date'
-                min={getTomorrowDateString()}
-                className={`task-input date-input ${validationErrors.deadLine ? "border-danger-glow" : ""}`}
-              />
-              {validationErrors.deadLine && <p className='error-glow-text'>{validationErrors.deadLine}</p>}
-            </div>
-
-            <div className='task-action-area'>
-              <Button type='submit' className='submit-task-btn'>Deploy Task</Button>
-            </div>
-
-          </Form>
+        <div className="task-form-group">
+          <Label className='task-label'>İcraçı (İşçi)</Label>
+          <Select
+            value={selectedUser}
+            onChange={(option) => setSelectedUser(option)}
+            options={sortedData}
+            isClearable
+            styles={customSelectStyles}
+            getOptionLabel={option => option.name + " " + option.surname}
+            getOptionValue={option => option.id}
+            placeholder="İşçi axtarın və seçin..."
+          />
+          {validationErrors.userId && <p className='error-glow-text'>{validationErrors.userId}</p>}
         </div>
-      </div>
+
+        <div className="task-form-group">
+          <Label className='task-label' htmlFor='title'>Tapşırıq Başlığı</Label>
+          <Input
+            name='title'
+            id='title'
+            placeholder="məs., Verilənlər bazasını optimallaşdır"
+            className={`task-input ${validationErrors.title ? "border-danger-glow" : ""}`}
+          />
+          {validationErrors.title && <p className='error-glow-text'>{validationErrors.title}</p>}
+        </div>
+
+        <div className="task-form-group">
+          <Label className='task-label' htmlFor='description'>Ətraflı Açıqlama</Label>
+          <Input
+            name='description'
+            id='description'
+            type="textarea"
+            rows="4"
+            placeholder="Tapşırığın detallarını, tələbləri və əhatə dairəsini yazın..."
+            className={`task-input textarea-input ${validationErrors.description ? "border-danger-glow" : ""}`}
+          />
+          {validationErrors.description && <p className='error-glow-text'>{validationErrors.description}</p>}
+        </div>
+
+        <div className="task-form-group">
+          <Label className='task-label' htmlFor='deadLine'>Son Tamamlanma Tarixi</Label>
+          <Input
+            name='deadLine'
+            id='deadLine'
+            type='date'
+            min={getTomorrowDateString()}
+            className={`task-input date-input ${validationErrors.deadLine ? "border-danger-glow" : ""}`}
+          />
+          {validationErrors.deadLine && <p className='error-glow-text'>{validationErrors.deadLine}</p>}
+        </div>
+
+        <div className='task-action-area'>
+          <Button type='submit' className='submit-task-btn'>Tapşırığı Göndər</Button>
+        </div>
+
+      </Form>
     </div>
+  </div>
+</div>
   )
 }
 

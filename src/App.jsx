@@ -22,6 +22,7 @@ import CreatePosition from './Pages/CreatePosition'
 import OurTeam from './Pages/OurTeam'
 import OrderApp from './Pages/OrderApp'
 import UserFooter from './Components/Footer'
+import About from './Pages/About'
 
 function App() {
   const { currentUser } = useSelector(store => store.homeSlice)
@@ -39,6 +40,7 @@ function App() {
         <Route path='/services' element={<Services />} />
         <Route path='/our-team' element={<OurTeam />} />
         <Route path='/order' element={<OrderApp />} />
+        <Route path='/about' element={<About />} />
 
         {/* ROLA GÖRƏ DƏYİŞƏN KÖK ( / ) VƏ SPESİFİK MARŞRUTLAR */}
         {isAdmin ? (

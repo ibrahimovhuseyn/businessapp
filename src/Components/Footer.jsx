@@ -16,14 +16,12 @@ function UserFooter() {
             <div className="footer-about-segment">
               <div className="footer-brand">
                 <FiCode className="brand-icon" />
-                <h4>Huseyn Ibrahimov</h4>
+                <h4>Hüseyn İbrahimov</h4>
               </div>
               <p className="about-text">
-                I am a software developer specializing in building modern, fast, and 
-                user-centric web applications. Harnessing the power of Redux, React, 
-                Node.js, and Java, I architect digital ecosystems and deliver seamless frontend 
-                and backend integrations. My core focus is always on clean code, ultimate 
-                performance, and innovative solutions.
+                Biznesiniz üçün yüksək sürətli, istifadəçi mərkəzli və modern veb tətbiqlər arxitekturası qururam. 
+                React, Node.js və Java gücünü birləşdirərək, rəqəmsal ekosistemlərinizi miqyaslanır və avtomatlaşdırıram. 
+                Əsas hədəfim: təmiz kod, mükəmməl performans və biznesinizə dəyər qatan yenilikçi həllərdir.
               </p>
             </div>
           </Col>
@@ -31,12 +29,12 @@ function UserFooter() {
           {/* SECTION 2: EXPERTISE / SERVICES */}
           <Col lg={3} md={6} sm={12}>
             <div className="footer-links-segment">
-              <h5 className="segment-title">Expertise</h5>
+              <h5 className="segment-title">Texnoloji Yığım</h5>
               <ul className="tech-stack-list">
                 <li><FiArrowRight className="list-arrow" /> Frontend (React, Redux, Axios)</li>
-                <li><FiArrowRight className="list-arrow" /> Backend (Node.js, REST APIs)</li>
-                <li><FiArrowRight className="list-arrow" /> Core Programming (Java SE)</li>
-                <li><FiArrowRight className="list-arrow" /> Architecture (Microservices, State Mgmt)</li>
+                <li><FiArrowRight className="list-arrow" /> Backend (Node.js, REST API)</li>
+                <li><FiArrowRight className="list-arrow" /> Core Development (Java SE)</li>
+                <li><FiArrowRight className="list-arrow" /> Arxitektura (Microservices, State)</li>
               </ul>
             </div>
           </Col>
@@ -44,8 +42,8 @@ function UserFooter() {
           {/* SECTION 3: DIRECT CONTACT GATES */}
           <Col lg={4} md={6} sm={12}>
             <div className="footer-contact-segment">
-              <h5 className="segment-title">Quick Contact</h5>
-              <p className="contact-desc">Direct lines are open for project proposals, inquiries, or collaborations:</p>
+              <h5 className="segment-title">Birbaşa Əlaqə</h5>
+              <p className="contact-desc">Layihə təklifləri və əməkdaşlıq üçün birbaşa xətlərimiz aktivdir:</p>
               
               <div className="user-contact-cards">
                 {/* WhatsApp */}
@@ -57,12 +55,12 @@ function UserFooter() {
                 >
                   <div className="icon-box"><FaWhatsapp /></div>
                   <div className="card-info">
-                    <span>WhatsApp Live</span>
+                    <span>WhatsApp Canlı</span>
                     <strong>+994 70 305 60 68</strong>
                   </div>
                 </a>
 
-                {/* BİRBAŞA GMAİL AÇAN YENİ KOD */}
+                {/* Email */}
                 <a 
                   href="https://mail.google.com/mail/?view=cm&fs=1&to=ibrahimovh066@gmail.com" 
                   target="_blank" 
@@ -71,12 +69,11 @@ function UserFooter() {
                 >
                   <div className="icon-box"><FiMail /></div>
                   <div className="card-info">
-                    <span>Email Address</span>
+                    <span>E-poçt Ünvanı</span>
                     <strong>ibrahimovh066@gmail.com</strong>
                   </div>
                 </a>
               </div>
-
             </div>
           </Col>
 
@@ -87,12 +84,12 @@ function UserFooter() {
           <Row className="align-items-center py-4">
             <Col sm={6} className="text-center text-sm-start">
               <span className="copyright-text">
-                © {currentYear} Huseyn Ibrahimov. All rights reserved.
+                © {currentYear} Hüseyn İbrahimov. Bütün hüquqlar qorunur.
               </span>
             </Col>
             <Col sm={6} className="text-center text-sm-end mt-3 mt-sm-0">
               <div className="framework-badge">
-                <FiLayers className="me-1" /> Built with Premium Stack
+                <FiLayers className="me-1" /> CoreSync Mühəndisliyi ilə hazırlanıb
               </div>
             </Col>
           </Row>

@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
-import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import Header from '../Components/Header/Header';
-import { apiUrl, toast_config } from '../Utils/confiq';
+import { toast_config } from '../Utils/confiq';
 import { FiSend, FiFileText, FiUser, FiMail, FiLayers, FiDollarSign } from 'react-icons/fi';
 import { useNavigate } from 'react-router-dom';
 
 function OrderApp() {
   // Giriş etmiş istifadəçinin məlumatlarını çəkirik (opsional olaraq formu doldurmaq üçün)
   const { currentUser } = useSelector((store) => store.homeSlice);
+  const dispatch = useDispatch()
   const navigate = useNavigate()
 
   // Formun state strukturu
@@ -34,7 +34,7 @@ function OrderApp() {
   };
 
   // Göndərmə (Submit) Məntiqi
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     // Sadə sahə yoxlanışı (Validation)
@@ -48,31 +48,17 @@ function OrderApp() {
     const newOrder = {
       ...formData,
       createdAt: new Date().toISOString(),
-      status: 'Pending', // Yeni gələn sifarişin ilkin statusu
+      status: 'Pending'
     };
 
-    axios
-      .post(`${apiUrl}/orders`, newOrder)
-      .then((res) => {
-        toast.success('Your project request has been submitted successfully!', toast_config);
-        // Formu sıfırlayırıq (Giriş etmiş istifadəçinin fərdi dataları qalmaq şərti ilə)
-        setFormData({
-          title: '',
-          description: '',
-          category: '1',
-          budget: '',
-          clientName: currentUser ? `${currentUser.name} ${currentUser.surname}` : '',
-          clientEmail: currentUser ? currentUser.email : '',
-        });
-      })
-      .catch((err) => {
-        console.error(err);
-        toast.error('Something went wrong. Please try again.', toast_config);
-      })
-      .finally(() => {
-        setLoading(false);
-        navigate('/');
-      });
+    try {
+    } catch (error) {
+      toast.error('Sistem xətası.', toast_config);
+    } finally {
+      setLoading(false);
+    }
+
+
   };
 
   return (
@@ -81,24 +67,24 @@ function OrderApp() {
 
       <div className="container my-5">
         <div className="order-header-section">
-          <h1 className="order-title">Launch Your <span>Project</span></h1>
+          <h1 className="order-title">Layihəni <span>Başlat</span></h1>
           <p className="order-subtitle">
-            Submit your technical requirements and deploy our top-tier engineers to build your software infrastructure.
+            Texniki tələblərinizi göndərin və biznes infrastrukturunuzu qurmaq üçün peşəkar mühəndis qrupumuzu aktivləşdirin.
           </p>
         </div>
 
         <div className="order-form-container">
           <form onSubmit={handleSubmit} className="cyber-order-form">
-            
+
             {/* Sifariş Başlığı */}
             <div className="form-group-cyber">
-              <label><FiFileText className="input-icon-label" /> Project Title *</label>
+              <label><FiFileText className="input-icon-label" /> Layihənin Adı *</label>
               <input
                 type="text"
                 name="title"
                 value={formData.title}
                 onChange={handleChange}
-                placeholder="e.g., E-Commerce Platform Development"
+                placeholder="məsələn: E-Ticarət Platforması"
                 required
               />
             </div>
@@ -106,25 +92,25 @@ function OrderApp() {
             {/* İki sütunlu sahə (Kateqoriya və Büdcə) */}
             <div className="form-row-cyber">
               <div className="form-group-cyber">
-                <label><FiLayers className="input-icon-label" /> Required Domain *</label>
+                <label><FiLayers className="input-icon-label" /> Tələb Olunan Sahə *</label>
                 <select name="category" value={formData.category} onChange={handleChange}>
-                  <option value="1">Frontend Development</option>
-                  <option value="2">Backend Engineering</option>
-                  <option value="3">Mobile Applications</option>
-                  <option value="4">DevOps & SysAdmin</option>
-                  <option value="5">Project Management</option>
-                  <option value="6">Business Analytics</option>
+                  <option value="1">Frontend İnkişafı</option>
+                  <option value="2">Backend Mühəndisliyi</option>
+                  <option value="3">Mobil Tətbiqlər</option>
+                  <option value="4">DevOps və Sistem İdarəetmə</option>
+                  <option value="5">Layihə İdarəetməsi</option>
+                  <option value="6">Biznes Analitika</option>
                 </select>
               </div>
 
               <div className="form-group-cyber">
-                <label><FiDollarSign className="input-icon-label" /> Estimated Budget ($)</label>
+                <label><FiDollarSign className="input-icon-label" /> Təxmini Büdcə ($)</label>
                 <input
                   type="number"
                   name="budget"
                   value={formData.budget}
                   onChange={handleChange}
-                  placeholder="e.g., 5000"
+                  placeholder="məsələn: 5000"
                 />
               </div>
             </div>
@@ -132,25 +118,25 @@ function OrderApp() {
             {/* İki sütunlu sahə (Müştəri Adı və Email) */}
             <div className="form-row-cyber">
               <div className="form-group-cyber">
-                <label><FiUser className="input-icon-label" /> Your Name *</label>
+                <label><FiUser className="input-icon-label" /> Adınız və Soyadınız *</label>
                 <input
                   type="text"
                   name="clientName"
                   value={formData.clientName}
                   onChange={handleChange}
-                  placeholder="John Doe"
+                  placeholder="Ad Soyad"
                   required
                 />
               </div>
 
               <div className="form-group-cyber">
-                <label><FiMail className="input-icon-label" /> Contact Email *</label>
+                <label><FiMail className="input-icon-label" /> Əlaqə E-poçtu *</label>
                 <input
                   type="email"
                   name="clientEmail"
                   value={formData.clientEmail}
                   onChange={handleChange}
-                  placeholder="john@example.com"
+                  placeholder="nümunə@email.com"
                   required
                 />
               </div>
@@ -158,13 +144,13 @@ function OrderApp() {
 
             {/* Layihənin İzahı */}
             <div className="form-group-cyber">
-              <label><FiFileText className="input-icon-label" /> Project Specifications & Tasks *</label>
+              <label><FiFileText className="input-icon-label" /> Layihə Spesifikasiyası və Tapşırıqlar *</label>
               <textarea
                 name="description"
                 value={formData.description}
                 onChange={handleChange}
                 rows="5"
-                placeholder="Provide a detailed roadmap, features, and technology stack expectations..."
+                placeholder="Layihənin yol xəritəsini, əsas funksiyaları və gözlənilən texnoloji stack-i ətraflı qeyd edin..."
                 required
               ></textarea>
             </div>
@@ -172,10 +158,10 @@ function OrderApp() {
             {/* Göndərmə Düyməsi */}
             <button type="submit" className="submit-cyber-btn" disabled={loading}>
               {loading ? (
-                <span>Deploying Request...</span>
+                <span>Sorğu Göndərilir...</span>
               ) : (
                 <>
-                  <span>Submit Task Order</span>
+                  <span>Sifarişi Təsdiqlə</span>
                   <FiSend className="btn-send-icon" />
                 </>
               )}

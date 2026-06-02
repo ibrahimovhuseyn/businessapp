@@ -1,84 +1,67 @@
 import React, { useEffect, useState } from 'react'
-import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { Form, FormGroup, Label, Input, Button } from 'reactstrap'
-import { apiUrl, toast_config } from '../Utils/confiq'
 import { toast } from 'react-toastify'
-import { fetchPositions } from '../Slices/homeSlice'
-// Səndə mövqeləri idarə edən slice-dan müvafiq action-ı import et (məsələn: addPosition)
-// Əgər belə bir action yoxdursa, homeSlice və ya adminSlice-da yarada bilərsən.
+import { addPosition, fetchAllData } from '../Slices/homeSlice'
+import { toast_config } from '../Utils/confiq'
 
 function CreatePosition() {
-    const [positionName, setPositionName] = useState('')
     const [loading, setLoading] = useState(false)
-    const { positions } = useSelector(store => store.homeSlice) // Və ya adminSlice, mövqelərin harda saxlanıldığına görə
-    // Mövqeləri store-dan çəkmək üçün selector
+    const { data } = useSelector(store => store.homeSlice)
+    const { positions } = data
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
-
     useEffect(() => {
-        if (positions.lenth === 0) {
-            dispatch(fetchPositions())
+        if (!positions || positions.length === 0) {
+            dispatch(fetchAllData())
         }
-    }, [])
-    const handleSubmit = (e) => {
-        e.preventDefault()
+    }, [dispatch, positions])
 
-        if (!positionName.trim()) {
-            alert('Please enter a position name!')
-            return
-        }
+    const handleSubmit = async (e) => {
+        e.preventDefault();
 
-        setLoading(true)
+        const formData = new FormData(e.target);
+        const formValues = Object.fromEntries(formData.entries());
 
         const newPosition = {
-            // json-server id-ni avtomatik string olaraq "7", "8" kimi generasiya edəcək
-            name: positionName.trim()
-        }
+            id: Date.now().toString(),
+            name: formValues.position // Məsələn, 'Frontend Developer'
+        };
 
-        axios.post(`${apiUrl}/positions`, newPosition)
-            .then(res => {
-                toast.success('Position successfully created!', toast_config)
-                axios.get(`${apiUrl}/positions`).then(response => {
-                    dispatch(getPosition(response.data))
-                    setPositionName('')
-                    navigate('/') // Və ya istədiyin başqa admin səhifəsinə yönləndir
-                })
-            })
-            .catch(err => {
-                console.error(err)
-                alert('Something went wrong!')
-            })
-            .finally(() => {
-                setLoading(false)
-                navigate('/')
-            })
+        try {
+            await dispatch(addPosition({ newPosition, fullData: data })).unwrap();
+
+            toast.success("Yeni vəzifə uğurla əlavə edildi!", toast_config);
+            navigate('/'); // İstədiyiniz səhifəyə yönləndirin
+            e.target.reset(); // Formu təmizlə
+        } catch (er) {
+            toast.error("Vəzifə yaradılarkən xəta baş verdi.", toast_config);
+            console.error(er);
+        }
     }
 
     return (
         <div className='create-position-layout'>
-            <div className='form-main-containerContainer'>
+            <div className='form-main-container'>
                 <div className='form-wrapper-box'>
                     <div className='form-header-zone'>
-                        <h2 className='form-main-title'>Create New <span>Position</span></h2>
-                        <p className='form-subtitle'>Add a new operational segment or technical role to the organization matrix</p>
+                        <h2 className='form-main-title'>Yeni <span>Vəzifə</span> Yarat</h2>
+                        <p className='form-subtitle'>Təşkilat matrisinə yeni bir əməliyyat seqmenti və ya texniki rol əlavə edin.</p>
                     </div>
 
                     <Form onSubmit={handleSubmit} className="neon-cyber-form">
                         <FormGroup>
                             <Label for="positionField" className="cyber-label">
-                                Position / Role Name
+                                Vəzifə / Rol Adı
                             </Label>
                             <Input
                                 id="positionField"
                                 name="position"
-                                placeholder="e.g., Cyber Security Specialist"
+                                placeholder="məs., Kibertəhlükəsizlik üzrə Mütəxəssis"
                                 type="text"
                                 className="cyber-input"
-                                value={positionName}
-                                onChange={(e) => setPositionName(e.target.value)}
                                 disabled={loading}
                                 required
                             />
@@ -91,14 +74,14 @@ function CreatePosition() {
                                 onClick={() => navigate(-1)}
                                 disabled={loading}
                             >
-                                Cancel
+                                Ləğv et
                             </Button>
                             <Button
                                 type="submit"
                                 className='cyber-btn-primary'
                                 disabled={loading}
                             >
-                                {loading ? 'Deploying...' : 'Deploy Position'}
+                                {loading ? 'Yaradılır...' : 'Vəzifəni Yarat'}
                             </Button>
                         </div>
                     </Form>

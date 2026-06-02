@@ -1,244 +1,160 @@
-import React, { useEffect, useState } from 'react'
-import { Button, Form, Input, Label } from 'reactstrap'
-import { toast } from 'react-toastify'
-import { apiUrl, toast_config } from '../Utils/confiq'
-import { useDispatch, useSelector } from 'react-redux'
-import axios from 'axios'
-import { useNavigate } from 'react-router-dom'
-import Select from 'react-select'
-import { fetchPositions, fetchUsers } from '../Slices/homeSlice'
+import React, { useEffect, useState } from 'react';
+import { Button, Form, Input, Label } from 'reactstrap';
+import { toast } from 'react-toastify';
+import { toast_config } from '../Utils/confiq';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import Select from 'react-select';
+import { fetchAllData, addUser } from '../Slices/homeSlice';
 
 function CreateUser() {
-  const [showPassword, setShowPassword] = useState(false)
-  const [password, setPassword] = useState('')
-  const [validationErrors, setValdationErrors] = useState({})
-  const [selectedPosition, setSelectedPosition] = useState(null)
+  const [showPassword, setShowPassword] = useState(false);
+  const [password, setPassword] = useState('');
+  const [validationErrors, setValidationErrors] = useState({});
+  const [selectedPosition, setSelectedPosition] = useState(null);
+  const [loading, setLoading] = useState(false);
 
-  const { users, positions } = useSelector(store => store.homeSlice)
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
+  const { data } = useSelector(store => store.homeSlice);
+
+  const { users, positions } = data;
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    if (!positions.length) {
-      dispatch(fetchPositions())
+    if (!positions || positions.length === 0) {
+      dispatch(fetchAllData());
     }
-  }, [positions.length, dispatch])
+  }, [positions, dispatch]);
 
-  const handleInputChange = (e) => {
-    setPassword(e.target.value)
-  }
-
-  const handleCheckboxChange = (e) => {
-    setShowPassword(e.target.checked)
-  }
+  const handleInputChange = (e) => setPassword(e.target.value);
+  const handleCheckboxChange = (e) => setShowPassword(e.target.checked);
 
   function validate(data) {
-    const errors = {
-      name: "",
-      surname: "",
-      email: "",
-      userName: "",
-      password: "",
-      phone: ""
-    }
-
-    if (!data.name) errors.name = "Name is required"
-    if (!data.surname) errors.surname = "Surname is required"
-    if (!data.email) errors.email = "Email is required"
-    if (!data.userName) errors.userName = "Username is required"
-    if (!data.password) errors.password = "Password is required"
-    if (!data.phone) errors.phone = "Phone number is required"
-
-    return errors
+    const errors = { name: "", surname: "", email: "", userName: "", password: "", phone: "" };
+    if (!data.name) errors.name = "Ad tələb olunur";
+    if (!data.surname) errors.surname = "Soyad tələb olunur";
+    if (!data.email) errors.email = "E-poçt tələb olunur";
+    if (!data.userName) errors.userName = "İstifadəçi adı tələb olunur";
+    if (!data.password) errors.password = "Şifrə tələb olunur";
+    if (!data.phone) errors.phone = "Telefon nömrəsi tələb olunur";
+    return errors;
   }
 
-  function handleCreateUser(e) {
-    e.preventDefault()
-    const formData = new FormData(e.target)
-    const data = {}
-    for (const [key, value] of formData.entries()) {
-      data[key] = value
-    }
-    const errors = validate(data)
-    setValdationErrors(errors)
+  async function handleCreateUser(e) {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const formInputData = Object.fromEntries(formData.entries());
 
-    if (Object.values(errors).filter(string => string).length) {
-      toast.error("Please fill the boxes", toast_config)
-      return
+    const errors = validate(formInputData);
+    setValidationErrors(errors);
+
+    if (Object.values(errors).some(err => err !== "")) {
+      toast.error("Zəhmət olmasa bütün sahələri doldurun", toast_config);
+      return;
     }
-    else if (data.password.length <= 5) {
-      toast.error("Password length is minimum 6 characters", toast_config)
-      return
+    if (formInputData.password.length <= 5) {
+      toast.error("Şifrə minimum 6 simvoldan ibarət olmalıdır", toast_config);
+      return;
     }
-    else if (users.find(item => item.userName.toUpperCase() === data.userName.toUpperCase())) {
-      toast.error("This username has been registered", toast_config)
-      return
+    if (users.find(item => item.userName.toUpperCase() === formInputData.userName.toUpperCase())) {
+      toast.error("Bu istifadəçi adı artıq qeydiyyatdan keçib", toast_config);
+      return;
     }
-    else if (!selectedPosition) {
-      toast.error("Please select position", toast_config)
-      return
+    if (!selectedPosition) {
+      toast.error("Zəhmət olmasa vəzifə seçin", toast_config);
+      return;
     }
 
-    axios.post(`${apiUrl}/users`, {
-      name: data.name,
-      surname: data.surname,
-      userName: data.userName,
-      password: data.password,
-      email: data.email,
-      phone: data.phone,
-      positionId: selectedPosition.id,
-      positionName: selectedPosition.name
-    }).then(res => {
-      e.target.reset()
-      setSelectedPosition(null)
-      setPassword('')
-      dispatch(fetchUsers())
-      toast.success("User successfully created", toast_config)
-      navigate('/')
-    })
+    setLoading(true);
+    const newUser = {
+      ...formInputData,
+      id: Date.now().toString(),
+      positionId: selectedPosition.id
+    };
+
+    try {
+      await dispatch(addUser({ newUser, fullData: data })).unwrap();
+      toast.success("İstifadəçi uğurla yaradıldı", toast_config);
+      navigate('/');
+    } catch (er) {
+      toast.error("Qeydiyyat zamanı xəta baş verdi", toast_config);
+      console.log(er);
+    } finally {
+      setLoading(false);
+    }
   }
 
-  // react-select üçün xüsusi kiber qaranlıq dizayn stilləri
-  const customSelectStyles = {
-    control: (base, state) => ({
-      ...base,
-      background: '#0d1321',
-      borderColor: state.isFocused ? '#00f3ff' : (validationErrors.positionId ? '#ff0055' : 'rgba(255, 255, 255, 0.08)'),
-      boxShadow: state.isFocused ? '0 0 10px rgba(0, 243, 255, 0.2)' : 'none',
-      '&:hover': { borderColor: '#00f3ff' },
-      borderRadius: '10px',
-      padding: '2px',
-    }),
-    menu: (base) => ({
-      ...base,
-      background: '#0f1424',
-      border: '1px solid rgba(0, 243, 255, 0.2)',
-      borderRadius: '10px',
-    }),
-    option: (base, state) => ({
-      ...base,
-      background: state.isSelected ? '#00f3ff' : state.isFocused ? 'rgba(0, 243, 255, 0.1)' : 'transparent',
-      color: state.isSelected ? '#000' : '#e0e0e6',
-      cursor: 'pointer',
-      '&:active': { background: '#00f3ff', color: '#000' },
-    }),
-    singleValue: (base) => ({ ...base, color: '#ffffff' }),
-    placeholder: (base) => ({ ...base, color: '#64748b', fontSize: '14px' })
-  };
+  const customSelectStyles = { /* Sənin əvvəlki stillərin */ };
 
   return (
     <div className='createUser-layout'>
       <div className='form-container-wrapper'>
         <div className='form-card'>
-          <h2 className='form-title'>Create <span>User</span></h2>
-          <p className='form-subtitle'>Fill in the details to register a new employee on the hub</p>
+          <h2 className='form-title'>İstifadəçi <span>Yarat</span></h2>
+          <p className='form-subtitle'>Yeni işçini sistemə qeydiyyatdan keçirmək üçün məlumatları daxil edin</p>
 
           <Form onSubmit={handleCreateUser} className='modern-form-grid'>
-
             <div className="form-group-item">
-              <Label className='form-label' htmlFor='name'>First Name</Label>
-              <Input
-                name='name'
-                id='name'
-                placeholder="John"
-                className={`form-input ${validationErrors.name ? "border-danger-glow" : ""}`}
-              />
-              {validationErrors.name && <p className='error-text'>{validationErrors.name}</p>}
+              <Label className='form-label' htmlFor='name'>Ad</Label>
+              <Input name='name' id='name' placeholder="John" className={validationErrors.name ? "border-danger-glow" : ""} />
             </div>
 
             <div className="form-group-item">
-              <Label className='form-label' htmlFor='surname'>Last Name</Label>
-              <Input
-                name='surname'
-                id='surname'
-                placeholder="Doe"
-                className={`form-input ${validationErrors.surname ? "border-danger-glow" : ""}`}
-              />
-              {validationErrors.surname && <p className='error-text'>{validationErrors.surname}</p>}
+              <Label className='form-label' htmlFor='surname'>Soyad</Label>
+              <Input name='surname' id='surname' placeholder="Doe" className={validationErrors.surname ? "border-danger-glow" : ""} />
             </div>
 
             <div className="form-group-item">
-              <Label className='form-label' htmlFor='userName'>Username</Label>
-              <Input
-                name='userName'
-                id='userName'
-                placeholder="johndoe12"
-                className={`form-input ${validationErrors.userName ? "border-danger-glow" : ""}`}
-              />
-              {validationErrors.userName && <p className='error-text'>{validationErrors.userName}</p>}
+              <Label className='form-label' htmlFor='userName'>İstifadəçi adı</Label>
+              <Input name='userName' id='userName' placeholder="johndoe12" className={validationErrors.userName ? "border-danger-glow" : ""} />
             </div>
 
             <div className="form-group-item">
-              <Label className='form-label' htmlFor='phone'>Phone Number</Label>
-              <Input
-                name='phone'
-                id='phone'
-                placeholder="+994 (50) 000-0000"
-                className={`form-input ${validationErrors.phone ? "border-danger-glow" : ""}`}
-              />
-              {validationErrors.phone && <p className='error-text'>{validationErrors.phone}</p>}
+              <Label className='form-label' htmlFor='phone'>Telefon</Label>
+              <Input name='phone' id='phone' placeholder="+994 (50) 000-00-00" className={validationErrors.phone ? "border-danger-glow" : ""} />
             </div>
 
             <div className="form-group-item full-width">
-              <Label className='form-label' htmlFor='email'>Email Address</Label>
-              <Input
-                name='email'
-                id='email'
-                type='email'
-                placeholder="johndoe@company.com"
-                className={`form-input ${validationErrors.email ? "border-danger-glow" : ""}`}
-              />
-              {validationErrors.email && <p className='error-text'>{validationErrors.email}</p>}
+              <Label className='form-label' htmlFor='email'>E-poçt ünvanı</Label>
+              <Input name='email' id='email' type='email' placeholder="johndoe@company.com" className={validationErrors.email ? "border-danger-glow" : ""} />
             </div>
 
             <div className="form-group-item full-width">
-              <Label className='form-label'>Position</Label>
+              <Label className='form-label'>Vəzifə</Label>
               <Select
-                styles={customSelectStyles}
+                className='react-select'
+                classNamePrefix="react-select"
                 options={positions}
-                value={selectedPosition}
-                onChange={(selectedOption) => setSelectedPosition(selectedOption)}
-                getOptionLabel={(option) => option.name}
-                getOptionValue={(option) => option.id}
-                placeholder="Select company role..."
+                onChange={setSelectedPosition}
+                getOptionLabel={(o) => o.name}
+                getOptionValue={(o) => o.id}
+                placeholder="Vəzifə seçin..."
               />
             </div>
 
             <div className="form-group-item full-width password-group">
-              <Label className='form-label' htmlFor='password'>Account Password</Label>
-              <div className="password-input-wrapper">
-                <Input
-                  value={password}
-                  name='password'
-                  id='password'
-                  placeholder="••••••••"
-                  className={`form-input ${validationErrors.password ? "border-danger-glow" : ""}`}
-                  onChange={handleInputChange}
-                  type={showPassword ? "text" : "password"}
-                />
-              </div>
-
+              <Label className='form-label' htmlFor='password'>Şifrə</Label>
+              <Input
+                value={password} name='password' id='password' type={showPassword ? "text" : "password"}
+                onChange={handleInputChange} placeholder="••••••••"
+              />
               <div className="checkbox-wrapper">
-                <Input
-                  type='checkbox'
-                  id='checkbox'
-                  onChange={handleCheckboxChange}
-                  checked={showPassword}
-                />
-                <Label htmlFor='checkbox' className='checkbox-label'>Show password</Label>
+                <Input type='checkbox' id='checkbox' onChange={handleCheckboxChange} checked={showPassword} />
+                <Label htmlFor='checkbox' className='checkbox-label'>Şifrəni göstər</Label>
               </div>
-              {validationErrors.password && <p className='error-text'>{validationErrors.password}</p>}
             </div>
 
             <div className='form-actions full-width'>
-              <Button type='submit' className='submit-neon-btn'>Register User</Button>
+              <Button type='submit' className='submit-neon-btn' disabled={loading}>
+                {loading ? "Gözləyin..." : "İstifadəçini Qeydiyyatdan Keçir"}
+              </Button>
             </div>
-
           </Form>
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default CreateUser
+export default CreateUser;

@@ -1,51 +1,48 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Select from 'react-select'
-import axios from 'axios' // Sizin konfiqurasiyaya uyğun olaraq (və ya 'axios')
-import axiosOriginal from 'axios'
 import { Button } from 'reactstrap'
-import { apiUrl, toast_config } from '../Utils/confiq'
+import { toast_config } from '../Utils/confiq'
 import { toast } from 'react-toastify'
 import { Link } from 'react-router-dom'
 import { IoBriefcaseOutline, IoPersonOutline, IoCheckmarkSharp, IoCreateOutline } from 'react-icons/io5'
-import { fetchPositions, fetchUsers } from '../Slices/homeSlice'
+import { changePosition, fetchAllData, } from '../Slices/homeSlice'
 
 function Valuation() {
-  const { users, currentUser, positions } = useSelector(store => store.homeSlice)
+  const { data } = useSelector(store => store.homeSlice)
+  const { users, currentUser, positions } = data
   const [selectedPosition, setSelectedPosition] = useState(null)
   const [selectedItemId, setSelectedItemId] = useState(null)
   const dispatch = useDispatch()
 
-  const erasAble = users.filter(item => item.id !== currentUser?.id)
+  const erasAble = users.filter(item => item.id !== "1")
 
   useEffect(() => {
-    if (users.length === 0) {
-      dispatch(fetchUsers())
+    if (users.length || positions.length === 0) {
+      dispatch(fetchAllData())
     }
-    if (positions.length === 0) {
-      dispatch(fetchPositions())
-    }
+
   }, [dispatch]);
 
-  const confirmPosition = (item) => {
+  const confirmPosition = async (item) => {
     if (!selectedPosition) {
-      toast.error("Please select a valid position", toast_config)
-      return
+      toast.error("Zəhmət olmasa düzgün vəzifə seçin", toast_config);
+      return;
     }
 
-    axiosOriginal.put(`${apiUrl}/users/${item.id}`, {
-      ...item,
-      positionId: selectedPosition.id,
-      positionName: selectedPosition.name,
-    }).then(() => {
-      toast.success("Position successfully updated", toast_config)
-      setSelectedItemId(null) 
-      setSelectedPosition(null)
-      // Əvvəlki köhnə metodun yerinə yeni yazdığımız fərdi AsyncThunk-ı çağırırıq!
-      dispatch(fetchUsers())
-    })
-  }
+    try {
+      await dispatch(changePosition({
+        userId: item.id,
+        newPosition: selectedPosition,
+        fullData: data
+      })).unwrap();
 
+      toast.success("Vəzifə uğurla yeniləndi!", toast_config);
+      setSelectedItemId(null);
+    } catch (error) {
+      toast.error("Xəta baş verdi", toast_config);
+    }
+  }
   // React-select üçün kiber qaranlıq dizayn obyektləri
   const customSelectStyles = {
     control: (base, state) => ({
@@ -81,11 +78,11 @@ function Valuation() {
       <div className='valuation-container'>
         <div className='valuation-top-bar'>
           <div className='title-area'>
-            <h1 className='page-title'>Management <span>Center</span></h1>
-            <p className='page-subtitle'>Review personnel status and update hierarchy placements</p>
+            <h1 className='page-title'>İdarəetmə <span>Mərkəzi</span></h1>
+            <p className='page-subtitle'>Işçi statuslarını nəzərdən keçirin və iyerarxiyanı yeniləyin</p>
           </div>
           <Link className='back-home-link' to={'/'}>
-            ← Back Home
+            ← Əsas səhifəyə qayıt
           </Link>
         </div>
 
@@ -107,7 +104,7 @@ function Valuation() {
                 <div className='current-position-badge'>
                   <IoBriefcaseOutline className='badge-icon' />
                   <span>
-                    Role: <strong>{!item.positionId || item.positionId === "0" ? "Unassigned" : item.positionName}</strong>
+                    Vəzifə: <strong>{!item.positionId || item.positionId === "0" ? "Unassigned" : item.positionName}</strong>
                   </span>
                 </div>
 
@@ -130,13 +127,13 @@ function Valuation() {
                         className='btn-confirm-neon'
                         onClick={() => confirmPosition(item)}
                       >
-                        <IoCheckmarkSharp /> Confirm
+                        <IoCheckmarkSharp /> Təsdiqlə
                       </Button>
                       <Button
                         className='btn-cancel-link'
                         onClick={() => setSelectedItemId(null)}
                       >
-                        Cancel
+                        Ləğv et
                       </Button>
                     </div>
                   ) : (
@@ -147,7 +144,7 @@ function Valuation() {
                         setSelectedPosition(null);
                       }}
                     >
-                      <IoCreateOutline /> Change Role
+                      <IoCreateOutline />Dəyişdir
                     </Button>
                   )}
                 </div>

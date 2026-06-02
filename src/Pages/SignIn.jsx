@@ -4,11 +4,9 @@ import { FaUserLarge } from "react-icons/fa6";
 import { IoIosUnlock } from "react-icons/io";
 import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import { apiUrl, toast_config } from '../Utils/confiq';
+import {  toast_config } from '../Utils/confiq';
 import { useDispatch, useSelector } from 'react-redux'
-import axios from 'axios';
-import { fetchUsers, setCurrentUser } from '../Slices/homeSlice';
-import Header from '../Components/Header/Header';
+import {  fetchAllData, setCurrentUser } from '../Slices/homeSlice';
 
 
 
@@ -16,13 +14,19 @@ function SignIn() {
     const [showPassword, setShowPassword] = useState(false)
     const [password, setPassword] = useState('')
     const navigate = useNavigate()
-    const { users } = useSelector(store => store.homeSlice)
+    const { data } = useSelector(store => store.homeSlice)
+    const { users } = data
     const dispatch = useDispatch()
     useEffect(() => {
         if (users.length === 0) {
-            dispatch(fetchUsers())
+            dispatch(fetchAllData())
         }
     }, [])
+
+
+    
+
+    
 
     const handleLogin = (e) => {
         e.preventDefault()
@@ -57,65 +61,68 @@ function SignIn() {
     }
 
     return (
-        <div className='signIn'>
-            <Form
-                onSubmit={e => {
-                    handleLogin(e)
-                }}
-            >
-                <div className='page'>
-                    <h2>User Login</h2>
-                    <div className="userName">
-                        <Input
-                            name='userName'
-                            placeholder='Enter your username'
-                        />
-                        <div className='i'>
-                            <FaUserLarge className='is' />
-                        </div>
-
-                    </div>
-                    <div className="password">
-                        <Input
-                            onChange={e => handleInputChange(e)}
-                            placeholder='Enter your password'
-                            name='password'
-                            type={showPassword ? "text" : "password"}
-                            value={password}
-                        />
-                        <div className='i'>
-                            <IoIosUnlock className='is' />
-                        </div>
-                        <div className="d-flex align-items-center">
-                            <input type="checkbox"
-                                className='check'
-                                onChange={handleCheckboxChange}
-                                id='password'
-                            />
-                            <Label htmlFor='password' className='fw-bold my-1 mx-1'>Show password</Label>
-                        </div>
-                    </div>
-                    <Button
-                        type='submit'
-                    >Login
-                    </Button>
-                    <div className='list'>
-                        <ul>
-                            <li>
-                                <Link to={'/resetpassword'}>Forget password</Link>
-                            </li>
-                            <li>
-                                <Link to={'/contact'}>Contact Admin</Link>
-                            </li>
-                            <li>
-                                <Link to={'/'}>Home</Link>
-                            </li>
-                        </ul>
-                    </div>
+     <div className='signIn'>
+    <Form
+        onSubmit={e => {
+            handleLogin(e)
+        }}
+    >
+        <div className='page'>
+            <h2>İstifadəçi Girişi</h2>
+            
+            <div className="userName">
+                <Input
+                    name='userName'
+                    placeholder='İstifadəçi adınızı daxil edin'
+                />
+                <div className='i'>
+                    <FaUserLarge className='is' />
                 </div>
-            </Form>
+            </div>
 
+            <div className="password">
+                <Input
+                    onChange={e => handleInputChange(e)}
+                    placeholder='Şifrənizi daxil edin'
+                    name='password'
+                    type={showPassword ? "text" : "password"}
+                    value={password}
+                />
+                <div className='i'>
+                    <IoIosUnlock className='is' />
+                </div>
+                
+                <div className="d-flex align-items-center">
+                    <input type="checkbox"
+                        className='check'
+                        onChange={handleCheckboxChange}
+                        id='password'
+                    />
+                    <Label htmlFor='password' className='fw-bold my-1 mx-1'>Şifrəni göstər</Label>
+                </div>
+            </div>
+
+            <Button
+                type='submit'
+            >Daxil ol
+            </Button>
+
+            <div className='list'>
+                <ul>
+                    <li>
+                        <Link to={'/resetpassword'}>Şifrəni unutmusan?</Link>
+                    </li>
+                    <li>
+                        <Link to={'/order'}>İnzibatçı ilə əlaqə</Link>
+                    </li>
+                    <li>
+                        <Link to={'/'}>Ana Səhifə</Link>
+                    </li>
+                </ul>
+            </div>
         </div>
+    </Form>
+</div>
     )
 }
 

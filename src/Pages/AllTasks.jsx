@@ -2,19 +2,18 @@ import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { IoBriefcaseOutline, IoPersonOutline, IoTimeOutline, IoChevronForwardSharp } from 'react-icons/io5'
-import { fetchTasks, fetchUsers } from '../Slices/homeSlice'
+import { fetchAllData } from '../Slices/homeSlice'
 
 function AllTasks() {
-  const { tasks, users } = useSelector(store => store.homeSlice)
+  const { data } = useSelector(store => store.homeSlice)
+  const { tasks, users } = data
   const dispatch = useDispatch()
 
   useEffect(() => {
-    if (tasks.length === 0) {
-      dispatch(fetchTasks())
+    if (tasks.length || users.length === 0) {
+      dispatch(fetchAllData())
     }
-    if (users.length === 0) {
-      dispatch(fetchUsers())
-    }
+
   }, [dispatch])
 
   // Statuslara görə dinamik CSS klassları təyin edən funksiya
@@ -31,11 +30,11 @@ function AllTasks() {
       <div className='tasks-main-container'>
         <div className='tasks-header-bar'>
           <div>
-            <h1 className='tasks-main-title'>Task <span>Pipeline</span></h1>
-            <p className='tasks-subtitle'>Monitor, track, and manage all operational duties across the workforce</p>
+            <h1 className='tasks-main-title'>Tapşırıq <span>Axını</span></h1>
+            <p className='tasks-subtitle'>İşçi qüvvəsi üzrə bütün əməliyyat tapşırıqlarını izləyin, idarə edin və monitorinq edin.</p>
           </div>
           <div className='tasks-counter-badge'>
-            Total Tasks: <strong>{tasks?.length || 0}</strong>
+            Cəmi Tapşırıq: <strong>{tasks?.length || 0}</strong>
           </div>
         </div>
 
@@ -59,13 +58,13 @@ function AllTasks() {
                       <div className='task-meta-row'>
                         <span className='meta-item'>
                           <IoPersonOutline className='meta-icon' />
-                          Worker: <strong>{worker ? `${worker.name} ${worker.surname}` : 'Not Assigned'}</strong>
+                          İşçi: <strong>{worker ? `${worker.name} ${worker.surname}` : 'Təyin olunmayıb'}</strong>
                         </span>
 
                         {item.deadLine && (
                           <span className='meta-item'>
                             <IoTimeOutline className='meta-icon' />
-                            Deadline: <span className='date-highlight'>{item.deadLine}</span>
+                            Son Tarix: <span className='date-highlight'>{item.deadLine}</span>
                           </span>
                         )}
                       </div>
@@ -75,7 +74,7 @@ function AllTasks() {
                   {/* Sağ Tərəf: Status və Keçid İkonu */}
                   <div className='task-secondary-info'>
                     <span className={`status-badge ${getStatusClass(item.status)}`}>
-                      {item.status || 'not started'}
+                      {item.status || 'başlanmayıb'}
                     </span>
                     <div className='arrow-action-box'>
                       <IoChevronForwardSharp />
@@ -90,8 +89,8 @@ function AllTasks() {
           {(!tasks || tasks.length === 0) && (
             <div className='no-tasks-fallback'>
               <IoBriefcaseOutline className='fallback-icon' />
-              <h3>No tasks deployed yet</h3>
-              <p>Go to the task creation panel to distribute work to your employees.</p>
+              <h3>Hələlik aktiv tapşırıq yoxdur</h3>
+              <p>İşçilərinizə tapşırıq vermək üçün tapşırıq yaratma panelinə keçin.</p>
             </div>
           )}
         </div>

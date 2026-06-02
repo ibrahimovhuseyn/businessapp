@@ -1,22 +1,22 @@
-import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { Button, Form, Input } from 'reactstrap'
-import { apiUrl, toast_config } from '../Utils/confiq'
+import { toast_config } from '../Utils/confiq'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchUsers } from '../Slices/homeSlice'
 import { toast } from 'react-toastify'
 import { Link } from 'react-router-dom'
 import { FaUserLarge, FaPhone } from "react-icons/fa6";
+import { fetchAllData } from '../Slices/homeSlice'
 
 function ResetPassword() {
     const dispatch = useDispatch()
-    const { users } = useSelector(store => store.homeSlice)
+    const { data } = useSelector(store => store.homeSlice)
+    const { users } = data
 
     const [password, setPassword] = useState(null)
 
     useEffect(() => {
         if (users.length === 0) {
-            dispatch(fetchUsers())
+            dispatch(fetchAllData())
         }
     }, [dispatch])
 

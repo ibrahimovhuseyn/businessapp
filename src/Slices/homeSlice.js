@@ -1,71 +1,101 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { apiUrl } from "../Utils/confiq";
+import { BIN_ID, MASTER_KEY } from "../Utils/confiq";
 
-// 1. İstifadəçiləri çəkmək üçün Thunk
-export const fetchUsers = createAsyncThunk(
-    "home/fetchUsers",
-    async (_, { rejectWithValue }) => {
-        try {
-            const res = await axios.get(`${apiUrl}/users`);
-            return res.data;
-        } catch (error) {
-            return rejectWithValue(error.message || "Users fetch failed");
-        }
+const axiosInstance = axios.create({
+    baseURL: `https://api.jsonbin.io/v3/b/${BIN_ID}`,
+    headers: {
+        "X-Master-Key": MASTER_KEY,
+        "Content-Type": "application/json"
     }
-);
+});
 
-// 2. Taskları çəkmək üçün Thunk
-export const fetchTasks = createAsyncThunk(
-    "home/fetchTasks",
-    async (_, { rejectWithValue }) => {
-        try {
-            const res = await axios.get(`${apiUrl}/tasks`);
-            return res.data;
-        } catch (error) {
-            return rejectWithValue(error.message || "Tasks fetch failed");
-        }
+// BÜTÜN DATA ÜÇÜN TƏK THUNK
+export const fetchAllData = createAsyncThunk("home/fetchAllData", async (_, { rejectWithValue }) => {
+    try {
+        const res = await axiosInstance.get(`/latest`);
+        return res.data.record; // Bütöv obyekti (users, tasks, vs.) qaytarırıq
+    } catch (error) {
+        return rejectWithValue(error.message);
     }
-);
+});
+export const addUser = createAsyncThunk("home/addUser", async ({ newUser, fullData }, { rejectWithValue }) => {
+    try {
+        // Mövcud datanın üzərinə yeni istifadəçini əlavə edirik
+        const updatedData = {
+            ...fullData,
+            users: [...(fullData.users || []), newUser]
+        };
 
-// 3. Vəzifələri (Positions) çəkmək üçün Thunk
-export const fetchPositions = createAsyncThunk(
-    "home/fetchPositions",
-    async (_, { rejectWithValue }) => {
-        try {
-            const res = await axios.get(`${apiUrl}/positions`);
-            return res.data;
-        } catch (error) {
-            return rejectWithValue(error.message || "Positions fetch failed");
-        }
-    }
-);
+        // Bütöv obyekti PUT sorğusu ilə göndəririk
+        await axiosInstance.put("/", updatedData);
 
-// 4. Biznes Xidmətlərini (Services) çəkmək üçün Thunk
-export const fetchServices = createAsyncThunk(
-    "home/fetchServices",
-    async (_, { rejectWithValue }) => {
-        try {
-            const res = await axios.get(`${apiUrl}/services`);
-            return res.data;
-        } catch (error) {
-            return rejectWithValue(error.message || "Services fetch failed");
-        }
+        // Yenilənmiş datanı qaytarırıq ki, state avtomatik güncellənsin
+        return updatedData;
+    } catch (error) {
+        return rejectWithValue(error.message);
     }
-);
+});
+
+export const addTask = createAsyncThunk("home/addTask", async ({ newTask, fullData }, { rejectWithValue }) => {
+    try {
+        // Mövcud bazanın üzərinə yeni tapşırığı əlavə edirik
+        const updatedData = {
+            ...fullData,
+            tasks: [...(fullData.tasks || []), newTask]
+        };
+
+        // Bütöv obyekti serverə yazırıq
+        await axiosInstance.put("/", updatedData);
+        
+        return updatedData;
+    } catch (error) {
+        return rejectWithValue(error.message);
+    }
+});
+export const addPosition = createAsyncThunk("home/addPosition", async ({ newPosition, fullData }, { rejectWithValue }) => {
+    try {
+        // Yeni vəzifəni əlavə edib bütöv obyekti yenidən qururuq
+        const updatedData = {
+            ...fullData,
+            positions: [...(fullData.positions || []), newPosition]
+        };
+
+        // Serverə bütöv obyekti göndəririk
+        await axiosInstance.put("/", updatedData);
+        
+        return updatedData;
+    } catch (error) {
+        return rejectWithValue(error.message);
+    }
+});
+
+export const changePosition = createAsyncThunk("home/changePosition", async ({ userId, newPosition, fullData }, { rejectWithValue }) => {
+    try {
+        // İşçini tapırıq və məlumatlarını yeniləyirik
+        const updatedUsers = fullData.users.map(user => 
+            user.id === userId 
+            ? { ...user, positionId: newPosition.id, positionName: newPosition.name } 
+            : user
+        );
+
+        const updatedData = {
+            ...fullData,
+            users: updatedUsers
+        };
+
+        await axiosInstance.put("/", updatedData);
+        return updatedData;
+    } catch (error) {
+        return rejectWithValue(error.message);
+    }
+});
+
 
 const initialState = {
     currentUser: localStorage.getItem("currentUser") ? JSON.parse(localStorage.getItem("currentUser")) : null,
-    users: [],
-    tasks: [],
-    positions: [],
-    services: [],
-    loadingStates: {
-        usersLoading: false,
-        tasksLoading: false,
-        positionsLoading: false,
-        servicesLoading: false
-    },
+    data: { users: [], tasks: [], positions: [], services: [], orders: [] }, // Bütün baza burada
+    loading: false,
     error: null
 };
 
@@ -73,67 +103,29 @@ export const homeSlice = createSlice({
     name: "home",
     initialState,
     reducers: {
-        setCurrentUser: (state, action) => {
-            state.currentUser = action.payload;
-        },
-        logOutUser: (state) => {
-            state.currentUser = null;
-            localStorage.removeItem("currentUser");
-        }
+        setCurrentUser: (state, action) => { state.currentUser = action.payload; },
+        logOutUser: (state) => { state.currentUser = null; localStorage.removeItem("currentUser"); }
     },
     extraReducers: (builder) => {
         builder
-            // Users Reducers
-            .addCase(fetchUsers.pending, (state) => {
-                state.loadingStates.usersLoading = true;
+            .addCase(fetchAllData.pending, (state) => { state.loading = true; })
+            .addCase(fetchAllData.fulfilled, (state, action) => {
+                state.loading = false;
+                state.data = action.payload; // Bütün datanı state-ə yazırıq
             })
-            .addCase(fetchUsers.fulfilled, (state, action) => {
-                state.loadingStates.usersLoading = false;
-                state.users = action.payload;
+            // addUser sonrası state-i yeniləyirik
+            .addCase(addUser.fulfilled, (state, action) => {
+                state.data = action.payload;
             })
-            .addCase(fetchUsers.rejected, (state, action) => {
-                state.loadingStates.usersLoading = false;
-                state.error = action.payload;
+            .addCase(addTask.fulfilled, (state, action) => {
+                state.data = action.payload;
             })
-
-            // Tasks Reducers
-            .addCase(fetchTasks.pending, (state) => {
-                state.loadingStates.tasksLoading = true;
+            .addCase(addPosition.fulfilled, (state, action) => {
+                state.data = action.payload;
             })
-            .addCase(fetchTasks.fulfilled, (state, action) => {
-                state.loadingStates.tasksLoading = false;
-                state.tasks = action.payload;
+            .addCase(changePosition.fulfilled, (state, action) => {
+                state.data = action.payload;
             })
-            .addCase(fetchTasks.rejected, (state, action) => {
-                state.loadingStates.tasksLoading = false;
-                state.error = action.payload;
-            })
-
-            // Positions Reducers
-            .addCase(fetchPositions.pending, (state) => {
-                state.loadingStates.positionsLoading = true;
-            })
-            .addCase(fetchPositions.fulfilled, (state, action) => {
-                state.loadingStates.positionsLoading = false;
-                state.positions = action.payload;
-            })
-            .addCase(fetchPositions.rejected, (state, action) => {
-                state.loadingStates.positionsLoading = false;
-                state.error = action.payload;
-            })
-
-            // Services Reducers
-            .addCase(fetchServices.pending, (state) => {
-                state.loadingStates.servicesLoading = true;
-            })
-            .addCase(fetchServices.fulfilled, (state, action) => {
-                state.loadingStates.servicesLoading = false;
-                state.services = action.payload;
-            })
-            .addCase(fetchServices.rejected, (state, action) => {
-                state.loadingStates.servicesLoading = false;
-                state.error = action.payload;
-            });
     }
 });
 
