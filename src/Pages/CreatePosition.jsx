@@ -5,10 +5,10 @@ import { Form, FormGroup, Label, Input, Button } from 'reactstrap'
 import { toast } from 'react-toastify'
 import { addPosition, fetchAllData } from '../Slices/homeSlice'
 import { toast_config } from '../Utils/confiq'
+import { FaSpinner } from 'react-icons/fa6'
 
 function CreatePosition() {
-    const [loading, setLoading] = useState(false)
-    const { data } = useSelector(store => store.homeSlice)
+    const { data, loading } = useSelector(store => store.homeSlice)
     const { positions } = data
     const navigate = useNavigate()
     const dispatch = useDispatch()
@@ -18,6 +18,7 @@ function CreatePosition() {
             dispatch(fetchAllData())
         }
     }, [dispatch, positions])
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -32,7 +33,6 @@ function CreatePosition() {
 
         try {
             await dispatch(addPosition({ newPosition, fullData: data })).unwrap();
-
             toast.success("Yeni vəzifə uğurla əlavə edildi!", toast_config);
             navigate('/'); // İstədiyiniz səhifəyə yönləndirin
             e.target.reset(); // Formu təmizlə
@@ -40,6 +40,14 @@ function CreatePosition() {
             toast.error("Vəzifə yaradılarkən xəta baş verdi.", toast_config);
             console.error(er);
         }
+    }
+
+    if (loading) {
+        return (
+            <div className="loading-container">
+                <FaSpinner className="spinner-icon" size={60} />
+            </div>
+        );
     }
 
     return (

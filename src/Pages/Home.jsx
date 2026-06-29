@@ -12,7 +12,6 @@ import {
 
 // AOS Animasiya Kitabxanası
 import AOS from 'aos';
-import 'aos/dist/aos.css';
 import { fetchAllData } from '../Slices/homeSlice';
 
 // 3-cü Section-dakı kiber üstünlüklər üçün ikon xəritəsi

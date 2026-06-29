@@ -5,10 +5,12 @@ import Header from '../Components/Header/Header';
 import { toast_config } from '../Utils/confiq';
 import { FiSend, FiFileText, FiUser, FiMail, FiLayers, FiDollarSign } from 'react-icons/fi';
 import { useNavigate } from 'react-router-dom';
+import { FaSpinner } from 'react-icons/fa6';
+import { addOrder } from '../Slices/homeSlice';
 
 function OrderApp() {
   // Giriş etmiş istifadəçinin məlumatlarını çəkirik (opsional olaraq formu doldurmaq üçün)
-  const { currentUser } = useSelector((store) => store.homeSlice);
+  const { currentUser, loading,data } = useSelector((store) => store.homeSlice);
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
@@ -22,7 +24,6 @@ function OrderApp() {
     clientEmail: currentUser ? currentUser.email : '',
   });
 
-  const [loading, setLoading] = useState(false);
 
   // Input dəyişəndə state-i yeniləyən funksiya
   const handleChange = (e) => {
@@ -37,29 +38,31 @@ function OrderApp() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Sadə sahə yoxlanışı (Validation)
-    if (!formData.title || !formData.description || !formData.clientName || !formData.clientEmail) {
-      toast.error('Please fill in all required fields.', toast_config);
-      return;
-    }
-
-    setLoading(true);
-
     const newOrder = {
+      id: Date.now().toString(),
       ...formData,
       createdAt: new Date().toISOString(),
-      status: 'Pending'
+      status: "Pending"
     };
 
     try {
+      await dispatch(addOrder({ newOrder, fullData: data })).unwrap();
+      toast.success("Sifarişiniz uğurla göndərildi!", toast_config);
+      navigate('/'); // Və ya sifarişlər səhifəsinə
     } catch (error) {
-      toast.error('Sistem xətası.', toast_config);
-    } finally {
-      setLoading(false);
+      toast.error("Sifariş göndərilərkən xəta baş verdi.", toast_config);
     }
-
-
   };
+
+
+  if (loading) {
+    return (
+      <div className="loading-container">
+        <FaSpinner className="spinner-icon" size={60} />
+        <p>Sorğunuz sistemə işlənir...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="order-page-wrapper">

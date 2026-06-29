@@ -1,56 +1,56 @@
-import React, { useEffect, useState } from 'react'
-import { Button, Form, Input } from 'reactstrap'
-import { toast_config } from '../Utils/confiq'
-import { useDispatch, useSelector } from 'react-redux'
-import { toast } from 'react-toastify'
-import { Link } from 'react-router-dom'
+import React, { useEffect, useState } from 'react';
+import { Button, Form, Input } from 'reactstrap';
+import { toast_config } from '../Utils/confiq';
+import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
+import { Link } from 'react-router-dom';
 import { FaUserLarge, FaPhone } from "react-icons/fa6";
-import { fetchAllData } from '../Slices/homeSlice'
+import { fetchAllData } from '../Slices/homeSlice';
 
 function ResetPassword() {
-    const dispatch = useDispatch()
-    const { data } = useSelector(store => store.homeSlice)
-    const { users } = data
+    const dispatch = useDispatch();
+    const { data } = useSelector(store => store.homeSlice);
+    const { users } = data;
 
-    const [password, setPassword] = useState(null)
+    const [password, setPassword] = useState(null);
 
     useEffect(() => {
         if (users.length === 0) {
-            dispatch(fetchAllData())
+            dispatch(fetchAllData());
         }
-    }, [dispatch])
+    }, [dispatch, users.length]);
 
     const handlePassword = (e) => {
-        e.preventDefault()
-        const formData = new FormData(e.target)
-        const data = {}
-        for (const [key, value] of formData.entries()) {
-            data[key] = value
-        }
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        const data = Object.fromEntries(formData.entries());
 
-        const passwordData = users.find(item => item.userName == data.userName && item.phone == data.phone)
+        const passwordData = users.find(item => 
+            item.userName === data.userName && item.phone === data.phone
+        );
 
         if (passwordData) {
-            setPassword(passwordData.password)
-            e.target.reset()
+            setPassword(passwordData.password);
+            e.target.reset();
         } else {
-            toast.error("User not found", toast_config)
+            toast.error("İstifadəçi tapılmadı!", toast_config);
+            setPassword(null);
         }
-    }
+    };
 
     return (
         <div className='resetPassword'>
-            <Form onSubmit={(e) => handlePassword(e)}>
+            <Form onSubmit={handlePassword}>
                 <div className='page'>
-                    <h2>Password Recovery</h2>
+                    <h2>Şifrə Bərpası</h2>
 
                     <div className="userName">
                         <Input
-                            placeholder='Enter your username'
+                            placeholder='İstifadəçi adınızı daxil edin'
                             name='userName'
                             type='text'
                             required
-                            onChange={() => setPassword(null)} // Xəta aradan qaldırıldı, lokal state sıfırlanır
+                            onChange={() => setPassword(null)}
                         />
                         <div className='i'>
                             <FaUserLarge className='is' />
@@ -59,10 +59,11 @@ function ResetPassword() {
 
                     <div className="phone">
                         <Input
-                            placeholder='Enter your phone number'
+                            placeholder='Telefon nömrənizi daxil edin'
                             name='phone'
                             type='text'
                             required
+                            onChange={() => setPassword(null)}
                         />
                         <div className='i'>
                             <FaPhone className='is' />
@@ -70,12 +71,12 @@ function ResetPassword() {
                     </div>
 
                     <Button type='submit'>
-                        Search Account
+                        Hesabı Axtar
                     </Button>
 
                     {password && (
                         <div className="password-result animate-fade-in">
-                            <p>Your password is:</p>
+                            <p>Sizin şifrəniz:</p>
                             <span className="retrieved-pass">{password}</span>
                         </div>
                     )}
@@ -83,17 +84,17 @@ function ResetPassword() {
                     <div className='list'>
                         <ul>
                             <li>
-                                <Link to={'/signin'}>Back to Login</Link>
+                                <Link to={'/signin'}>Giriş səhifəsinə qayıt</Link>
                             </li>
                             <li>
-                                <Link to={'/'}>Home</Link>
+                                <Link to={'/'}>Ana səhifə</Link>
                             </li>
                         </ul>
                     </div>
                 </div>
             </Form>
         </div>
-    )
+    );
 }
 
-export default ResetPassword
+export default ResetPassword;

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { IoBriefcaseOutline, IoPersonOutline, IoTimeOutline, IoChevronForwardSharp } from 'react-icons/io5'
 import { fetchAllData } from '../Slices/homeSlice'
+import AdminHeader from '../Components/AdminHeader'
 
 function AllTasks() {
   const { data } = useSelector(store => store.homeSlice)
@@ -14,16 +15,24 @@ function AllTasks() {
       dispatch(fetchAllData())
     }
 
-  }, [dispatch])
+  }, [tasks.length])
 
-  // Statuslara görə dinamik CSS klassları təyin edən funksiya
+  
+  
+
+
+  
+
   const getStatusClass = (status) => {
     switch (status?.toLowerCase()) {
-      case 'finished': return 'status-finished';
+      case 'completed': return 'status-finished';
       case 'in progress': return 'status-progress';
       default: return 'status-not-started';
     }
   }
+
+
+
 
   return (
     <div className='all-tasks-layout'>

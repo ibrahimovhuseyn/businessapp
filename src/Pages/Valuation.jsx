@@ -7,10 +7,11 @@ import { toast } from 'react-toastify'
 import { Link } from 'react-router-dom'
 import { IoBriefcaseOutline, IoPersonOutline, IoCheckmarkSharp, IoCreateOutline } from 'react-icons/io5'
 import { changePosition, fetchAllData, } from '../Slices/homeSlice'
+import { FaSpinner } from 'react-icons/fa6'
 
 function Valuation() {
-  const { data } = useSelector(store => store.homeSlice)
-  const { users, currentUser, positions } = data
+  const { data, loading  } = useSelector(store => store.homeSlice)
+  const { users, positions } = data
   const [selectedPosition, setSelectedPosition] = useState(null)
   const [selectedItemId, setSelectedItemId] = useState(null)
   const dispatch = useDispatch()
@@ -72,18 +73,22 @@ function Valuation() {
     placeholder: (base) => ({ ...base, color: '#64748b', fontSize: '14px' })
   };
 
+  if (loading) {
+        return (
+            <div className="loading-container">
+                <FaSpinner className="spinner-icon" size={60} />
+            </div>
+        );
+    }
+
   return (
     <div className='valuation-layout'>
-
       <div className='valuation-container'>
         <div className='valuation-top-bar'>
           <div className='title-area'>
             <h1 className='page-title'>İdarəetmə <span>Mərkəzi</span></h1>
             <p className='page-subtitle'>Işçi statuslarını nəzərdən keçirin və iyerarxiyanı yeniləyin</p>
           </div>
-          <Link className='back-home-link' to={'/'}>
-            ← Əsas səhifəyə qayıt
-          </Link>
         </div>
 
         <div className='workers-grid-container'>

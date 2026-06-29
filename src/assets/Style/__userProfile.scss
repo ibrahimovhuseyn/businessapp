@@ -329,3 +329,41 @@ $disabled-text: #475569;
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+
+.loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 60vh;
+    color: #00f2ff; // Neon Mavi
+    font-family: 'Courier New', Courier, monospace;
+    gap: 20px;
+
+    .spinner-icon {
+        animation: spin 1.5s linear infinite;
+        filter: drop-shadow(0 0 10px #00f2ff);
+    }
+
+    p {
+        font-size: 1.2rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        animation: pulse 2s infinite;
+    }
+}
+
+@keyframes spin {
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+// İcrada olan statusdakı dönən ikon üçün
+.spin-icon {
+    animation: spin 1s linear infinite;
+}

@@ -7,17 +7,28 @@
   .header-zone {
     text-align: center;
     margin-bottom: 80px;
+    
     .cyber-title {
       font-size: 5rem;
       font-weight: 900;
       letter-spacing: -2px;
-      .text-neon { color: $neon-cyan; text-shadow: 0 0 20px rgba($neon-cyan, 0.5); }
+      
+      .text-neon { 
+        color: $neon-cyan; 
+        text-shadow: 0 0 20px rgba($neon-cyan, 0.5); 
+      }
     }
-    .subtitle { color: $text-para; font-size: 1.4rem; letter-spacing: 2px; }
+    
+    .subtitle { 
+      color: $text-para; 
+      font-size: 1.4rem; 
+      letter-spacing: 2px; 
+    }
   }
 
   .info-grid {
     gap: 30px 0;
+    
     .cyber-node {
       background: $bg-card;
       border: 1px solid $border-color;
@@ -38,13 +49,124 @@
         color: $neon-cyan;
         margin-bottom: 20px;
       }
-      h4 { font-weight: 700; margin-bottom: 15px; }
-      p { color: $text-para; line-height: 1.8; font-size: 0.95rem; }
+      
+      h4 { 
+        font-weight: 700; 
+        margin-bottom: 15px; 
+      }
+      
+      p { 
+        color: $text-para; 
+        line-height: 1.8; 
+        font-size: 0.95rem; 
+      }
+    }
+  }
+
+  // YENİ: Missiya Bölməsi
+  .mission-section {
+    margin: 100px 0;
+    background: rgba($neon-purple, 0.05);
+    border: 1px solid rgba($neon-purple, 0.2);
+    border-radius: 20px;
+    padding: 60px;
+    text-align: center;
+    backdrop-filter: blur(5px);
+
+    .mission-icon {
+      font-size: 3.5rem;
+      color: $neon-purple;
+      margin-bottom: 20px;
+    }
+
+    h3 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: white;
+      margin-bottom: 15px;
+    }
+
+    p {
+      max-width: 700px;
+      margin: 0 auto;
+      color: $text-para;
+      font-size: 1.1rem;
+      line-height: 1.6;
+    }
+  }
+
+  // YENİ: Statistika Bölməsi
+  .stats-section {
+    margin-bottom: 100px;
+    text-align: center;
+
+    .stat-box {
+      background: rgba($bg-card, 0.8);
+      border: 1px solid $border-color;
+      padding: 30px;
+      border-radius: 15px;
+      transition: 0.3s;
+
+      &:hover {
+        border-color: $neon-cyan;
+        box-shadow: 0 0 20px rgba($neon-cyan, 0.15);
+      }
+
+      .stat-number {
+        font-size: 3.5rem;
+        font-weight: 900;
+        color: $neon-cyan;
+        line-height: 1;
+        margin-bottom: 10px;
+      }
+
+      .stat-label {
+        color: $text-para;
+        text-transform: uppercase;
+        font-size: 0.9rem;
+        letter-spacing: 1px;
+      }
+    }
+  }
+
+  // YENİ: Testimonials Bölməsi
+  .testimonials-section {
+    margin-bottom: 100px;
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 50px;
+      font-weight: 800;
+      color: white;
+    }
+
+    .testimonial-card {
+      background: rgba(255, 255, 255, 0.02);
+      border-left: 4px solid $neon-cyan;
+      padding: 40px;
+      border-radius: 0 15px 15px 0;
+      height: 100%;
+      backdrop-filter: blur(3px);
+      
+      p {
+        font-style: italic;
+        color: $text-title;
+        font-size: 1.1rem;
+        line-height: 1.7;
+        margin-bottom: 20px;
+      }
+
+      .client {
+        color: $text-para;
+        font-weight: 600;
+        font-size: 0.95rem;
+      }
     }
   }
 
   .footer-zone {
-    margin-top: 80px;
+    margin-top: 40px;
+    
     .cta-btn {
       background: transparent;
       border: 1px solid $neon-cyan;
@@ -53,9 +175,12 @@
       text-transform: uppercase;
       letter-spacing: 2px;
       transition: 0.3s;
+      border-radius: 5px;
+      
       &:hover {
         background: $neon-cyan;
         color: $bg-main;
+        box-shadow: 0 0 20px $neon-cyan;
       }
     }
   }

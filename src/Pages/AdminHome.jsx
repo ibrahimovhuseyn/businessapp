@@ -11,10 +11,11 @@ import CreateTask from './CreateTask';
 import CreatePosition from './CreatePosition';
 import AllTasks from './AllTasks';
 import { fetchAllData } from '../Slices/homeSlice';
+import { FaSpinner } from 'react-icons/fa6';
 
 function AdminHome() {
   const [activeTab, setActiveTab] = useState('dashboard');
-  const { data } = useSelector(store => store.homeSlice);
+  const { data, loading } = useSelector(store => store.homeSlice);
   const { users, tasks } = data;
   const dispatch = useDispatch();
 
@@ -204,6 +205,10 @@ function AdminHome() {
       </Container>
     );
   };
+
+
+
+  
 
   return (
     <div className="coresync-premium-dashboard-layout">

@@ -41,7 +41,6 @@ function SignIn() {
 
         if (!selectedUser) {
             toast.error("Please enter the true data", toast_config)
-            console.log(data);
             return
         }
         else {

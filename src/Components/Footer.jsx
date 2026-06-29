@@ -29,7 +29,7 @@ function UserFooter() {
           {/* SECTION 2: EXPERTISE / SERVICES */}
           <Col lg={3} md={6} sm={12}>
             <div className="footer-links-segment">
-              <h5 className="segment-title">Texnoloji Yığım</h5>
+              <h5 className="segment-title">Texnologiya</h5>
               <ul className="tech-stack-list">
                 <li><FiArrowRight className="list-arrow" /> Frontend (React, Redux, Axios)</li>
                 <li><FiArrowRight className="list-arrow" /> Backend (Node.js, REST API)</li>

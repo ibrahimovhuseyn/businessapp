@@ -111,7 +111,7 @@ function OurTeam() {
 
                         {/* Profilə keçid düyməsi */}
                         <div className="card-action-zone">
-                            <Link to={`/user/${member.id}`} className="view-profile-btn">
+                            <Link  className="view-profile-btn">
                                 Performansı İzlə
                             </Link>
                         </div>

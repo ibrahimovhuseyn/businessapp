@@ -6,15 +6,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Select from 'react-select';
 import { fetchAllData, addUser } from '../Slices/homeSlice';
+import { FaSpinner } from 'react-icons/fa6';
 
 function CreateUser() {
   const [showPassword, setShowPassword] = useState(false);
   const [password, setPassword] = useState('');
   const [validationErrors, setValidationErrors] = useState({});
   const [selectedPosition, setSelectedPosition] = useState(null);
-  const [loading, setLoading] = useState(false);
 
-  const { data } = useSelector(store => store.homeSlice);
+  const { data, loading } = useSelector(store => store.homeSlice);
 
   const { users, positions } = data;
 
@@ -66,7 +66,6 @@ function CreateUser() {
       return;
     }
 
-    setLoading(true);
     const newUser = {
       ...formInputData,
       id: Date.now().toString(),
@@ -85,7 +84,14 @@ function CreateUser() {
     }
   }
 
-  const customSelectStyles = { /* Sənin əvvəlki stillərin */ };
+  if (loading) {
+    return (
+      <div className="loading-container">
+        <FaSpinner className="spinner-icon" size={60} />
+        <p>Istifadəçi yaradılır...  </p>
+      </div>
+    );
+  }
 
   return (
     <div className='createUser-layout'>
