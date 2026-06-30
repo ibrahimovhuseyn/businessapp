@@ -10,7 +10,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import AdminHome from './Pages/AdminHome'
 import CreateUser from './Pages/CreateUser'
 import CreateTask from './Pages/CreateTask'
-import TaskWithId from './Pages/TaskWithId'
 import Home from './Pages/Home'
 import UserProfile from './Pages/UserProfile'
 import Valuation from './Pages/Valuation'
@@ -43,7 +42,6 @@ function App() {
         {isAdmin ? (
           <>
             <Route path='/' element={<AdminHome />} />
-        <Route path='/task/:id' element={<TaskWithId />} />
             <Route path='/createuser' element={<CreateUser />} />
             <Route path='/createposition' element={<CreatePosition />} />
             <Route path='/valuation' element={<Valuation />} />
@@ -60,7 +58,7 @@ function App() {
         {/* TAPILMAYAN SƏHİFƏLƏR ÜÇÜN YÖNLƏNDİRMƏ */}
         <Route path='*' element={<NotFound />} />
       </Routes>
-      <UserFooter/>
+      <UserFooter />
 
       <ToastContainer />
     </div>

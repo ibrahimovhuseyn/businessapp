@@ -16,13 +16,6 @@ function AllTasks() {
     }
 
   }, [tasks.length])
-
-  
-  
-
-
-  
-
   const getStatusClass = (status) => {
     switch (status?.toLowerCase()) {
       case 'completed': return 'status-finished';
@@ -30,9 +23,6 @@ function AllTasks() {
       default: return 'status-not-started';
     }
   }
-
-
-
 
   return (
     <div className='all-tasks-layout'>
@@ -52,7 +42,7 @@ function AllTasks() {
             const worker = users.find((u) => u.id === item.userId);
 
             return (
-              <Link key={item.id} to={`/task/${item.id}`} className='task-link-card'>
+              <Link key={item.id} className='task-link-card'>
                 <div className='task-card-body'>
 
                   {/* Sol Tərəf: İndeks və Tapşırıq Məlumatları */}
