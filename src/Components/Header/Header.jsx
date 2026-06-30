@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import Navbar from './Navbar';
+import Navbar from './NavBar';
 import { useNavigate } from 'react-router-dom';
 
 function Header() {
